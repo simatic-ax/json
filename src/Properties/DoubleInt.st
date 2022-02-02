@@ -1,5 +1,4 @@
 USING Simatic.Ax.Conversion;
-USING Simatic.Ax.Conversion;
     
 NAMESPACE Simatic.Ax.Json.Properties
     CLASS DoubleInt EXTENDS JsonProperty
