@@ -1,0 +1,11 @@
+{
+    "UsingSnippet": {
+    "scope": "javascript,typescript,st",
+    "prefix": ["Using  Json"],
+    "body": [
+        "USING Simatic.Ax.Json;",
+        ""
+    ],
+    "description": "Create USING Simatic.Ax.WindowTracking;"
+    }
+}

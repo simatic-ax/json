@@ -1,0 +1,14 @@
+USING Simatic.Ax.Conversion;
+USING Simatic.Ax.Conversion;
+    
+NAMESPACE Simatic.Ax.Json.Properties
+    CLASS DoubleInt EXTENDS JsonProperty
+        VAR PUBLIC
+            value : DINT;
+        END_VAR
+    
+        METHOD PUBLIC OVERRIDE ToString : STRING
+            ToString := THIS.ToStringHelper(Integer.ToString(value := value));
+        END_METHOD
+    END_CLASS
+END_NAMESPACE
