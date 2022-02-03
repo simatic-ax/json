@@ -1,7 +1,7 @@
 USING Simatic.Ax.Conversion;
     
-NAMESPACE Simatic.Ax.Json.Properties
-    CLASS DoubleInt EXTENDS JsonNumber
+NAMESPACE Simatic.Ax.Json
+    CLASS JsonDoubleInt EXTENDS JsonNumber
         VAR PUBLIC
             value : DINT;
         END_VAR

@@ -1,4 +1,0 @@
-NAMESPACE Simatic.Ax.Json
-    INTERFACE IJsonProperty EXTENDS IJsonObject
-    END_INTERFACE    
-END_NAMESPACE
