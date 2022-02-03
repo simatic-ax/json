@@ -3,7 +3,7 @@ USING System.Strings;
 NAMESPACE Simatic.Ax.Json
     CLASS JsonObject IMPLEMENTS IJsonObject
         VAR PUBLIC
-            
+            key : STRING := '';
         END_VAR
         VAR PROTECTED
             _firstObject : IJsonObject;
@@ -18,6 +18,7 @@ NAMESPACE Simatic.Ax.Json
                 _firstObject := obj;
                 _lastObject := obj;
             ELSE
+                _lastObject.AddObject(obj);
                 _lastObject := obj;
             END_IF;
         END_METHOD
@@ -25,12 +26,23 @@ NAMESPACE Simatic.Ax.Json
         METHOD PUBLIC ToString : STRING
             VAR_TEMP
                 _str : STRING;
+                _to : IJsonObject;
             END_VAR
-            _str := '{';
-            // insert properties
-            IF (_firstObject <> NULL) THEN
-                Concat(_str, _firstObject.ToString());
+
+            IF (key <> '') THEN
+                _str := Concat(_str, '"', key, '": ');
             END_IF;
+        
+            _str := Concat(_str, '{');
+            // insert properties
+            _to := _firstObject;
+            WHILE _to <> NULL DO
+                _str := Concat(_str, _to.ToString());
+                _to := _to.GetNext();
+                IF (_to <> NULL) THEN
+                    _str := Concat(_str, ', ');
+                END_IF;
+            END_WHILE;
             _str := Concat(_str, '}');
             ToString := _str;
         END_METHOD
@@ -40,6 +52,10 @@ NAMESPACE Simatic.Ax.Json
                 t : ARRAY [*] OF BYTE;
             END_VAR
 
+            ;
+        END_METHOD
+    
+        METHOD PUBLIC GetNext : IJsonObject
             ;
         END_METHOD
     END_CLASS

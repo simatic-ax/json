@@ -1,13 +1,13 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS ABSTRACT JsonProperty IMPLEMENTS IJsonProperty
+    CLASS ABSTRACT JsonProperty IMPLEMENTS IJsonObject
         VAR PUBLIC
             key : STRING;                    
         END_VAR
 
         VAR PROTECTED
-            _next : IJsonProperty;    
+            _next : IJsonObject;    
         END_VAR
 
         METHOD PUBLIC ABSTRACT ToString : STRING
@@ -31,5 +31,21 @@ NAMESPACE Simatic.Ax.Json
             _str := Concat(_str, valueAsString, '"');
             ToStringHelper := _str;
         END_METHOD
+
+        METHOD PUBLIC HasNext : BOOL
+            HasNext := _next <> NULL;
+        END_METHOD
+
+        METHOD PUBLIC GetNext : IJsonObject
+            GetNext := _next;
+        END_METHOD
+
+        METHOD PUBLIC AddObject
+            VAR_INPUT
+                obj : IJsonObject;
+            END_VAR
+            _next := obj;
+        END_METHOD
+
     END_CLASS
 END_NAMESPACE
