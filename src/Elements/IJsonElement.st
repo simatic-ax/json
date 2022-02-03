@@ -1,5 +1,5 @@
 NAMESPACE Simatic.Ax.Json
-    INTERFACE IJsonObject
+    INTERFACE IJsonElement
         METHOD ToString : STRING
         END_METHOD
         
@@ -8,5 +8,5 @@ NAMESPACE Simatic.Ax.Json
                 t : Array[*] OF BYTE;
             END_VAR
         END_METHOD
-    END_INTERFACE    
+    END_INTERFACE
 END_NAMESPACE

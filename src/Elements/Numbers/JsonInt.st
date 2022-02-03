@@ -1,9 +1,9 @@
 USING Simatic.Ax.Conversion;
     
-NAMESPACE Simatic.Ax.Json.Properties
-    CLASS DoubleInt EXTENDS JsonProperty
+NAMESPACE Simatic.Ax.Json
+    CLASS JsonInt EXTENDS JsonNumber
         VAR PUBLIC
-            value : DINT;
+            value : INT;
         END_VAR
     
         METHOD PUBLIC OVERRIDE ToString : STRING

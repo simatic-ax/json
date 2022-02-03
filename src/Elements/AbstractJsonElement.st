@@ -1,13 +1,13 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS ABSTRACT JsonProperty IMPLEMENTS IJsonProperty
+    CLASS ABSTRACT AbstractJsonElement IMPLEMENTS IJsonElementMuteable, IJsonElement
         VAR PUBLIC
-            key : STRING;                    
+            key : STRING  := 'NoKeySet';                    
         END_VAR
 
         VAR PROTECTED
-            _next : IJsonProperty;    
+                _next : IJsonElementMuteable;
         END_VAR
 
         METHOD PUBLIC ABSTRACT ToString : STRING
@@ -31,5 +31,21 @@ NAMESPACE Simatic.Ax.Json
             _str := Concat(_str, valueAsString, '"');
             ToStringHelper := _str;
         END_METHOD
+
+        METHOD PUBLIC HasNext : BOOL
+            HasNext := _next <> NULL;
+        END_METHOD
+
+        METHOD PUBLIC GetNext : IJsonElementMuteable
+            GetNext := _next;
+        END_METHOD
+
+        METHOD PUBLIC AddElement
+            VAR_INPUT
+                elem : IJsonElementMuteable;
+            END_VAR
+            _next := elem;
+        END_METHOD
+
     END_CLASS
 END_NAMESPACE
