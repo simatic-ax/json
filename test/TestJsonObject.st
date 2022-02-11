@@ -10,6 +10,7 @@ NAMESPACE Simatic.Ax.Json
             e2 : JsonDoubleInt := (value := -999, key := 'second_key');
             e3 : JsonDoubleInt := (value := 1, key := '3rd');
             o : JsonObject := (key := 'Name');
+            doc : JsonDocument;
         END_VAR
 
         {Test}
@@ -47,6 +48,26 @@ NAMESPACE Simatic.Ax.Json
             o.AddElement(e);
             o.AddElement(e2);
             o.AddElement(e3);
+            _expStr := '"Name": {"test": 999, "second_key": -999, "3rd": 1}';
+            _expStr := StartOf(_expStr, 5);
+            
+            _i := LengthOf(_expStr);
+
+           
+            
+            _actStr := StartOf(o.ToString(), LengthOf(_expStr));
+            _j := LengthOf(_actStr);
+            Equal(expected := _actStr, actual := _expStr);            
+        END_METHOD
+
+        {Test}
+        METHOD PUBLIC Test_Serialize_Object_with_three_elements
+            VAR_TEMP
+                _expStr : STRING;
+                _actStr : STRING;
+                _i, _j : INT;
+            END_VAR
+            THIS.Test_Object_with_three_elements();
             _expStr := '"Name": {"test": 999, "second_key": -999, "3rd": 1}';
             _expStr := StartOf(_expStr, 5);
             

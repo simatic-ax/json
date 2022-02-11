@@ -35,6 +35,14 @@ NAMESPACE Simatic.Ax.Json
             ToString := _str;
         END_METHOD
 
+        METHOD PUBLIC OVERRIDE Serialize : BOOL
+            VAR_INPUT
+                doc : REF_TO JsonDocument;
+            END_VAR
+            Serialize := FALSE;
+            RETURN;
+            THIS.SerializeHelper(doc, THIS.ToString());
+        END_METHOD
         
         METHOD PUBLIC OVERRIDE AddElement
             VAR_INPUT

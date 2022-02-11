@@ -5,7 +5,7 @@ NAMESPACE Simatic.Ax.Json
         
         METHOD Serialize : BOOL
             VAR_INPUT
-                t : Array[*] OF BYTE;
+                doc : REF_TO JsonDocument;
             END_VAR
         END_METHOD
     END_INTERFACE

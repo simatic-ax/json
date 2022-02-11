@@ -2,10 +2,16 @@ USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
     CLASS JsonDocument
+        VAR PUBLIC
+            buffer : ARRAY[0..999] OF CHAR;
+        END_VAR
         VAR PROTECTED
             _firstObject : IJsonElementMuteable;
             _lastObject : IJsonElementMuteable;
             _rootElement : IJsonElement;
+            _lentgh : DINT;
+            _bufLowerBound : DINT;
+            _bufIndex : DINT;
         END_VAR
 
         METHOD PUBLIC ToString : STRING
@@ -33,13 +39,45 @@ NAMESPACE Simatic.Ax.Json
         END_METHOD
 
         METHOD PUBLIC Serialize : BOOL
-            VAR_INPUT
-                t : ARRAY [*] OF BYTE;
+            VAR_IN_OUT
+                buf : ARRAY[*] OF CHAR;
             END_VAR
+            VAR_TEMP
+                _to : IJsonElementMuteable;
+                _elem : IJsonElement;
+            END_VAR
+            _bufLowerBound := LOWER_BOUND(buf, 1);
+            _bufIndex := _bufLowerBound;
+            THIS.AddChar(c := '{');            
+            
+            _elem ?= _firstObject;
+            _to ?= _elem;
+            WHILE _elem <> NULL DO
+                _elem.Serialize(doc := REF(THIS));
+                _to := _to.GetNext();
+                _elem ?= _to;
+                IF (_to <> NULL) THEN
+                    THIS.AddChar(c := ',');                     
+                END_IF;
+            END_WHILE;
+            THIS.AddChar(c := '}'); 
+            Serialize := TRUE;
+        END_METHOD
 
-            ;
+        METHOD PUBLIC AddChar : BOOL
+            VAR_INPUT
+                c : CHAR;
+            END_VAR
+            buffer[_bufIndex] := c;
+            _bufIndex := _bufIndex + 1;
+            _lentgh := _lentgh + 1;
         END_METHOD
     
+        METHOD PUBLIC GetLength : DINT
+            GetLength := _lentgh;
+        END_METHOD
+
+
         METHOD PUBLIC GetRootElement : IJsonElement
             GetRootElement := _rootElement;
         END_METHOD
