@@ -71,6 +71,22 @@ NAMESPACE Simatic.Ax.Json
             buffer[_bufIndex] := c;
             _bufIndex := _bufIndex + 1;
             _lentgh := _lentgh + 1;
+            AddChar := TRUE;
+        END_METHOD
+
+        METHOD PUBLIC AddString : BOOL
+            VAR_INPUT
+                s : STRING;
+            END_VAR
+            VAR_TEMP
+                i : INT;
+            END_VAR
+            FOR i := 1 TO LengthOf(s) DO
+                buffer[_bufIndex] := s[i];
+                _bufIndex := _bufIndex + 1;
+                _lentgh := _lentgh + 1;
+            END_FOR;
+            AddString := TRUE;
         END_METHOD
     
         METHOD PUBLIC GetLength : DINT
