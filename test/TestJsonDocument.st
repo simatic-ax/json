@@ -12,17 +12,22 @@ NAMESPACE Simatic.Ax.Json
             e3 : JsonDoubleInt := (value := 1, key := '3rd');
             doc : JsonDocument;
             o2 : JsonObject := (key := 'Name');
-        
+            
+            iElem : IJsonElement;
+            rElem : REF_TO JsonDoubleInt;
             expArray : ARRAY[0..399] OF CHAR;
             expArrayCnt : DINT;
             expString : STRING;
             actString : STRING;
             result : BOOL;
 
+
+
         END_VAR
 
         {Test}
         METHOD PUBLIC Test_Empty_object_ToString_Expect_empty_object
+           
             // expected string
             expString := '{}';
 
@@ -78,7 +83,13 @@ NAMESPACE Simatic.Ax.Json
             o2.AddElement(e);
 
             actString := doc.ToString();
-            Equal(expected := actString, actual := expString);                        
+            Equal(expected := actString, actual := expString);   
+            
+            // Test Serialize
+            expArrayCnt := Strings.ToArray(str := expString, arr := expArray);
+            doc.Serialize(doc.buffer);
+            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            Equal(expected := TRUE, actual := result);
         END_METHOD
 
 
@@ -91,7 +102,13 @@ NAMESPACE Simatic.Ax.Json
 
             doc.AddElement(e);
             doc.AddElement(e2);
-            Equal(expected := doc.ToString(), actual := expString);            
+            Equal(expected := doc.ToString(), actual := expString);          
+            
+            // Test Serialize
+            expArrayCnt := Strings.ToArray(str := expString, arr := expArray);
+            doc.Serialize(doc.buffer);
+            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            Equal(expected := TRUE, actual := result);
         END_METHOD
 
         {Test}
@@ -99,11 +116,16 @@ NAMESPACE Simatic.Ax.Json
             // expected string
             expString := '{"test": 999, "second_key": -999, "3rd": 1}';
             
-            // Expect: {"test": "999", "second_key": "-999", "3rd": "1"}
             doc.AddElement(e);
             doc.AddElement(e2);
             doc.AddElement(e3);
             Equal(expected := doc.ToString(), actual := expString);
+
+            // Test Serialize
+            expArrayCnt := Strings.ToArray(str := expString, arr := expArray);
+            doc.Serialize(doc.buffer);
+            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            Equal(expected := TRUE, actual := result);
         END_METHOD
 
         {Test}
@@ -134,7 +156,12 @@ NAMESPACE Simatic.Ax.Json
 
             actString := doc.ToString();
             Equal(expected := expString , actual := actString);
-          
+
+            // // Test Serialize
+            // expArrayCnt := Strings.ToArray(str := expString, arr := expArray);
+            // doc.Serialize(doc.buffer);
+            // result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            // Equal(expected := TRUE, actual := result);
         END_METHOD
     END_CLASS
 END_NAMESPACE

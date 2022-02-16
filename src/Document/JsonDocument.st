@@ -22,8 +22,6 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
         
             _str := Concat(_str, '{');
-            // insert properties
-            //_to := _firstObject;
             _elem ?= _firstObject;
             _to ?= _elem;
             WHILE _elem <> NULL DO
@@ -57,7 +55,7 @@ NAMESPACE Simatic.Ax.Json
                 _to := _to.GetNext();
                 _elem ?= _to;
                 IF (_to <> NULL) THEN
-                    THIS.AddChar(c := ',');                     
+                    THIS.AddString(s := ', ');                     
                 END_IF;
             END_WHILE;
             THIS.AddChar(c := '}'); 
@@ -117,5 +115,33 @@ NAMESPACE Simatic.Ax.Json
             END_IF;
             ;
         END_METHOD
+
+        
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                keys : ARRAY[*] OF STRING;  //  --> ARRAY[*] OF STRING key[0] := 'key', key[1] := 'nestedkey'
+            END_VAR
+
+            VAR_OUTPUT
+                value : DINT;
+            END_VAR
+            
+            VAR_TEMP
+                ub : DINT;
+                lb : DINT;
+                i : DINT;
+            END_VAR
+
+            ub := UPPER_BOUND(keys, 1);
+            lb := LOWER_BOUND(keys, 1);
+
+            FOR i := lb TO ub DO
+                ;
+            END_FOR;
+
+            TryParse := FALSE;
+            TryParse := TRUE;
+        END_METHOD
+
     END_CLASS
 END_NAMESPACE
