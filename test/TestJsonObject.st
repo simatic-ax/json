@@ -1,5 +1,6 @@
 USING AxUnit.Assert;
 USING System.Strings;
+USING Simatic.Ax.Conversion;
 
 NAMESPACE Simatic.Ax.Json
     {TestFixture}
@@ -10,6 +11,9 @@ NAMESPACE Simatic.Ax.Json
             e2 : JsonDoubleInt := (value := -999, key := 'second_key');
             e3 : JsonDoubleInt := (value := 1, key := '3rd');
             o : JsonObject := (key := 'Name');
+            doc : JsonDocument;
+            cmpBuff : ARRAY[0..399] OF CHAR;
+            len : DINT;
         END_VAR
 
         {Test}
@@ -57,6 +61,25 @@ NAMESPACE Simatic.Ax.Json
             _actStr := StartOf(o.ToString(), LengthOf(_expStr));
             _j := LengthOf(_actStr);
             Equal(expected := _actStr, actual := _expStr);            
+        END_METHOD
+
+        {Test}
+        METHOD PUBLIC Test_Serialize_Object_with_three_elements
+            VAR_TEMP
+                _expStr : STRING;
+                _actStr : STRING;
+                _i, _j : INT;
+                _res : BOOL;
+            END_VAR
+            THIS.Test_Object_with_three_elements();
+            _expStr := '"Name": {"test": 999, "second_key": -999, "3rd": 1}';
+
+            
+            o.Serialize(REF(doc));
+
+            len := Strings.ToArray(str := _expStr, arr := cmpBuff);
+            _res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            Equal(expected := TRUE, actual := _res);
         END_METHOD
 
     END_CLASS

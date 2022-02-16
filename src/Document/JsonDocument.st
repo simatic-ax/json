@@ -2,10 +2,16 @@ USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
     CLASS JsonDocument
+        VAR PUBLIC
+            buffer : ARRAY[0..999] OF CHAR;
+        END_VAR
         VAR PROTECTED
             _firstObject : IJsonElementMuteable;
             _lastObject : IJsonElementMuteable;
             _rootElement : IJsonElement;
+            _lentgh : DINT;
+            _bufLowerBound : DINT;
+            _bufIndex : DINT;
         END_VAR
 
         METHOD PUBLIC ToString : STRING
@@ -16,8 +22,6 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
         
             _str := Concat(_str, '{');
-            // insert properties
-            //_to := _firstObject;
             _elem ?= _firstObject;
             _to ?= _elem;
             WHILE _elem <> NULL DO
@@ -33,13 +37,61 @@ NAMESPACE Simatic.Ax.Json
         END_METHOD
 
         METHOD PUBLIC Serialize : BOOL
-            VAR_INPUT
-                t : ARRAY [*] OF BYTE;
+            VAR_IN_OUT
+                buf : ARRAY[*] OF CHAR;
             END_VAR
+            VAR_TEMP
+                _to : IJsonElementMuteable;
+                _elem : IJsonElement;
+            END_VAR
+            _bufLowerBound := LOWER_BOUND(buf, 1);
+            _bufIndex := _bufLowerBound;
+            THIS.AddChar(c := '{');            
+            
+            _elem ?= _firstObject;
+            _to ?= _elem;
+            WHILE _elem <> NULL DO
+                _elem.Serialize(doc := REF(THIS));
+                _to := _to.GetNext();
+                _elem ?= _to;
+                IF (_to <> NULL) THEN
+                    THIS.AddString(s := ', ');                     
+                END_IF;
+            END_WHILE;
+            THIS.AddChar(c := '}'); 
+            Serialize := TRUE;
+        END_METHOD
 
-            ;
+        METHOD PUBLIC AddChar : BOOL
+            VAR_INPUT
+                c : CHAR;
+            END_VAR
+            buffer[_bufIndex] := c;
+            _bufIndex := _bufIndex + 1;
+            _lentgh := _lentgh + 1;
+            AddChar := TRUE;
+        END_METHOD
+
+        METHOD PUBLIC AddString : BOOL
+            VAR_INPUT
+                s : STRING;
+            END_VAR
+            VAR_TEMP
+                i : INT;
+            END_VAR
+            FOR i := 1 TO LengthOf(s) DO
+                buffer[_bufIndex] := s[i];
+                _bufIndex := _bufIndex + 1;
+                _lentgh := _lentgh + 1;
+            END_FOR;
+            AddString := TRUE;
         END_METHOD
     
+        METHOD PUBLIC GetLength : DINT
+            GetLength := _lentgh;
+        END_METHOD
+
+
         METHOD PUBLIC GetRootElement : IJsonElement
             GetRootElement := _rootElement;
         END_METHOD
@@ -63,5 +115,33 @@ NAMESPACE Simatic.Ax.Json
             END_IF;
             ;
         END_METHOD
+
+        
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                keys : ARRAY[*] OF STRING;  //  --> ARRAY[*] OF STRING key[0] := 'key', key[1] := 'nestedkey'
+            END_VAR
+
+            VAR_OUTPUT
+                value : DINT;
+            END_VAR
+            
+            VAR_TEMP
+                ub : DINT;
+                lb : DINT;
+                i : DINT;
+            END_VAR
+
+            ub := UPPER_BOUND(keys, 1);
+            lb := LOWER_BOUND(keys, 1);
+
+            FOR i := lb TO ub DO
+                ;
+            END_FOR;
+
+            TryParse := FALSE;
+            TryParse := TRUE;
+        END_METHOD
+
     END_CLASS
 END_NAMESPACE

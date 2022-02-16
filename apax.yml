@@ -5,7 +5,6 @@ type: lib
 targets:
   - "1500"
   - axunit-llvm
-  - llvm
 scripts:
   publishlib:
     - apax publish --package *.apax.tgz --registry 'https://npm.pkg.github.com/'
@@ -16,11 +15,11 @@ scripts:
     - apax version $1
     - apax pack
 devDependencies:
-  "@ax/sdk": 1.0.138
+  "@ax/sdk": 1.0.144
   "@simatic-ax/snippetscollection": 0.0.6
 dependencies:
   "@ax/system-strings": 2.0.13
-  "@simatic-ax/conversion": 0.0.1
+  "@simatic-ax/conversion": 0.0.2
 registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
 
