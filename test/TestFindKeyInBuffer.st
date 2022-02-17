@@ -46,7 +46,7 @@ CLASS Test_FindKeyInBuffer
     END_METHOD
 
     {Test}
-    Method Public Test_FindKeyPosition_in_SimpleJSON
+    Method Public Test_FindAKeyPosition_in_SimpleJSON
         VAR
             keyStart : int;
             keyEnd : int;
