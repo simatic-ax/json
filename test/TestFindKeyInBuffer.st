@@ -11,10 +11,7 @@ CLASS Test_FindKeyInBuffer
     VAR protected
         doc : JsonDocument;
         testString : STRING := 'works!';
-        buffer : ARRAY[0..999] OF CHAR;
-
-        JSON_1Entry: STRING := '{"Key1": "Element1"}';
-        JSON_2Entries: STRING := '{"Key1": "Element1","Key2": 1234}';
+        buffer : ARRAY[0..999] OF CHAR;        
     END_VAR
 
     METHOD PUBLIC ConvertStringToCharArray
@@ -48,16 +45,41 @@ CLASS Test_FindKeyInBuffer
     {Test}
     Method Public Test_FindAKeyPosition_in_SimpleJSON
         VAR
+            JSON_1Entry: STRING := '{"Key1": "Element1"}';
+
             keyStart : int;
             keyEnd : int;
+            keysFound: int;
         END_VAR
 
         THIS.ConvertStringToCharArray(JSON_1Entry);
         doc.buffer := buffer;
-        doc.FindKeys(keyStart, keyEnd);
+        keysFound := doc.FindKeys(keyStart, keyEnd);
 
+        //index is 0 based, not 1 based!
         Equal(2, keyStart);
         Equal(5, keyEnd);
+        Equal(keysFound, 1);
+    END_Method
+
+    {Test}
+    Method Public Test_FindKeysPosition_in_SimpleJSON_2Entries
+        VAR
+            JSON_2Entries: STRING := '{"Key1": "Element1","Key2": 1234}';
+
+            keyStart : int;
+            keyEnd : int;
+            keysFound: int;
+        END_VAR
+
+        THIS.ConvertStringToCharArray(JSON_2Entries);
+        doc.buffer := buffer;
+        keysFound := doc.FindKeys(keyStart, keyEnd);
+
+        //index is 0 based, not 1 based!
+        Equal(21, keyStart);
+        Equal(24, keyEnd);
+        Equal(keysFound, 2);
     END_Method
 
 

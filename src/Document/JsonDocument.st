@@ -120,12 +120,11 @@ NAMESPACE Simatic.Ax.Json
         METHOD PUBLIC FindKeys : int //gibt alle key locations zurück. Dazu später die value locations mitgeben. Mit Methoden dann später diese aus den objekten auslesen.
             VAR_INPUT
                 // key : STRING;
+                //deserializedObejctArray : ARRAY[*] of DeserializedObject;
             END_VAR
             VAR_TEMP
-                numberOfKeysFound : BOOL;
+                numberOfKeysFound : int;
                 index: int;
-
-                
 
                 foundQuotationMarks : int := 0; //noch keine Marks am Anfang gefunden
                 inKeySpace : bool := TRUE; //erster Eintrag muss immer ein key sein
@@ -153,22 +152,26 @@ NAMESPACE Simatic.Ax.Json
     
                         IF (foundQuotationMarks = 2) THEN
                             keyEndIndex := index - 1;
+                            numberOfKeysFound := numberOfKeysFound + 1;
                         END_IF;
                     END_IF;
                    
                 END_IF; //end buffer check
 
+                //value space ist mit : von keyspace getrennt, danach erst ein , ! "Key1": "Element1","Key2": 1234
                 //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.
-                IF (buffer[index] = ',') THEN
-                    IF (inKeySpace = TRUE) THEN
-                        inKeySpace := FALSE;
-                    ELSE
-                        inKeySpace := TRUE;
-                        foundQuotationMarks := 0; //we are back in keyspace, we can now reset the " counter
-                    END_IF;
+                IF (buffer[index] = ':') THEN // -> : ist auch als Teil eines keys oder value möglich, später erweitern!
+                    inKeySpace := FALSE;
+                END_IF;
+
+                IF (buffer[index] = ',') THEN // -> , ist auch als Teil eines keys oder value möglich, später erweitern!
+                    inKeySpace := TRUE;
+                    foundQuotationMarks := 0;
                 END_IF;
 
             END_FOR;
+
+            FindKeys := numberOfKeysFound;
 
         END_METHOD
 
