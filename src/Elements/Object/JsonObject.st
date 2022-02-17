@@ -17,7 +17,7 @@ NAMESPACE Simatic.Ax.Json
 
             ;
             IF (_firstElement <> NULL) THEN
-                _str := Concat(_str, '"', key, '": ');
+                _str := Concat(_str, '"', Key, '": ');
             END_IF;
         
             _str := Concat(_str, '{');
@@ -49,7 +49,7 @@ NAMESPACE Simatic.Ax.Json
 
             IF (_firstElement <> NULL) THEN
                 
-                _str := Concat(_str, '"', key, '": ');
+                _str := Concat(_str, '"', Key, '": ');
                 doc^.AddString(_str);
             END_IF;
         

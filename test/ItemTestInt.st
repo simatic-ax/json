@@ -7,8 +7,8 @@ NAMESPACE Simatic.Ax.Json
     CLASS TestJsonElementsInt
         
         VAR PROTECTED
-            e : JsonInt := (value := 999, key := 'test');
-            e2 : JsonInt := (value := -999, key := 'second_key');
+            e : JsonInt := (Value := 999, Key := 'test');
+            e2 : JsonInt := (Value := -999, Key := 'second_key');
             s_test_999 : STRING := '"test": 999';
             s_test_minus_999 : STRING := '"second_key": -999';
             cmpBuff : ARRAY[0..20] OF CHAR;

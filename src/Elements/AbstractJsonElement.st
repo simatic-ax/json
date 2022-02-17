@@ -4,7 +4,7 @@ USING Simatic.Ax.Json;
 NAMESPACE Simatic.Ax.Json
     CLASS ABSTRACT AbstractJsonElement IMPLEMENTS IJsonElementMuteable, IJsonElement
         VAR PUBLIC
-            key : STRING  := 'NoKeySet';                    
+            Key : STRING  := 'NoKeySet';                    
         END_VAR
 
         VAR PROTECTED
@@ -27,7 +27,7 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 _str : STRING;
             END_VAR
-            _str := Concat('"', key, '"', ': "');
+            _str := Concat('"', Key, '"', ': "');
             _str := Concat(_str, valueAsString, '"');
             ToStringHelper := _str;
         END_METHOD

@@ -6,8 +6,8 @@ NAMESPACE Simatic.Ax.Json
     CLASS TestJsonElementsLint
         
         VAR PROTECTED
-            e : JsonLongInt := (value := 999, key := 'test');
-            e2 : JsonLongInt := (value := -999, key := 'second_key');
+            e : JsonLongInt := (Value := 999, Key := 'test');
+            e2 : JsonLongInt := (Value := -999, Key := 'second_key');
         END_VAR
 
         {Test}

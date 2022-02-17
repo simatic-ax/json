@@ -6,9 +6,9 @@ NAMESPACE Simatic.Ax.Json
     CLASS TestJsonLongDocument
         
         VAR PROTECTED
-            e1 : JsonInt := (key := 'elem1', value := 0);
-            e2 : JsonLongInt := (key := 'elem2', value := 1);
-            e3 : JsonDoubleInt := (key := 'elem3', value := 2);
+            e1 : JsonInt := (Key := 'elem1', Value := 0);
+            e2 : JsonLongInt := (Key := 'elem2', Value := 1);
+            e3 : JsonDoubleInt := (Key := 'elem3', Value := 2);
             doc :JsonDocument;
         END_VAR
         

@@ -3,11 +3,11 @@ USING Simatic.Ax.Conversion;
 NAMESPACE Simatic.Ax.Json
     CLASS JsonLongInt EXTENDS JsonNumber
         VAR PUBLIC
-            value : LINT;
+            Value : LINT;
         END_VAR
     
         METHOD PUBLIC OVERRIDE ToString : STRING
-            ToString := THIS.ToStringHelper(Integer.ToString(value := value));
+            ToString := THIS.ToStringHelper(Integer.ToString(value := Value));
         END_METHOD
 
         METHOD PUBLIC OVERRIDE Serialize : BOOL

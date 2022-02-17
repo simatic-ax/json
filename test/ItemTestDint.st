@@ -6,8 +6,8 @@ NAMESPACE Simatic.Ax.Json
     CLASS TestJsonElementsDint
         
         VAR PROTECTED
-            e : JsonDoubleInt := (value := 999, key := 'test');
-            e2 : JsonDoubleInt := (value := -999, key := 'second_key');
+            e : JsonDoubleInt := (Value := 999, Key := 'test');
+            e2 : JsonDoubleInt := (Value := -999, Key := 'second_key');
         END_VAR
 
         {Test}

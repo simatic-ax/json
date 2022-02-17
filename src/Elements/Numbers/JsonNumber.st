@@ -10,7 +10,7 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 _str : STRING;
             END_VAR
-            _str := Concat('"', key, '": ', valueAsString);
+            _str := Concat('"', Key, '": ', valueAsString);
             ToStringHelper := _str;
         END_METHOD
     

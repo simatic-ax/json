@@ -7,11 +7,11 @@ NAMESPACE Simatic.Ax.Json
     CLASS TestJsonDocument
         
         VAR PROTECTED
-            e : JsonDoubleInt := (value := 999, key := 'test');
-            e2 : JsonDoubleInt := (value := -999, key := 'second_key');
-            e3 : JsonDoubleInt := (value := 1, key := '3rd');
+            e : JsonDoubleInt := (Value := 999, Key := 'test');
+            e2 : JsonDoubleInt := (Value := -999, Key := 'second_key');
+            e3 : JsonDoubleInt := (Value := 1, Key := '3rd');
             doc : JsonDocument;
-            o2 : JsonObject := (key := 'Name');
+            o2 : JsonObject := (Key := 'Name');
             
             iElem : IJsonElement;
             rElem : REF_TO JsonDoubleInt;
@@ -141,7 +141,7 @@ NAMESPACE Simatic.Ax.Json
             // expected string
             expString := '"NestedObject": {"3rd": 1}';
 
-            o2.key := 'NestedObject';
+            o2.Key := 'NestedObject';
             o2.AddElement(e3);
             actString := o2.ToString();
             Equal(expected := expString, actual := actString);      
