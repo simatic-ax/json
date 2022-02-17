@@ -7,9 +7,9 @@ NAMESPACE Simatic.Ax.Json
     CLASS TestJsonObject
         
         VAR PROTECTED
-            e : JsonDoubleInt := (Value := 999, Key := 'test');
-            e2 : JsonDoubleInt := (Value := -999, Key := 'second_key');
-            e3 : JsonDoubleInt := (Value := 1, Key := '3rd');
+            e : JsonDInt := (Value := 999, Key := 'test');
+            e2 : JsonDInt := (Value := -999, Key := 'second_key');
+            e3 : JsonDInt := (Value := 1, Key := '3rd');
             o : JsonObject := (Key := 'Name');
             doc : JsonDocument;
             cmpBuff : ARRAY[0..399] OF CHAR;

@@ -7,8 +7,8 @@ NAMESPACE Simatic.Ax.Json
         
         VAR PROTECTED
             e1 : JsonInt := (Key := 'elem1', Value := 0);
-            e2 : JsonLongInt := (Key := 'elem2', Value := 1);
-            e3 : JsonDoubleInt := (Key := 'elem3', Value := 2);
+            e2 : JsonLInt := (Key := 'elem2', Value := 1);
+            e3 : JsonDInt := (Key := 'elem3', Value := 2);
             doc :JsonDocument;
         END_VAR
         

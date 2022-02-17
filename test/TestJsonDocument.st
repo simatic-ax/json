@@ -7,14 +7,14 @@ NAMESPACE Simatic.Ax.Json
     CLASS TestJsonDocument
         
         VAR PROTECTED
-            e : JsonDoubleInt := (Value := 999, Key := 'test');
-            e2 : JsonDoubleInt := (Value := -999, Key := 'second_key');
-            e3 : JsonDoubleInt := (Value := 1, Key := '3rd');
+            e : JsonDInt := (Value := 999, Key := 'test');
+            e2 : JsonDInt := (Value := -999, Key := 'second_key');
+            e3 : JsonDInt := (Value := 1, Key := '3rd');
             doc : JsonDocument;
             o2 : JsonObject := (Key := 'Name');
             
             iElem : IJsonElement;
-            rElem : REF_TO JsonDoubleInt;
+            rElem : REF_TO JsonDInt;
             expArray : ARRAY[0..399] OF CHAR;
             expArrayCnt : DINT;
             expString : STRING;

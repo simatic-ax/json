@@ -1,5 +1,5 @@
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonBoolean EXTENDS JsonNumber
+    CLASS JsonBoolean EXTENDS BaseJsonNumber
         VAR PUBLIC
             Value : BOOL;
         END_VAR

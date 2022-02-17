@@ -1,7 +1,7 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonNumber EXTENDS AbstractJsonElement
+    CLASS BaseJsonNumber EXTENDS AbstractJsonElement
 
         METHOD PROTECTED OVERRIDE ToStringHelper : STRING
             VAR_INPUT

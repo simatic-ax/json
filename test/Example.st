@@ -8,9 +8,9 @@ NAMESPACE Simatic.Ax
         END_VAR
         VAR PROTECTED
             doc : JsonDocument;
-            e1 : JsonDoubleInt := (Key := 'Element1', Value := 1);
-            e2 : JsonDoubleInt := (Key := 'Element2', Value := 2);
-            e3 : JsonDoubleInt := (Key := 'Element3', Value := 3);
+            e1 : JsonDInt := (Key := 'Element1', Value := 1);
+            e2 : JsonDInt := (Key := 'Element2', Value := 2);
+            e3 : JsonDInt := (Key := 'Element3', Value := 3);
             o1 : JsonObject := (Key := 'NestedObject');
             
         END_VAR

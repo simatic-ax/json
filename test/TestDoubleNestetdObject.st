@@ -7,7 +7,7 @@ NAMESPACE Simatic.Ax.Json
     CLASS TestDoubleNestetdObject
         
         VAR PROTECTED
-            e1 : JsonDoubleInt := (Value := 999, Key := 'e1');
+            e1 : JsonDInt := (Value := 999, Key := 'e1');
             o1 : JsonObject := (Key := 'O1');
             o2 : JsonObject := (Key := 'O2');
             o3 : JsonObject := (Key := 'O3');
