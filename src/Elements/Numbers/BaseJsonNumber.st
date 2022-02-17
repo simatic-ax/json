@@ -1,7 +1,7 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonNumber EXTENDS AbstractJsonElement
+    CLASS BaseJsonNumber EXTENDS AbstractJsonElement
 
         METHOD PROTECTED OVERRIDE ToStringHelper : STRING
             VAR_INPUT
@@ -10,7 +10,7 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 _str : STRING;
             END_VAR
-            _str := Concat('"', key, '": ', valueAsString);
+            _str := Concat('"', Key, '": ', valueAsString);
             ToStringHelper := _str;
         END_METHOD
     
@@ -20,9 +20,10 @@ NAMESPACE Simatic.Ax.Json
     
         METHOD PUBLIC OVERRIDE Serialize : BOOL
             VAR_INPUT
-                doc : REF_TO Simatic.Ax.Json.JsonDocument;
+                doc : REF_TO JsonDocument;
             END_VAR
-            ;
+            THIS.SerializeHelper(doc, THIS.ToString());
+            Serialize := FALSE;
         END_METHOD
     END_CLASS
 END_NAMESPACE
