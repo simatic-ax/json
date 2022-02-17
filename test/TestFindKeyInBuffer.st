@@ -12,6 +12,8 @@ CLASS Test_FindKeyInBuffer
         doc : JsonDocument;
         testString : STRING := 'works!';
         buffer : ARRAY[1..999] OF CHAR;
+
+        simple_JSON: STRING := '{"Key1": "Element1","Key2": 1234}';
     END_VAR
 
     METHOD PUBLIC ConvertStringToCharArray

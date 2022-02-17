@@ -1,3 +1,4 @@
+USING Deserializer;
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
@@ -116,7 +117,60 @@ NAMESPACE Simatic.Ax.Json
             ;
         END_METHOD
 
-        
+        METHOD PUBLIC FindKeys : int //gibt alle key locations zurück. Dazu später die value locations mitgeben. Mit Methoden dann später diese aus den objekten auslesen.
+            VAR_INPUT
+                // key : STRING;
+            END_VAR
+            VAR_TEMP
+                numberOfKeysFound : BOOL;
+                index: int;
+
+                keyStartIndex: int;
+                keyEndIndex: int;
+
+                foundQuotationMarks : int := 0; //noch keine Marks am Anfang gefunden
+                inKeySpace : bool := TRUE; //erster Eintrag muss immer ein key sein
+            end_var
+            VAR_OUTPUT
+                // keyLowerBound : int;
+                // keyUpperBound : int;
+            end_var
+
+            //bufferLB := LOWER_BOUND(buffer);
+
+            FOR Index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
+                //das erste " markiert beginn von key. das zweite " ist das ende von key (außer es ist ein \davor ->später prüfen).
+                //Anschließend kommt irgendwann ein , und das nächste , schließt den value ab. Außer im value ist ein , .... -> später prüfen.
+
+                //-> später allgemeiner machen für value!
+                IF (buffer[index] = '"') THEN
+                    foundQuotationMarks := foundQuotationMarks + 1;
+                    
+                    IF (foundQuotationMarks = 1) THEN
+                        keyStartIndex := index + 1;
+                    END_IF;
+
+                    IF (foundQuotationMarks = 2) THEN
+                        keyEndIndex := index - 1;
+                    END_IF;
+
+                END_IF; //end buffer check
+
+                //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen!
+                IF (buffer[index] = ',') THEN
+                    IF (inKeySpace = TRUE) THEN
+                        inKeySpace := FALSE;
+                    ELSE
+                        inKeySpace := TRUE;
+                    END_IF
+                ;
+                
+                END_IF;
+                ;
+            END_FOR;
+            ;
+        END_METHOD
+
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keys : ARRAY[*] OF STRING;  //  --> ARRAY[*] OF STRING key[0] := 'key', key[1] := 'nestedkey'
