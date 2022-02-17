@@ -9,14 +9,6 @@ NAMESPACE Simatic.Ax.Json
         METHOD PUBLIC OVERRIDE ToString : STRING
             ToString := THIS.ToStringHelper(Integer.ToString(value := Value));
         END_METHOD
-
-        METHOD PUBLIC OVERRIDE Serialize : BOOL
-            VAR_INPUT
-                doc : REF_TO JsonDocument;
-            END_VAR
-            THIS.SerializeHelper(doc, THIS.ToString());
-            Serialize := FALSE;
-        END_METHOD
-
+        
     END_CLASS
 END_NAMESPACE
