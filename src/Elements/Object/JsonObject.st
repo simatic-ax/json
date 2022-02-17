@@ -22,7 +22,8 @@ NAMESPACE Simatic.Ax.Json
         
             _str := Concat(_str, '{');
             // insert properties
-            _to := _firstElement;
+            _elem ?= _firstElement;
+            _to ?= _elem;
             WHILE _to <> NULL DO
                 _elem ?= _to;
                 _str := Concat(_str, _elem.ToString());
@@ -56,11 +57,12 @@ NAMESPACE Simatic.Ax.Json
             doc^.AddChar('{');
             
             // insert properties
-            _to := _firstElement;
+            _elem ?= _firstElement;
+            _to ?= _elem;
             WHILE _to <> NULL DO
-                _elem ?= _to;
                 _elem.Serialize(doc);
                 _to := _to.GetNext();
+                _elem ?= _to;
                 IF (_to <> NULL) THEN
                     doc^.AddString(', ');
                 END_IF;
@@ -71,15 +73,19 @@ NAMESPACE Simatic.Ax.Json
         
         METHOD PUBLIC OVERRIDE AddElement
             VAR_INPUT
-                elem : IJsonElementMuteable;
+                elem : IJsonElement;
             END_VAR
-
+            VAR_TEMP
+                _elemMuted : IJsonElementMuteable;
+            END_VAR
             IF (_firstElement = NULL) THEN
-                _firstElement := elem;
-                _lastElement := elem;
+                _elemMuted ?= elem;
+                _firstElement := _elemMuted;
+                _lastElement := _elemMuted;
             ELSE
+                _elemMuted ?= elem;
                 _lastElement.AddElement(elem);
-                _lastElement ?= elem;
+                _lastElement := _elemMuted;
             END_IF;
             ;
         END_METHOD

@@ -55,9 +55,9 @@ NAMESPACE Simatic.Ax.Json
 
         METHOD PUBLIC AddElement
             VAR_INPUT
-                elem : IJsonElementMuteable;
+                elem : IJsonElement;
             END_VAR
-            _next := elem;
+            _next ?= elem;
         END_METHOD
 
     END_CLASS
