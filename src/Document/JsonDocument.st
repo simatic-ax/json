@@ -125,15 +125,14 @@ NAMESPACE Simatic.Ax.Json
                 numberOfKeysFound : BOOL;
                 index: int;
 
-                keyStartIndex: int;
-                keyEndIndex: int;
+                
 
                 foundQuotationMarks : int := 0; //noch keine Marks am Anfang gefunden
                 inKeySpace : bool := TRUE; //erster Eintrag muss immer ein key sein
             end_var
             VAR_OUTPUT
-                // keyLowerBound : int;
-                // keyUpperBound : int;
+                keyStartIndex: int;
+                keyEndIndex: int;
             end_var
 
             //bufferLB := LOWER_BOUND(buffer);
@@ -146,29 +145,31 @@ NAMESPACE Simatic.Ax.Json
                 IF (buffer[index] = '"') THEN
                     foundQuotationMarks := foundQuotationMarks + 1;
                     
-                    IF (foundQuotationMarks = 1) THEN
-                        keyStartIndex := index + 1;
+                    //we are in a key range!
+                    IF (inKeySpace = TRUE) THEN
+                        IF (foundQuotationMarks = 1) THEN
+                            keyStartIndex := index + 1;
+                        END_IF;
+    
+                        IF (foundQuotationMarks = 2) THEN
+                            keyEndIndex := index - 1;
+                        END_IF;
                     END_IF;
-
-                    IF (foundQuotationMarks = 2) THEN
-                        keyEndIndex := index - 1;
-                    END_IF;
-
+                   
                 END_IF; //end buffer check
 
-                //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen!
+                //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.
                 IF (buffer[index] = ',') THEN
                     IF (inKeySpace = TRUE) THEN
                         inKeySpace := FALSE;
                     ELSE
                         inKeySpace := TRUE;
-                    END_IF
-                ;
-                
+                        foundQuotationMarks := 0; //we are back in keyspace, we can now reset the " counter
+                    END_IF;
                 END_IF;
-                ;
+
             END_FOR;
-            ;
+
         END_METHOD
 
         METHOD PUBLIC TryParse : BOOL
