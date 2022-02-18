@@ -149,20 +149,29 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
             VAR_TEMP
                 index: INT;
-                inValueSpace: BOOL := FALSE;
                 realStartIndex: INT;
                 realEndIndex: INT;
+                
+                incrementBackwards: INT := -1;
             END_VAR
 
             FOR index := startIndex^ TO endIndex^ DO
-                IF (inValueSpace = FALSE AND NOT ((buffer[index] = ' ') OR ((buffer[index] = '"')))) THEN
-                    inValueSpace := TRUE;
+                IF NOT ((buffer[index] = ' ') OR ((buffer[index] = '"'))) THEN
                     realStartIndex := index;
                     EXIT;
                 END_IF;
             END_FOR;
 
-            GetValueFromIndex := Conversion.Arrays.ToString(buffer, realStartIndex, endIndex^);
+
+            FOR index := endIndex^ TO realStartIndex BY incrementBackwards DO
+                IF NOT ((buffer[index] = ' ') OR ((buffer[index] = '"'))) THEN
+                    realEndIndex := index;
+                    EXIT;
+                END_IF;
+            
+            END_FOR;
+
+            GetValueFromIndex := Conversion.Arrays.ToString(buffer, realStartIndex, realEndIndex);
         END_METHOD
 
         METHOD PUBLIC GetValue : BOOL

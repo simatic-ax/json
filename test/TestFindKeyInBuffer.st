@@ -63,24 +63,6 @@ CLASS Test_FindKeyInBuffer
         Equal(FALSE, keyFound);
     END_Method
 
-    {Test}
-    Method Public Test_GetValueFromIndex_GetValue        
-        VAR
-            len: DINT;
-        END_VAR
-
-        len:= Strings.ToArray(str := '1234', arr := doc.buffer);
-
-        testIndex1:= 0; testIndex2 := 3;
-        value:= doc.GetValueFromIndex(REF(testIndex1), REF(testIndex2));
-
-        Equal(4, LengthOf(value));
-        Equal('1234', value);
-        
-    END_Method
-
-    //start with FindKey, in a string, Get Back Key and value. Make TryParse out of it (provide key). Nachteil: json wird jedes mal durchsucht. Test: Stringlänge! (Refto string?)
-
 END_CLASS
 
 END_NAMESPACE
