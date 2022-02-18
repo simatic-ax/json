@@ -1,11 +1,8 @@
 NAMESPACE Simatic.Ax.Json
     INTERFACE IJsonElement
-        METHOD ToString : STRING
-        END_METHOD
-        
-        METHOD Serialize : BOOL
+        METHOD AddElement
             VAR_INPUT
-                doc : REF_TO JsonDocument;
+                elem : IJsonElement;
             END_VAR
         END_METHOD
     END_INTERFACE

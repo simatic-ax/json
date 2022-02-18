@@ -6,9 +6,13 @@ NAMESPACE Simatic.Ax.Json
         METHOD GetNext : IJsonElementMuteable
         END_METHOD
 
-        METHOD AddElement
+
+        METHOD ToString : STRING
+        END_METHOD
+        
+        METHOD Serialize : BOOL
             VAR_INPUT
-                elem : IJsonElement;
+                doc : REF_TO JsonDocument;
             END_VAR
         END_METHOD
     END_INTERFACE
