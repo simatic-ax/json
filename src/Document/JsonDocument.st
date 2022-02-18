@@ -117,7 +117,35 @@ NAMESPACE Simatic.Ax.Json
             ;
         END_METHOD
 
-        METHOD PUBLIC FindKeys : int //gibt alle key locations zurück. Dazu später die value locations mitgeben. Mit Methoden dann später diese aus den objekten auslesen.
+        //TODO: Zeitsparen später: Methode nur aufrufen wenn die Länge vom key so lange ist wie der index-span
+        METHOD PUBLIC KeyIsInIndexSpan : BOOL
+            VAR_INPUT
+                key : REF_TO STRING;
+                startIndex: INT;
+                endIndex: INT;
+            end_var
+            VAR_TEMP
+                keyIndex: INT := 1;
+                loopIndex: INT;
+            END_VAR
+
+            FOR loopIndex := startIndex TO endIndex DO
+                IF NOT (buffer[loopIndex] = key^[keyIndex])  THEN
+                    KeyIsInIndexSpan := FALSE;
+                    RETURN;
+                END_IF;
+
+                keyIndex := keyIndex + 1;
+            END_FOR;
+
+            KeyIsInIndexSpan := TRUE;
+
+        END_METHOD
+
+        METHOD PUBLIC FindKey : int //gibt alle key locations zurück. Dazu später die value locations mitgeben. Mit Methoden dann später diese aus den objekten auslesen.
+            // VAR_INPUT
+            //     key : REF_TO STRING;
+            // end_var
             VAR_IN_OUT
                 //deserializedObejctArray : ARRAY[*] of DeserializedObject;
             END_VAR
@@ -158,6 +186,8 @@ NAMESPACE Simatic.Ax.Json
                    
                 END_IF;
 
+
+
                 //value space ist mit : von keyspace getrennt, danach erst ein , ! "Key1": "Element1","Key2": 1234
                 //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.
                 IF (buffer[index] = ':') THEN // -> : ist auch als Teil eines keys oder value möglich, später erweitern!
@@ -171,7 +201,7 @@ NAMESPACE Simatic.Ax.Json
 
             END_FOR;
 
-            FindKeys := numberOfKeysFound;
+            FindKey := numberOfKeysFound;
 
         END_METHOD
 

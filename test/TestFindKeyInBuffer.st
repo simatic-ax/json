@@ -10,6 +10,7 @@ NAMESPACE Deserializer
 CLASS Test_FindKeyInBuffer
     VAR protected
         doc : JsonDocument;
+        key: STRING := 'key';
         testString : STRING := 'works!';
         buffer : ARRAY[0..999] OF CHAR;        
     END_VAR
@@ -27,7 +28,7 @@ CLASS Test_FindKeyInBuffer
 
         len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
 
-        keysFound := doc.FindKeys(keyStart, keyEnd);
+        keysFound := doc.FindKey(keyStart, keyEnd);
 
         //index is 0 based, not 1 based!
         Equal(2, keyStart);
@@ -48,12 +49,33 @@ CLASS Test_FindKeyInBuffer
 
         len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
 
-        keysFound := doc.FindKeys(keyStart, keyEnd);
+        keysFound := doc.FindKey(keyStart, keyEnd);
 
         //index is 0 based, not 1 based!
         Equal(21, keyStart);
         Equal(24, keyEnd);
         Equal(keysFound, 2);
+    END_Method
+
+    {Test}
+    Method Public Test_KeyIsInIndexSpan_FindsKey
+        VAR
+            len:DINT;
+            keyStart : int := 0;
+            keyEnd : int := 2;
+            keyFound: BOOL;
+
+            test: bool := true;
+        END_VAR
+
+        len:= Strings.ToArray(str := key, arr := doc.buffer);
+
+        keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
+        Equal(TRUE, keyFound);
+
+        key := 'not';
+        keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
+        Equal(FALSE, keyFound);
     END_Method
 
     //start with FindKey, in a string, Get Back Key and value. Make TryParse out of it (provide key). Nachteil: json wird jedes mal durchsucht. Test: Stringlänge! (Refto string?)
