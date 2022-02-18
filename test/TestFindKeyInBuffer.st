@@ -31,13 +31,13 @@ CLASS Test_FindKeyInBuffer
 
         len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
 
-        keyFound := doc.GetValue(REF(key1));
+        keyFound := doc.GetValue(REF(key1), value);
         Equal(TRUE, keyFound);
 
-        keyFound := doc.GetValue(REF(key2));
+        keyFound := doc.GetValue(REF(key2), value);
         Equal(TRUE, keyFound);
 
-        keyFound := doc.GetValue(REF(notAKey));
+        keyFound := doc.GetValue(REF(notAKey), value);
         Equal(FALSE, keyFound);
     END_Method
 

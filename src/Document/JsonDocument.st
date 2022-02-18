@@ -159,7 +159,7 @@ NAMESPACE Simatic.Ax.Json
                 keyEndIndex: int;
             end_var
             VAR_OUTPUT
-                
+                value: STRING;
             end_var
 
             FOR index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
