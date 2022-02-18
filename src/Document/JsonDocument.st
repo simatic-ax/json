@@ -142,28 +142,27 @@ NAMESPACE Simatic.Ax.Json
 
         END_METHOD
 
-        METHOD PUBLIC FindKey : int //gibt alle key locations zurück. Dazu später die value locations mitgeben. Mit Methoden dann später diese aus den objekten auslesen.
-            // VAR_INPUT
-            //     key : REF_TO STRING;
-            // end_var
+        METHOD PUBLIC GetValue : BOOL
+            VAR_INPUT
+                key : REF_TO STRING;
+            end_var
             VAR_IN_OUT
-                //deserializedObejctArray : ARRAY[*] of DeserializedObject;
+                //deserializedObejctArray : ARRAY[*] of DeserializedObject; -> in späterer Methode verwenden, die alle keys ausgibt
             END_VAR
             VAR_TEMP
-                numberOfKeysFound : int;
-                index: int;
+                keyFound: BOOL := FALSE;
 
+                index: int;
                 foundQuotationMarks : int := 0; //noch keine Marks am Anfang gefunden
                 inKeySpace : bool := TRUE; //erster Eintrag muss immer ein key sein
-            end_var
-            VAR_OUTPUT
                 keyStartIndex: int;
                 keyEndIndex: int;
             end_var
+            VAR_OUTPUT
+                
+            end_var
 
-            //bufferLB := LOWER_BOUND(buffer);
-
-            FOR Index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
+            FOR index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
                 
                 //das erste " markiert beginn von key. das zweite " ist das ende von key (außer es ist ein \davor ->später prüfen).
                 //Anschließend kommt irgendwann ein , und das nächste , schließt den value ab. Außer im value ist ein , .... -> später prüfen.
@@ -180,11 +179,13 @@ NAMESPACE Simatic.Ax.Json
     
                         IF (foundQuotationMarks = 2) THEN
                             keyEndIndex := index - 1;
-                            numberOfKeysFound := numberOfKeysFound + 1;
+                            keyFound := THIS.KeyIsInIndexSpan(key, keyStartIndex, keyEndIndex);
                         END_IF;
                     END_IF;
                    
                 END_IF;
+
+
 
 
 
@@ -199,9 +200,13 @@ NAMESPACE Simatic.Ax.Json
                     foundQuotationMarks := 0;
                 END_IF;
 
+                IF keyFound = TRUE THEN
+                    GetValue:= keyFound;
+                    RETURN;
+                END_IF;
             END_FOR;
 
-            FindKey := numberOfKeysFound;
+            GetValue := keyFound;
 
         END_METHOD
 

@@ -10,51 +10,35 @@ NAMESPACE Deserializer
 CLASS Test_FindKeyInBuffer
     VAR protected
         doc : JsonDocument;
-        key: STRING := 'key';
-        testString : STRING := 'works!';
-        buffer : ARRAY[0..999] OF CHAR;        
+
+        notAKey: STRING := 'not a key!';
+        key1: STRING := 'key';
+        key2: STRING := 'Key 2';
+        
+        value: STRING;
     END_VAR
 
     {Test}
-    Method Public Test_FindAKeyPosition_in_JSON_OneEntry
+    Method Public Test_FindKeysPosition_in_JSON_SimpleEntries
         VAR
-            JSON_Entry: STRING := '{"Key1": "Element1"}';
+            JSON_Entry: STRING := '{"key": "Element1", "Hello": "something", "Nothing": 456, "Key 2": 1234, }';
 
             len:DINT;
             keyStart : int;
             keyEnd : int;
-            keysFound: int;
+            keyFound: BOOL;
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
 
-        keysFound := doc.FindKey(keyStart, keyEnd);
+        keyFound := doc.GetValue(REF(key1));
+        Equal(TRUE, keyFound);
 
-        //index is 0 based, not 1 based!
-        Equal(2, keyStart);
-        Equal(5, keyEnd);
-        Equal(keysFound, 1);
-    END_Method
+        keyFound := doc.GetValue(REF(key2));
+        Equal(TRUE, keyFound);
 
-    {Test}
-    Method Public Test_FindKeysPosition_in_JSON_2Entries
-        VAR
-            JSON_Entry: STRING := '{"Key1": "Element1","Key2": 1234}';
-
-            len:DINT;
-            keyStart : int;
-            keyEnd : int;
-            keysFound: int;
-        END_VAR
-
-        len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
-
-        keysFound := doc.FindKey(keyStart, keyEnd);
-
-        //index is 0 based, not 1 based!
-        Equal(21, keyStart);
-        Equal(24, keyEnd);
-        Equal(keysFound, 2);
+        keyFound := doc.GetValue(REF(notAKey));
+        Equal(FALSE, keyFound);
     END_Method
 
     {Test}
@@ -68,13 +52,13 @@ CLASS Test_FindKeyInBuffer
             test: bool := true;
         END_VAR
 
-        len:= Strings.ToArray(str := key, arr := doc.buffer);
+        len:= Strings.ToArray(str := key1, arr := doc.buffer);
 
-        keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
+        keyFound := doc.KeyIsInIndexSpan(REF(key1), keyStart, keyEnd);
         Equal(TRUE, keyFound);
 
-        key := 'not';
-        keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
+        key1 := 'not';
+        keyFound := doc.KeyIsInIndexSpan(REF(key1), keyStart, keyEnd);
         Equal(FALSE, keyFound);
     END_Method
 
