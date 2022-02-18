@@ -118,8 +118,7 @@ NAMESPACE Simatic.Ax.Json
         END_METHOD
 
         METHOD PUBLIC FindKeys : int //gibt alle key locations zurück. Dazu später die value locations mitgeben. Mit Methoden dann später diese aus den objekten auslesen.
-            VAR_INPUT
-                // key : STRING;
+            VAR_IN_OUT
                 //deserializedObejctArray : ARRAY[*] of DeserializedObject;
             END_VAR
             VAR_TEMP
@@ -137,6 +136,7 @@ NAMESPACE Simatic.Ax.Json
             //bufferLB := LOWER_BOUND(buffer);
 
             FOR Index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
+                
                 //das erste " markiert beginn von key. das zweite " ist das ende von key (außer es ist ein \davor ->später prüfen).
                 //Anschließend kommt irgendwann ein , und das nächste , schließt den value ab. Außer im value ist ein , .... -> später prüfen.
 
@@ -156,7 +156,7 @@ NAMESPACE Simatic.Ax.Json
                         END_IF;
                     END_IF;
                    
-                END_IF; //end buffer check
+                END_IF;
 
                 //value space ist mit : von keyspace getrennt, danach erst ein , ! "Key1": "Element1","Key2": 1234
                 //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.

@@ -14,46 +14,19 @@ CLASS Test_FindKeyInBuffer
         buffer : ARRAY[0..999] OF CHAR;        
     END_VAR
 
-    METHOD PUBLIC ConvertStringToCharArray
-        VAR_INPUT
-            inputstring: string;
-        end_var
-        VAR_TEMP
-            stringLength : int;
-            index : Int;
-        end_var
-
-        stringLength := LengthOf(inputstring);
-
-        FOR Index := 0 TO stringlength DO
-            buffer[index] := inputstring[index + 1];
-        END_FOR;
-
-    END_METHOD
-
     {Test}
-    METHOD PUBLIC Test_ConvertStringToCharArray
-            THIS.ConvertStringToCharArray(testString);
-            Equal('w', buffer[0]);
-            Equal('o', buffer[1]);
-            Equal('r', buffer[2]);
-            Equal('k', buffer[3]);
-            Equal('s', buffer[4]);
-            Equal('!', buffer[5]);
-    END_METHOD
-
-    {Test}
-    Method Public Test_FindAKeyPosition_in_SimpleJSON
+    Method Public Test_FindAKeyPosition_in_JSON_OneEntry
         VAR
-            JSON_1Entry: STRING := '{"Key1": "Element1"}';
+            JSON_Entry: STRING := '{"Key1": "Element1"}';
 
+            len:DINT;
             keyStart : int;
             keyEnd : int;
             keysFound: int;
         END_VAR
 
-        THIS.ConvertStringToCharArray(JSON_1Entry);
-        doc.buffer := buffer;
+        len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
+
         keysFound := doc.FindKeys(keyStart, keyEnd);
 
         //index is 0 based, not 1 based!
@@ -63,17 +36,18 @@ CLASS Test_FindKeyInBuffer
     END_Method
 
     {Test}
-    Method Public Test_FindKeysPosition_in_SimpleJSON_2Entries
+    Method Public Test_FindKeysPosition_in_JSON_2Entries
         VAR
-            JSON_2Entries: STRING := '{"Key1": "Element1","Key2": 1234}';
+            JSON_Entry: STRING := '{"Key1": "Element1","Key2": 1234}';
 
+            len:DINT;
             keyStart : int;
             keyEnd : int;
             keysFound: int;
         END_VAR
 
-        THIS.ConvertStringToCharArray(JSON_2Entries);
-        doc.buffer := buffer;
+        len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
+
         keysFound := doc.FindKeys(keyStart, keyEnd);
 
         //index is 0 based, not 1 based!
@@ -82,6 +56,7 @@ CLASS Test_FindKeyInBuffer
         Equal(keysFound, 2);
     END_Method
 
+    //start with FindKey, in a string, Get Back Key and value. Make TryParse out of it (provide key). Nachteil: json wird jedes mal durchsucht. Test: Stringlänge! (Refto string?)
 
 END_CLASS
 
