@@ -144,8 +144,8 @@ NAMESPACE Simatic.Ax.Json
 
         METHOD PUBLIC GetValueFromIndex : STRING
             VAR_INPUT
-               startIndex: REF_TO INT;
-               endIndex: REF_TO INT; 
+               startIndex: INT;
+               endIndex: INT; 
             END_VAR
             VAR_TEMP
                 index: INT;
@@ -155,7 +155,7 @@ NAMESPACE Simatic.Ax.Json
                 incrementBackwards: INT := -1;
             END_VAR
 
-            FOR index := startIndex^ TO endIndex^ DO
+            FOR index := startIndex TO endIndex DO
                 IF NOT ((buffer[index] = ' ') OR ((buffer[index] = '"'))) THEN
                     realStartIndex := index;
                     EXIT;
@@ -163,7 +163,7 @@ NAMESPACE Simatic.Ax.Json
             END_FOR;
 
 
-            FOR index := endIndex^ TO realStartIndex BY incrementBackwards DO
+            FOR index := endIndex TO realStartIndex BY incrementBackwards DO
                 IF NOT ((buffer[index] = ' ') OR ((buffer[index] = '"'))) THEN
                     realEndIndex := index;
                     EXIT;
@@ -174,6 +174,8 @@ NAMESPACE Simatic.Ax.Json
             GetValueFromIndex := Conversion.Arrays.ToString(buffer, realStartIndex, realEndIndex);
         END_METHOD
 
+
+        //TODO: Auftrennen und schöner machen.
         METHOD PUBLIC GetValue : BOOL
             VAR_INPUT
                 key : REF_TO STRING;
@@ -183,6 +185,7 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
             VAR_TEMP
                 keyFound: BOOL := FALSE;
+                valueFound: BOOL := FALSE;
 
                 index: INT;
                 foundQuotationMarks : INT := 0; //noch keine Marks am Anfang gefunden
@@ -202,7 +205,7 @@ NAMESPACE Simatic.Ax.Json
                 //Anschließend kommt irgendwann ein , und das nächste , schließt den value ab. Außer im value ist ein , .... -> später prüfen.
 
                 //-> später allgemeiner machen für value!
-                IF (buffer[index] = '"') THEN
+                IF (keyFound = FALSE AND buffer[index] = '"') THEN
                     foundQuotationMarks := foundQuotationMarks + 1;
                     
                     //we are in a key range!
@@ -219,10 +222,6 @@ NAMESPACE Simatic.Ax.Json
                    
                 END_IF;
 
-
-
-
-
                 //value space ist mit : von keyspace getrennt, danach erst ein , ! "Key1": "Element1","Key2": 1234
                 //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.
                 IF (buffer[index] = ':') THEN // -> : ist auch als Teil eines keys oder value möglich, später erweitern!
@@ -234,19 +233,21 @@ NAMESPACE Simatic.Ax.Json
                     inKeySpace := TRUE;
                     foundQuotationMarks := 0;
                     valueEndIndex := index - 1;
+                    valueFound := TRUE;
                 END_IF;
 
 
 
-                IF keyFound = TRUE THEN
-                    //Get valuestring
-
-
+                IF (keyFound = TRUE AND valueFound = TRUE) THEN
+                    value:= THIS.GetValueFromIndex(valueStartIndex, valueEndIndex);
                     GetValue:= keyFound;
                     RETURN;
                 END_IF;
+
+                valueFound := FALSE;// must be reset, otherwise the last found key is attached!
             END_FOR;
 
+            value := '';
             GetValue := keyFound;
 
         END_METHOD
