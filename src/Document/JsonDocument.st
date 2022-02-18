@@ -142,25 +142,50 @@ NAMESPACE Simatic.Ax.Json
 
         END_METHOD
 
+        METHOD PUBLIC GetValueFromIndex : STRING
+            VAR_INPUT
+               startIndex: REF_TO INT;
+               endIndex: REF_TO INT; 
+            END_VAR
+            VAR_TEMP
+                index: INT;
+                inValueSpace: BOOL := FALSE;
+                realStartIndex: INT;
+                realEndIndex: INT;
+            END_VAR
+
+            FOR index := startIndex^ TO endIndex^ DO
+                IF (inValueSpace = FALSE AND NOT ((buffer[index] = ' ') OR ((buffer[index] = '"')))) THEN
+                    inValueSpace := TRUE;
+                    realStartIndex := index;
+                    EXIT;
+                END_IF;
+            END_FOR;
+
+            GetValueFromIndex := Conversion.Arrays.ToString(buffer, realStartIndex, endIndex^);
+        END_METHOD
+
         METHOD PUBLIC GetValue : BOOL
             VAR_INPUT
                 key : REF_TO STRING;
-            end_var
+            END_VAR
             VAR_IN_OUT
                 //deserializedObejctArray : ARRAY[*] of DeserializedObject; -> in späterer Methode verwenden, die alle keys ausgibt
             END_VAR
             VAR_TEMP
                 keyFound: BOOL := FALSE;
 
-                index: int;
-                foundQuotationMarks : int := 0; //noch keine Marks am Anfang gefunden
-                inKeySpace : bool := TRUE; //erster Eintrag muss immer ein key sein
-                keyStartIndex: int;
-                keyEndIndex: int;
-            end_var
+                index: INT;
+                foundQuotationMarks : INT := 0; //noch keine Marks am Anfang gefunden
+                inKeySpace : BOOL := TRUE; //erster Eintrag muss immer ein key sein
+                keyStartIndex: INT;
+                keyEndIndex: INT;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
             VAR_OUTPUT
                 value: STRING;
-            end_var
+            END_VAR
 
             FOR index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
                 
@@ -193,14 +218,21 @@ NAMESPACE Simatic.Ax.Json
                 //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.
                 IF (buffer[index] = ':') THEN // -> : ist auch als Teil eines keys oder value möglich, später erweitern!
                     inKeySpace := FALSE;
+                    valueStartIndex := index + 1;
                 END_IF;
 
                 IF (buffer[index] = ',') THEN // -> , ist auch als Teil eines keys oder value möglich, später erweitern!
                     inKeySpace := TRUE;
                     foundQuotationMarks := 0;
+                    valueEndIndex := index - 1;
                 END_IF;
 
+
+
                 IF keyFound = TRUE THEN
+                    //Get valuestring
+
+
                     GetValue:= keyFound;
                     RETURN;
                 END_IF;

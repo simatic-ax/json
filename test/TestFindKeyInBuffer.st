@@ -11,11 +11,10 @@ CLASS Test_FindKeyInBuffer
     VAR protected
         doc : JsonDocument;
 
-        notAKey: STRING := 'not a key!';
-        key1: STRING := 'key';
-        key2: STRING := 'Key 2';
-        
+        key: STRING;
         value: STRING;
+        testIndex1: INT;
+        testIndex2: INT;
     END_VAR
 
     {Test}
@@ -31,13 +30,16 @@ CLASS Test_FindKeyInBuffer
 
         len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
 
-        keyFound := doc.GetValue(REF(key1), value);
+        key := 'key';
+        keyFound := doc.GetValue(REF(key), value);
         Equal(TRUE, keyFound);
 
-        keyFound := doc.GetValue(REF(key2), value);
+        key := 'Key 2';
+        keyFound := doc.GetValue(REF(key), value);
         Equal(TRUE, keyFound);
 
-        keyFound := doc.GetValue(REF(notAKey), value);
+        key := 'not a key';
+        keyFound := doc.GetValue(REF(key), value);
         Equal(FALSE, keyFound);
     END_Method
 
@@ -48,34 +50,37 @@ CLASS Test_FindKeyInBuffer
             keyStart : int := 0;
             keyEnd : int := 2;
             keyFound: BOOL;
-
-            test: bool := true;
         END_VAR
 
-        len:= Strings.ToArray(str := key1, arr := doc.buffer);
+        key := 'key';
+        len:= Strings.ToArray(str := key, arr := doc.buffer);
 
-        keyFound := doc.KeyIsInIndexSpan(REF(key1), keyStart, keyEnd);
+        keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
         Equal(TRUE, keyFound);
 
-        key1 := 'not';
-        keyFound := doc.KeyIsInIndexSpan(REF(key1), keyStart, keyEnd);
+        key := 'not';
+        keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
         Equal(FALSE, keyFound);
+    END_Method
+
+    {Test}
+    Method Public Test_GetValueFromIndex_GetValue        
+        VAR
+            len: DINT;
+        END_VAR
+
+        len:= Strings.ToArray(str := '1234', arr := doc.buffer);
+
+        testIndex1:= 0; testIndex2 := 3;
+        value:= doc.GetValueFromIndex(REF(testIndex1), REF(testIndex2));
+
+        Equal(4, LengthOf(value));
+        Equal('1234', value);
+        
     END_Method
 
     //start with FindKey, in a string, Get Back Key and value. Make TryParse out of it (provide key). Nachteil: json wird jedes mal durchsucht. Test: Stringlänge! (Refto string?)
 
 END_CLASS
-
-
-
-{Test}
-FUNCTION GetACharInString
-    VAR_TEMP
-        e : STRING := 'hallo';
-        c : CHAR;
-    end_var
-        c := e[1];
-        Equal(c, 'h');
-END_FUNCTION
 
 END_NAMESPACE

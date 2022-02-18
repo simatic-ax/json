@@ -361,10 +361,10 @@
   resolved "https://apax-prod-734703289705.d.codeartifact.eu-central-1.amazonaws.com:443/npm/ax/@ax/third-party-licenses-st-compiler/-/third-party-licenses-st-compiler-2.1.36.tgz#bcae26288e75d9e784ef3721c6a89b69b96e8e9e"
   integrity sha512-Ff65DOb1ndNkn90o35LaPss7guw4hlbQkYQzkxVvFMp/GJJuL3eUfc+1kpcbBXBFWiyhM8R34hFPMcK5gZPYRA==
 
-"@simatic-ax/conversion@0.0.5":
-  version "0.0.5"
-  resolved "https://npm.pkg.github.com/download/@simatic-ax/conversion/0.0.5/aa9e6fdf5ea19fbfc75d28601d93ad86ea2f45ee18893aa0e46626de12070d9e#0a3728a69cd279aa7590da5e74d205e4454e4561"
-  integrity sha512-exHcjF0MvCOSMbRiT4YOzBWHNVVsrapLVqzJn1GpjBzAWjyuYguVyH6aiAd/bTZ5+oUNUWdu7IPUzwHHF9I//g==
+"@simatic-ax/conversion@0.0.6":
+  version "0.0.6"
+  resolved "https://npm.pkg.github.com/download/@simatic-ax/conversion/0.0.6/c165b8b21e56daf41699ea924a9f0407b1d51a8d9512059e2f18b32b2d05f27c#39b94b8af0dc5247504baebc68a28f40d5e2082a"
+  integrity sha512-Ta1FWsoZtX+cX2cBuVF2kAPiDTtuzrlSEliHuEhjwVuOy8U+dfnvhkMbwN3Ndbi/WlgPRvPwnb5eOfdfVIEk8g==
   dependencies:
     "@ax/system-math" "1.0.32"
     "@ax/system-strings" "2.0.13"
