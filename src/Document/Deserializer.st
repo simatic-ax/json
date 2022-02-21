@@ -170,7 +170,7 @@ NAMESPACE Simatic.Ax.Json
                 END_IF;
 
                 //--------------------- nested Area
-                IF (buffer[index] = '{' AND NOT inKeyArea AND NOT inValueArea) THEN //+3, da sonst die Anfangsklammer genommen wird!
+                IF (buffer[index] = '{' AND NOT inKeyArea) THEN
                     inKeyArea := FALSE;
                     inValueArea:= FALSE;
                     inNestedArea := TRUE;
@@ -202,14 +202,18 @@ NAMESPACE Simatic.Ax.Json
                 //value space ist mit : von keyspace getrennt, danach erst ein , ! "Key1": "Element1","Key2": 1234
                 //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.
 
-                IF (buffer[index] = ':' AND inNestedArea = FALSE) THEN // -> : ist auch als Teil eines keys oder value möglich, später erweitern!
+                IF (buffer[index] = ':' AND NOT inNestedArea AND NOT inKeyArea) THEN // -> : ist auch als Teil eines keys oder value möglich, später erweitern!
+                    inValueArea := TRUE;
+                    inNestedArea := FALSE;
                     inKeyArea := FALSE;
                     valueStartIndex := index + 1;
                 END_IF;
 
-                IF (inNestedArea = FALSE AND (buffer[index] = ',' OR buffer[index] = '}')) THEN // -> , ist auch als Teil eines keys oder value möglich, später erweitern! } => FileEnd
+                IF ((buffer[index] = ',' OR buffer[index] = '}') AND NOT inNestedArea AND NOT inKeyArea) THEN // -> , ist auch als Teil eines keys oder value möglich, später erweitern! } => FileEnd
                     inKeyArea := TRUE;
-                    foundQuotationMarks := 0;
+                    inValueArea := FALSE;
+                    inNestedArea := FALSE;
+
                     valueEndIndex := index - 1;
                     valueFound := TRUE;
 
