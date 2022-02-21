@@ -110,11 +110,36 @@ CLASS Test_FindValueInBuffer
         Equal(true, keyFound);
         Equal('{"nested1" : "hello", "nested2" : 1234  }', nestedElement);
 
-        // len := Strings.ToArray(str := nestedElement, arr := buffer);
-        // doc.SetBuffer(buffer);
-        // key := 'nested1';
-        // keyFound := doc.GetValue( REF(key), value);
-        // Equal('hello', value);
+        len := Strings.ToArray(str := nestedElement, arr := buffer);
+        doc.SetBuffer(buffer);
+        key := 'nested1';
+        keyFound := doc.GetValue( REF(key), value);
+        Equal('hello', value);
+
+    END_Method
+
+    {Test}
+    Method Public Test_FindValue_NestedElement_in_JSON_MoreEntries
+        VAR
+            JSON_Entry: STRING := '{"anotherkey": 123, "key": {"nested1" : "hello", "nested2" : 1234  }, "differentKey": 12 }';
+            len:DINT;
+            keyFound: BOOL;
+            nestedElement: STRING;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        doc.SetBuffer(buffer);
+
+        key := 'key';
+        keyFound := doc.GetValue( REF(key), nestedElement);
+        Equal(true, keyFound);
+        Equal('{"nested1" : "hello", "nested2" : 1234  }', nestedElement);
+
+        len := Strings.ToArray(str := nestedElement, arr := buffer);
+        doc.SetBuffer(buffer);
+        key := 'nested1';
+        keyFound := doc.GetValue( REF(key), value);
+        Equal('hello', value);
 
     END_Method
 
