@@ -69,7 +69,7 @@ CLASS Test_FindValueInBuffer
     {Test}
     Method Public Test_FindValue_in_JSON_SimpleEntries
         VAR
-            JSON_Entry: STRING := '{"key": "Element1", "Hello": "something", "Nothing": 456, "Key 2":  1234 }';
+            JSON_Entry: STRING := '{"key": "Element1", "key 2": "something", "key 3": 456, "Key 4":  1234 }';
 
             len:DINT;
             keyFound: BOOL;
@@ -83,7 +83,7 @@ CLASS Test_FindValueInBuffer
         Equal(8, LengthOf(value));
         Equal('Element1', value);
 
-        key := 'Key 2';
+        key := 'Key 4';
         keyFound := doc.GetValue( REF(key), value);
         Equal(4, LengthOf(value));
         Equal('1234', value);

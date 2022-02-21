@@ -80,17 +80,20 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 index: INT;
                 incrementBackwards: INT := -1;
+                foundBeginn: BOOL := FALSE;
             END_VAR
 
             FOR index := 0 TO 999 DO //TODO: Array* upper und lowerbound
-                IF (buffer[index] = '{') THEN
+                IF (buffer[index] = '{' AND foundBeginn = FALSE) THEN
                     bufferStart := index;
+                    foundBeginn := TRUE;
                 END_IF;
             END_FOR;
 
             FOR index := 999 TO 0 BY incrementBackwards DO
                 IF (buffer[index] = '}') THEN
                     bufferEnd := index;
+                    RETURN;
                 END_IF;
             END_FOR;
         END_METHOD
@@ -111,11 +114,15 @@ NAMESPACE Simatic.Ax.Json
 
                 index: INT;
                 foundQuotationMarks : INT := 0; //noch keine Marks am Anfang gefunden
+
                 inKeySpace : BOOL := TRUE; //erster Eintrag muss immer ein key sein
                 keyStartIndex: INT;
                 keyEndIndex: INT;
+
                 valueStartIndex: INT;
                 valueEndIndex: INT;
+
+                inNestedSpace: BOOL := FALSE;
 
                 keyLength: INT;
 
@@ -128,7 +135,7 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
 
             THIS.GetBufferIndizes(bufferStart, bufferEnd );
-            
+
             //buffer := document;
             keyLength := LengthOf(key^);
 
@@ -145,7 +152,7 @@ NAMESPACE Simatic.Ax.Json
                     IF (foundQuotationMarks = 1) THEN
                         keyStartIndex := index + 1;
                     END_IF;
-    
+                    //TODO: Else if
                     IF (foundQuotationMarks = 2) THEN
                         keyEndIndex := index - 1;
 
@@ -154,19 +161,39 @@ NAMESPACE Simatic.Ax.Json
                         END_IF;
                     END_IF;
                    
+                    CONTINUE; //TODO: Mehr continue
                    
                 END_IF;
 
 
+                //Unterscheidung ob in nested space oder normaler Valuespace
+                IF (buffer[index] = '{' AND index > bufferStart + 3) THEN //+3, da sonst die Anfangsklammer genommen wird!
+                    inKeySpace := FALSE;
+                    inNestedSpace := TRUE;
+                    valueStartIndex := index + 1;
+                END_IF;
+
+                IF (buffer[index] = '}') THEN
+                    inNestedSpace := FALSE;
+                    inKeySpace := TRUE;
+
+                    valueEndIndex := index - 1;
+                    
+                    foundQuotationMarks := 0;
+                    valueEndIndex := index - 1;
+                    valueFound := TRUE;
+                END_IF;
+
 
                 //value space ist mit : von keyspace getrennt, danach erst ein , ! "Key1": "Element1","Key2": 1234
                 //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.
-                IF (buffer[index] = ':') THEN // -> : ist auch als Teil eines keys oder value möglich, später erweitern!
+
+                IF (buffer[index] = ':' AND NOT inNestedSpace) THEN // -> : ist auch als Teil eines keys oder value möglich, später erweitern!
                     inKeySpace := FALSE;
                     valueStartIndex := index + 1;
                 END_IF;
 
-                IF (buffer[index] = ',' OR buffer[index] = '}') THEN // -> , ist auch als Teil eines keys oder value möglich, später erweitern!
+                IF (buffer[index] = ',' OR buffer[index] = '}' AND NOT inNestedSpace) THEN // -> , ist auch als Teil eines keys oder value möglich, später erweitern! } => FileEnd
                     inKeySpace := TRUE;
                     foundQuotationMarks := 0;
                     valueEndIndex := index - 1;
