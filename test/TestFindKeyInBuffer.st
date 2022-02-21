@@ -30,17 +30,18 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        doc.SetBuffer(buffer);
 
         key := 'key ';
-        keyFound := doc.GetValue(buffer, REF(key), value);
+        keyFound := doc.GetValue( REF(key), value);
         Equal(TRUE, keyFound);
 
         key := 'Key 2';
-        keyFound := doc.GetValue(buffer, REF(key), value);
+        keyFound := doc.GetValue( REF(key), value);
         Equal(TRUE, keyFound);
 
         key := 'not a key';
-        keyFound := doc.GetValue(buffer, REF(key), value);
+        keyFound := doc.GetValue( REF(key), value);
         Equal(FALSE, keyFound);
     END_Method
 
@@ -54,7 +55,8 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         key := 'key';
-        len:= Strings.ToArray(str := key, arr := doc.buffer);
+        len:= Strings.ToArray(str := key, arr := buffer);
+        doc.SetBuffer(buffer);
 
         keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
         Equal(TRUE, keyFound);

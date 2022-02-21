@@ -24,7 +24,8 @@ CLASS Test_FindValueInBuffer
             len: DINT;
         END_VAR
 
-        len:= Strings.ToArray(str := '1234', arr := doc.buffer);
+        len:= Strings.ToArray(str := '1234', arr := buffer);
+        doc.SetBuffer(buffer);
 
         testIndex1:= 0; testIndex2 := 3;
         value:= doc.GetValueFromIndex(testIndex1, testIndex2);
@@ -39,7 +40,8 @@ CLASS Test_FindValueInBuffer
             len: DINT;
         END_VAR
 
-        len:= Strings.ToArray(str := '    1234    ', arr := doc.buffer);
+        len:= Strings.ToArray(str := '    1234    ', arr := buffer);
+        doc.SetBuffer(buffer);
 
         testIndex1:= 0; testIndex2 := 10;
         value:= doc.GetValueFromIndex(testIndex1, testIndex2);
@@ -54,7 +56,8 @@ CLASS Test_FindValueInBuffer
             len: DINT;
         END_VAR
 
-        len:= Strings.ToArray(str := ' "1234"      ', arr := doc.buffer);
+        len:= Strings.ToArray(str := ' "1234"      ', arr := buffer);
+        doc.SetBuffer(buffer);
 
         testIndex1:= 0; testIndex2 := 10;
         value:= doc.GetValueFromIndex(testIndex1, testIndex2);
@@ -66,29 +69,50 @@ CLASS Test_FindValueInBuffer
     {Test}
     Method Public Test_FindValue_in_JSON_SimpleEntries
         VAR
-            JSON_Entry: STRING := '{"key": "Element1", "Hello": "something", "Nothing": 456, "Key 2":  1234  , }';
+            JSON_Entry: STRING := '{"key": "Element1", "Hello": "something", "Nothing": 456, "Key 2":  1234 }';
 
             len:DINT;
-            keyStart : int;
-            keyEnd : int;
             keyFound: BOOL;
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        doc.SetBuffer(buffer); //TODO: ausbauen und ersetzen durch buffer in methode
 
         key := 'key';
-        keyFound := doc.GetValue(buffer, REF(key), value);
+        keyFound := doc.GetValue( REF(key), value);
         Equal(8, LengthOf(value));
         Equal('Element1', value);
 
         key := 'Key 2';
-        keyFound := doc.GetValue(buffer, REF(key), value);
+        keyFound := doc.GetValue( REF(key), value);
         Equal(4, LengthOf(value));
         Equal('1234', value);
 
         key := 'not a key';
-        keyFound := doc.GetValue(buffer, REF(key), value);
+        keyFound := doc.GetValue( REF(key), value);
         Equal('', value);
+    END_Method
+
+    {Test}
+    Method Public Test_FindValue_NestedElement_in_JSON_SimpleEntries
+        VAR
+            JSON_Entry: STRING := '{"key": {"nested1" : "hello", "nested2" : 1234  } }';
+            len:DINT;
+            keyFound: BOOL;
+            nestedElement: STRING;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        doc.SetBuffer(buffer);
+
+        key := 'key';
+        keyFound := doc.GetValue( REF(key), nestedElement);
+
+        len := Strings.ToArray(str := nestedElement, arr := buffer);
+        key := 'nested1';
+        keyFound := doc.GetValue( REF(key), value);
+        Equal('hello', value);
+
     END_Method
 
 END_CLASS

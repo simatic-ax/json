@@ -3,9 +3,18 @@ USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
     CLASS Deserializer
-        VAR PUBLIC //TODO Public entfernen wenn ref_to array star, derzeit nur noch zum testen drin!
+        VAR PRIVATE //TODO Public entfernen wenn ref_to array star, derzeit nur noch zum testen drin!
             buffer : ARRAY[0..999] OF CHAR;
         END_VAR
+
+        //Temporäre Hilfsmethode um Buffer zus etzten, bis Ref_to array*
+        METHOD PUBLIC SetBuffer
+            VAR_INPUT
+                _buffer : ARRAY[0..999] OF CHAR;
+            end_var
+
+            buffer := _buffer;
+        END_METHOD
 
         METHOD PUBLIC KeyIsInIndexSpan : BOOL
             VAR_INPUT
@@ -67,7 +76,7 @@ NAMESPACE Simatic.Ax.Json
         //TODO: Auftrennen und schöner machen.
         METHOD PUBLIC GetValue : BOOL
             VAR_INPUT
-                document : ARRAY[0..999] OF CHAR; //ref_to array char machen!
+                //document : ARRAY[0..999] OF CHAR; //ref_to array char machen!
                 key : REF_TO STRING;
             END_VAR
             VAR_IN_OUT
@@ -92,7 +101,7 @@ NAMESPACE Simatic.Ax.Json
                 value: STRING;
             END_VAR
 
-            buffer := document;
+            //buffer := document;
             keyLength := LengthOf(key^);
 
             FOR index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
@@ -129,7 +138,7 @@ NAMESPACE Simatic.Ax.Json
                     valueStartIndex := index + 1;
                 END_IF;
 
-                IF (buffer[index] = ',') THEN // -> , ist auch als Teil eines keys oder value möglich, später erweitern!
+                IF (buffer[index] = ',' OR buffer[index] = '}') THEN // -> , ist auch als Teil eines keys oder value möglich, später erweitern!
                     inKeySpace := TRUE;
                     foundQuotationMarks := 0;
                     valueEndIndex := index - 1;
@@ -140,6 +149,7 @@ NAMESPACE Simatic.Ax.Json
 
                 IF (keyFound = TRUE AND valueFound = TRUE) THEN
                     value:= THIS.GetValueFromIndex(valueStartIndex, valueEndIndex);
+                    //This.EmptyBuffer(); //TODO Remove after ref_to_arraystar wird verwendet und buffer innerhalb klasse ausgebaut wird. Alternativ: set Document Methode!
                     GetValue:= keyFound;
                     RETURN;
                 END_IF;
@@ -149,6 +159,17 @@ NAMESPACE Simatic.Ax.Json
 
             value := '';
             GetValue := keyFound;
+
+        END_METHOD
+
+        METHOD PRIVATE EmptyBuffer
+            VAR_TEMP
+                Index: INT;
+            END_VAR
+            
+            FOR Index := 0  TO 999 DO
+                buffer[Index] := ' ';
+            END_FOR;
 
         END_METHOD
 
