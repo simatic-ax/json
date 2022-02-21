@@ -107,6 +107,7 @@ CLASS Test_FindValueInBuffer
 
         key := 'key';
         keyFound := doc.GetValue( REF(key), nestedElement);
+        Equal(true, keyFound);
         Equal('{"nested1" : "hello", "nested2" : 1234  }', nestedElement);
 
         // len := Strings.ToArray(str := nestedElement, arr := buffer);

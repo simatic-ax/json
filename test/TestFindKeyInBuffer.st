@@ -65,7 +65,7 @@ CLASS Test_FindKeyInBuffer
     END_Method
 
     {Test}
-    Method Public Test_FindKeysPosition_in_JSON_Nested_Entry
+    Method Public Test_FindKeysPosition_with_JSON_Nested_Entry
         VAR
             JSON_Entry: STRING := '{"key ": " Elem ent1", "nested": {"nested1" : "hello", "nested2" : 1234  }, "key2": " Elem ent1"}';
 
