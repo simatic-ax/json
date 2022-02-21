@@ -99,157 +99,114 @@ NAMESPACE Simatic.Ax.Json
         END_METHOD
 
 
-        //TODO: Auftrennen und schöner machen.
         METHOD PUBLIC GetValue : BOOL
             VAR_INPUT
-                //document : ARRAY[0..999] OF CHAR; //ref_to array char machen!
                 key : REF_TO STRING;
-            END_VAR
-            VAR_IN_OUT
-                //deserializedObejctArray : ARRAY[*] of DeserializedObject; -> in späterer Methode verwenden, die alle keys ausgibt
             END_VAR
             VAR_TEMP
                 keyFound: BOOL := FALSE;
                 valueFound: BOOL := FALSE;
 
                 index: INT;
-                foundQuotationMarks : INT := 0; //noch keine Marks am Anfang gefunden
+                quotationMarkCount : INT := 0;
 
-                inKeyArea : BOOL := TRUE; //erster Eintrag muss immer ein key sein
+                inKeyArea : BOOL := TRUE;
                 inNestedArea: BOOL := FALSE;
                 inValueArea: BOOL := FALSE;
 
-                keyStartIndex: INT;
-                keyEndIndex: INT;
+                areaStartIndex: INT;
+                areaEndIndex: INT;
 
-                valueStartIndex: INT;
-                valueEndIndex: INT;
-
-                keyLength: INT;
-
-                bufferStart: INT;
-                bufferEnd: INT;
-
+                documentStartIndex: INT;
+                documentEndIndex: INT;
             END_VAR
             VAR_OUTPUT
                 value: STRING;
             END_VAR
 
-            THIS.GetBufferIndizes(bufferStart, bufferEnd );
+            THIS.GetBufferIndizes(documentStartIndex, documentEndIndex );
 
-            //buffer := document;
-            keyLength := LengthOf(key^);
-
-            FOR index := bufferStart TO bufferEnd DO 
+            FOR index := documentStartIndex TO documentEndIndex DO 
                 
-                //das erste " markiert beginn von key. das zweite " ist das ende von key (außer es ist ein \davor ->später prüfen).
-                //Anschließend kommt irgendwann ein , und das nächste , schließt den value ab. Außer im value ist ein , .... -> später prüfen.
-
-                //--------------------- key area
-                //-> später allgemeiner machen für value!
-                IF (keyFound = FALSE AND buffer[index] = '"' AND inKeyArea AND NOT inNestedArea AND NOT inValueArea) THEN
-                    foundQuotationMarks := foundQuotationMarks + 1;
-
-                    IF (foundQuotationMarks = 1) THEN
-                        keyStartIndex := index + 1;
-                    END_IF;
-
-                    //TODO: Else if
-                    IF (foundQuotationMarks = 2) THEN
-                        keyEndIndex := index - 1;
-                        inKeyArea := FALSE;
-                        foundQuotationMarks := 0;
-
-                        IF (keyLength = (keyEndIndex - keyStartIndex + 1)) THEN
-                            keyFound := THIS.KeyIsInIndexSpan(key, keyStartIndex, keyEndIndex);
+                //----- key area
+                IF inKeyArea AND NOT inNestedArea AND NOT inValueArea THEN
+                    IF (keyFound = FALSE AND buffer[index] = '"') THEN
+                        quotationMarkCount := quotationMarkCount + 1;
+    
+                        IF (quotationMarkCount = 1) THEN
+                            areaStartIndex := index + 1;
                         END_IF;
-                    END_IF;
-                   
-                    //CONTINUE?
-                   
-                END_IF;
+    
+                        IF (quotationMarkCount = 2) THEN
+                            inKeyArea := FALSE;
 
-                //--------------------- nested Area
-                IF (buffer[index] = '{' AND NOT inKeyArea) THEN
-                    inKeyArea := FALSE;
-                    inValueArea:= FALSE;
-                    inNestedArea := TRUE;
-                    valueStartIndex := index;
-                END_IF;
+                            areaEndIndex := index - 1;
+                            quotationMarkCount := 0;
+    
+                            IF (LengthOf(key^) = (areaEndIndex - areaStartIndex + 1)) THEN
+                                keyFound := THIS.KeyIsInIndexSpan(key, areaStartIndex, areaEndIndex);
+                            END_IF;
+                        END_IF;
 
-                IF (buffer[index] = '}' AND NOT inKeyArea AND NOT inValueArea) THEN
-                    inNestedArea := FALSE;
-                    inValueArea := FALSE;
-                    inKeyArea := TRUE;
-
-                    valueEndIndex := index - 1;
-                    
-                    foundQuotationMarks := 0;
-                    valueEndIndex := index;
-                    valueFound := TRUE;
-
-
-                    IF (keyFound = TRUE AND valueFound = TRUE) THEN
-                        value:= THIS.GetValueFromIndex(valueStartIndex, valueEndIndex);
-                        //This.EmptyBuffer(); //TODO Remove after ref_to_arraystar wird verwendet und buffer innerhalb klasse ausgebaut wird. Alternativ: set Document Methode!
-                        GetValue:= keyFound;
-                        RETURN;
+                        CONTINUE;
                     END_IF;
                 END_IF;
+                
+                //----- nested area
+                IF NOT inKeyArea THEN
+                    IF (buffer[index] = '{') THEN
+                        inNestedArea := TRUE;
+                        inKeyArea := FALSE;
+                        inValueArea:= FALSE;
 
-
-                //-------------------------------value area
-                //value space ist mit : von keyspace getrennt, danach erst ein , ! "Key1": "Element1","Key2": 1234
-                //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.
-
-                IF (buffer[index] = ':' AND NOT inNestedArea AND NOT inKeyArea) THEN // -> : ist auch als Teil eines keys oder value möglich, später erweitern!
-                    inValueArea := TRUE;
-                    inNestedArea := FALSE;
-                    inKeyArea := FALSE;
-                    valueStartIndex := index + 1;
-                END_IF;
-
-                IF ((buffer[index] = ',' OR buffer[index] = '}') AND NOT inNestedArea AND NOT inKeyArea) THEN // -> , ist auch als Teil eines keys oder value möglich, später erweitern! } => FileEnd
-                    inKeyArea := TRUE;
-                    inValueArea := FALSE;
-                    inNestedArea := FALSE;
-
-                    valueEndIndex := index - 1;
-                    valueFound := TRUE;
-
-                    IF (keyFound = TRUE AND valueFound = TRUE) THEN
-                        value:= THIS.GetValueFromIndex(valueStartIndex, valueEndIndex);
-                        //This.EmptyBuffer(); //TODO Remove after ref_to_arraystar wird verwendet und buffer innerhalb klasse ausgebaut wird. Alternativ: set Document Methode!
-                        GetValue:= keyFound;
-                        RETURN;
+                        areaStartIndex := index;
+                        CONTINUE;
+                    END_IF;
+    
+                    IF (buffer[index] = '}' AND NOT inValueArea) THEN
+                        inKeyArea := TRUE;
+                        inNestedArea := FALSE;
+                        inValueArea := FALSE;
+                        
+                        areaEndIndex := index;
+                        valueFound := TRUE;
                     END_IF;
                 END_IF;
+                
+                //----- value area
+                IF NOT inKeyArea AND NOT inNestedArea THEN
+                    IF (buffer[index] = ':' ) THEN
+                        inValueArea := TRUE;
+                        inNestedArea := FALSE;
+                        inKeyArea := FALSE;
 
+                        areaStartIndex := index + 1;
+                        CONTINUE;
+                    END_IF;
+    
+                    IF (buffer[index] = ',' OR buffer[index] = '}') THEN
+                        inKeyArea := TRUE;
+                        inValueArea := FALSE;
+                        inNestedArea := FALSE;
+    
+                        areaEndIndex := index - 1;
+                        valueFound := TRUE;
+                    END_IF;
+                END_IF;
+                
+                //----- get value
+                IF (keyFound = TRUE AND valueFound = TRUE) THEN
+                    value:= THIS.GetValueFromIndex(areaStartIndex, areaEndIndex);
+                    GetValue:= keyFound;
+                    RETURN;
+                END_IF;
 
+                valueFound := FALSE; // must be reset, otherwise the last found key is attached!
 
-                // IF (keyFound = TRUE AND valueFound = TRUE) THEN
-                //     value:= THIS.GetValueFromIndex(valueStartIndex, valueEndIndex);
-                //     //This.EmptyBuffer(); //TODO Remove after ref_to_arraystar wird verwendet und buffer innerhalb klasse ausgebaut wird. Alternativ: set Document Methode!
-                //     GetValue:= keyFound;
-                //     RETURN;
-                // END_IF;
-
-                valueFound := FALSE;// must be reset, otherwise the last found key is attached!
             END_FOR;
 
             value := '';
             GetValue := keyFound;
-
-        END_METHOD
-
-        METHOD PRIVATE EmptyBuffer
-            VAR_TEMP
-                Index: INT;
-            END_VAR
-            
-            FOR Index := 0  TO 999 DO
-                buffer[Index] := ' ';
-            END_FOR;
 
         END_METHOD
 
