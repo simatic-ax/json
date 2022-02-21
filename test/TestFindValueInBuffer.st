@@ -9,7 +9,7 @@ NAMESPACE Deserializer
 {TestFixture}
 CLASS Test_FindValueInBuffer
     VAR protected
-        doc : JsonDocument;
+        doc : Deserializer;
 
         key: STRING;
         value: STRING;
