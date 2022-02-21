@@ -21,7 +21,7 @@ CLASS Test_FindKeyInBuffer
     {Test}
     Method Public Test_FindKeysPosition_in_JSON_SimpleEntries
         VAR
-            JSON_Entry: STRING := '{"key ": " Elem ent1", "Hello": "something", "Nothing": 456, "Key 2": 1234, }';
+            JSON_Entry: STRING := '{"key ": " Elem ent1", "Hello": "something", "Nothing": 456, "Key 2": 1234 }';
 
             len:DINT;
             keyStart : int;
@@ -43,6 +43,33 @@ CLASS Test_FindKeyInBuffer
         key := 'not a key';
         keyFound := doc.GetValue( REF(key), value);
         Equal(FALSE, keyFound);
+    END_Method
+
+    {Test}
+    Method Public Test_FindKeysPosition_in_JSON_Nested_Entry
+        VAR
+            JSON_Entry: STRING := '{"key ": " Elem ent1", "nested": {"nested1" : "hello", "nested2" : 1234  }, "key2": " Elem ent1"}';
+
+            len:DINT;
+            keyStart : int;
+            keyEnd : int;
+            keyFound: BOOL;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        doc.SetBuffer(buffer);
+
+        key := 'key ';
+        keyFound := doc.GetValue( REF(key), value);
+        Equal(TRUE, keyFound);
+
+        key := 'nested';
+        keyFound := doc.GetValue( REF(key), value);
+        Equal(TRUE, keyFound);
+
+        key := 'key2';
+        keyFound := doc.GetValue( REF(key), value);
+        Equal(TRUE, keyFound);
     END_Method
 
     {Test}

@@ -72,6 +72,29 @@ NAMESPACE Simatic.Ax.Json
             GetValueFromIndex := Conversion.Arrays.ToString(buffer, realStartIndex, realEndIndex);
         END_METHOD
 
+        METHOD PRIVATE GetBufferIndizes
+            VAR_OUTPUT
+                bufferStart: INT;
+                bufferEnd: INT;
+            END_VAR
+            VAR_TEMP
+                index: INT;
+                incrementBackwards: INT := -1;
+            END_VAR
+
+            FOR index := 0 TO 999 DO //TODO: Array* upper und lowerbound
+                IF (buffer[index] = '{') THEN
+                    bufferStart := index;
+                END_IF;
+            END_FOR;
+
+            FOR index := 999 TO 0 BY incrementBackwards DO
+                IF (buffer[index] = '}') THEN
+                    bufferEnd := index;
+                END_IF;
+            END_FOR;
+        END_METHOD
+
 
         //TODO: Auftrennen und schöner machen.
         METHOD PUBLIC GetValue : BOOL
@@ -96,15 +119,20 @@ NAMESPACE Simatic.Ax.Json
 
                 keyLength: INT;
 
+                bufferStart: INT;
+                bufferEnd: INT;
+
             END_VAR
             VAR_OUTPUT
                 value: STRING;
             END_VAR
 
+            THIS.GetBufferIndizes(bufferStart, bufferEnd );
+            
             //buffer := document;
             keyLength := LengthOf(key^);
 
-            FOR index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
+            FOR index := bufferStart TO bufferEnd DO 
                 
                 //das erste " markiert beginn von key. das zweite " ist das ende von key (außer es ist ein \davor ->später prüfen).
                 //Anschließend kommt irgendwann ein , und das nächste , schließt den value ab. Außer im value ist ein , .... -> später prüfen.
