@@ -7,7 +7,6 @@ NAMESPACE Simatic.Ax.Json
             buffer : ARRAY[0..999] OF CHAR;
         END_VAR
 
-        //TODO: Zeitsparen später: Methode nur aufrufen wenn die Länge vom key so lange ist wie der index-span
         METHOD PUBLIC KeyIsInIndexSpan : BOOL
             VAR_INPUT
                 key : REF_TO STRING;
@@ -84,10 +83,15 @@ NAMESPACE Simatic.Ax.Json
                 keyEndIndex: INT;
                 valueStartIndex: INT;
                 valueEndIndex: INT;
+
+                keyLength: INT;
+
             END_VAR
             VAR_OUTPUT
                 value: STRING;
             END_VAR
+
+            keyLength := LengthOf(key^);
 
             FOR index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
                 
@@ -106,7 +110,11 @@ NAMESPACE Simatic.Ax.Json
     
                         IF (foundQuotationMarks = 2) THEN
                             keyEndIndex := index - 1;
-                            keyFound := THIS.KeyIsInIndexSpan(key, keyStartIndex, keyEndIndex);
+
+                            IF (keyLength = (keyEndIndex - keyStartIndex + 1)) THEN
+                                keyFound := THIS.KeyIsInIndexSpan(key, keyStartIndex, keyEndIndex);
+                            END_IF;
+
                         END_IF;
                     END_IF;
                    
