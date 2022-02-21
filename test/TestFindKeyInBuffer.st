@@ -11,6 +11,7 @@ CLASS Test_FindKeyInBuffer
     VAR protected
         doc : Deserializer;
 
+        buffer : ARRAY[0..999] OF CHAR;
         key: STRING;
         value: STRING;
         testIndex1: INT;
@@ -20,7 +21,7 @@ CLASS Test_FindKeyInBuffer
     {Test}
     Method Public Test_FindKeysPosition_in_JSON_SimpleEntries
         VAR
-            JSON_Entry: STRING := '{"key": "Element1", "Hello": "something", "Nothing": 456, "Key 2": 1234, }';
+            JSON_Entry: STRING := '{"key ": " Elem ent1", "Hello": "something", "Nothing": 456, "Key 2": 1234, }';
 
             len:DINT;
             keyStart : int;
@@ -28,18 +29,18 @@ CLASS Test_FindKeyInBuffer
             keyFound: BOOL;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
 
-        key := 'key';
-        keyFound := doc.GetValue(REF(key), value);
+        key := 'key ';
+        keyFound := doc.GetValue(buffer, REF(key), value);
         Equal(TRUE, keyFound);
 
         key := 'Key 2';
-        keyFound := doc.GetValue(REF(key), value);
+        keyFound := doc.GetValue(buffer, REF(key), value);
         Equal(TRUE, keyFound);
 
         key := 'not a key';
-        keyFound := doc.GetValue(REF(key), value);
+        keyFound := doc.GetValue(buffer, REF(key), value);
         Equal(FALSE, keyFound);
     END_Method
 

@@ -11,6 +11,7 @@ CLASS Test_FindValueInBuffer
     VAR protected
         doc : Deserializer;
 
+        buffer : ARRAY[0..999] OF CHAR;
         key: STRING;
         value: STRING;
         testIndex1: INT;
@@ -73,20 +74,20 @@ CLASS Test_FindValueInBuffer
             keyFound: BOOL;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := doc.buffer);
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
 
         key := 'key';
-        keyFound := doc.GetValue(REF(key), value);
+        keyFound := doc.GetValue(buffer, REF(key), value);
         Equal(8, LengthOf(value));
         Equal('Element1', value);
 
         key := 'Key 2';
-        keyFound := doc.GetValue(REF(key), value);
+        keyFound := doc.GetValue(buffer, REF(key), value);
         Equal(4, LengthOf(value));
         Equal('1234', value);
 
         key := 'not a key';
-        keyFound := doc.GetValue(REF(key), value);
+        keyFound := doc.GetValue(buffer, REF(key), value);
         Equal('', value);
     END_Method
 

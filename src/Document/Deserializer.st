@@ -3,7 +3,7 @@ USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
     CLASS Deserializer
-        VAR PUBLIC
+        VAR PUBLIC //TODO Public entfernen wenn ref_to array star, derzeit nur noch zum testen drin!
             buffer : ARRAY[0..999] OF CHAR;
         END_VAR
 
@@ -67,6 +67,7 @@ NAMESPACE Simatic.Ax.Json
         //TODO: Auftrennen und schöner machen.
         METHOD PUBLIC GetValue : BOOL
             VAR_INPUT
+                document : ARRAY[0..999] OF CHAR; //ref_to array char machen!
                 key : REF_TO STRING;
             END_VAR
             VAR_IN_OUT
@@ -91,6 +92,7 @@ NAMESPACE Simatic.Ax.Json
                 value: STRING;
             END_VAR
 
+            buffer := document;
             keyLength := LengthOf(key^);
 
             FOR index := 0 TO 999 DO //TODO: Change to upper_lowerbounds when buffer is array*
@@ -98,27 +100,27 @@ NAMESPACE Simatic.Ax.Json
                 //das erste " markiert beginn von key. das zweite " ist das ende von key (außer es ist ein \davor ->später prüfen).
                 //Anschließend kommt irgendwann ein , und das nächste , schließt den value ab. Außer im value ist ein , .... -> später prüfen.
 
+                //we are in a key range!
                 //-> später allgemeiner machen für value!
-                IF (keyFound = FALSE AND buffer[index] = '"') THEN
+                IF (keyFound = FALSE AND buffer[index] = '"' AND inKeySpace) THEN
                     foundQuotationMarks := foundQuotationMarks + 1;
-                    
-                    //we are in a key range!
-                    IF (inKeySpace = TRUE) THEN
-                        IF (foundQuotationMarks = 1) THEN
-                            keyStartIndex := index + 1;
-                        END_IF;
+
+                    IF (foundQuotationMarks = 1) THEN
+                        keyStartIndex := index + 1;
+                    END_IF;
     
-                        IF (foundQuotationMarks = 2) THEN
-                            keyEndIndex := index - 1;
+                    IF (foundQuotationMarks = 2) THEN
+                        keyEndIndex := index - 1;
 
-                            IF (keyLength = (keyEndIndex - keyStartIndex + 1)) THEN
-                                keyFound := THIS.KeyIsInIndexSpan(key, keyStartIndex, keyEndIndex);
-                            END_IF;
-
+                        IF (keyLength = (keyEndIndex - keyStartIndex + 1)) THEN
+                            keyFound := THIS.KeyIsInIndexSpan(key, keyStartIndex, keyEndIndex);
                         END_IF;
                     END_IF;
                    
+                   
                 END_IF;
+
+
 
                 //value space ist mit : von keyspace getrennt, danach erst ein , ! "Key1": "Element1","Key2": 1234
                 //Achtung! , ist erlaubt wenn es teil eines string value oder keys ist! Das später korrigieren und testen! Dazu den " counter nehmen.
