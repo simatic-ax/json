@@ -80,13 +80,12 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 index: INT;
                 incrementBackwards: INT := -1;
-                foundBeginn: BOOL := FALSE;
             END_VAR
 
             FOR index := 0 TO 999 DO //TODO: Array* upper und lowerbound
-                IF (buffer[index] = '{' AND foundBeginn = FALSE) THEN
+                IF (buffer[index] = '{') THEN
                     bufferStart := index;
-                    foundBeginn := TRUE;
+                    EXIT;
                 END_IF;
             END_FOR;
 
