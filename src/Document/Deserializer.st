@@ -98,6 +98,201 @@ NAMESPACE Simatic.Ax.Json
             END_FOR;
         END_METHOD
 
+        //---------------------TODO: Temporary for playground
+        METHOD PUBLIC KeyIsInIndexSpan : BOOL 
+            VAR_INPUT
+                key :  STRING;
+                startIndex: INT;
+                endIndex: INT;
+            end_var
+            VAR_TEMP
+                keyIndex: INT := 1;
+                loopIndex: INT;
+            END_VAR
+
+            FOR loopIndex := startIndex TO endIndex DO
+                IF NOT (buffer^[loopIndex] = key[keyIndex])  THEN
+                    KeyIsInIndexSpan := FALSE;
+                    RETURN;
+                END_IF;
+
+                keyIndex := keyIndex + 1;
+            END_FOR;
+
+            KeyIsInIndexSpan := TRUE;
+
+        END_METHOD
+
+        //Playground
+        METHOD PUBLIC GetValue_WithKeyArray : BOOL
+            VAR_INPUT
+                keyArray : REF_TO ARRAY[0..1] OF STRING;
+            END_VAR
+            VAR_TEMP
+                key: STRING;
+                keyFound: BOOL := FALSE;
+                valueFound: BOOL := FALSE;
+
+                keyIndex: INT;
+                index: INT;
+                quotationMarkCount : INT := 0;
+
+                inKeyArea : BOOL := TRUE;
+                inNestedArea: BOOL := FALSE;
+                inValueArea: BOOL := FALSE;
+                inArrayArea: BOOL := FALSE;
+
+                areaStartIndex: INT;
+                areaEndIndex: INT;
+
+                documentStartIndex: INT;
+                documentEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: STRING;
+            END_VAR
+
+            THIS.GetBufferIndizes(documentStartIndex, documentEndIndex );
+
+            //gehe durch key Array!
+            FOR keyIndex := 0 TO 1 DO
+                key := keyArray^[keyIndex];
+                
+                FOR index := documentStartIndex TO documentEndIndex DO 
+                
+                    //----- key area
+                    IF inKeyArea AND NOT inNestedArea AND NOT inValueArea THEN
+                        IF (keyFound = FALSE AND buffer^[index] = '"') THEN
+                            quotationMarkCount := quotationMarkCount + 1;
+        
+                            IF (quotationMarkCount = 1) THEN
+                                areaStartIndex := index + 1;
+                            END_IF;
+        
+                            IF (quotationMarkCount = 2) THEN
+                                inKeyArea := FALSE;
+    
+                                areaEndIndex := index - 1;
+                                quotationMarkCount := 0;
+        
+                                IF (LengthOf(key) = (areaEndIndex - areaStartIndex + 1)) THEN
+                                    keyFound := THIS.KeyIsInIndexSpan(key, areaStartIndex, areaEndIndex);
+                                END_IF;
+                            END_IF;
+    
+                            CONTINUE;
+                        END_IF;
+                    END_IF;
+                    
+                    //----- array area
+                    IF NOT inKeyArea AND NOT inNestedArea THEN
+                        IF (buffer^[index] = '[') THEN
+                            inArrayArea := TRUE;
+                            inNestedArea := FALSE;
+                            inKeyArea := FALSE;
+                            inValueArea:= FALSE;
+    
+                            areaStartIndex := index;
+                            CONTINUE;
+                        END_IF;
+    
+                        IF (buffer^[index] = ']' AND NOT inValueArea) THEN
+                            inKeyArea := TRUE;
+                            inNestedArea := FALSE;
+                            inValueArea := FALSE;
+                            inArrayArea := FALSE;
+                            
+                            areaEndIndex := index;
+                            valueFound := TRUE;
+                        END_IF;
+                    END_IF;
+    
+                    //----- nested area
+                    IF NOT inKeyArea AND NOT inArrayArea THEN
+                        IF (buffer^[index] = '{') THEN
+                            inNestedArea := TRUE;
+                            inKeyArea := FALSE;
+                            inValueArea:= FALSE;
+                            inArrayArea := FALSE;
+    
+                            areaStartIndex := index;
+                            CONTINUE;
+                        END_IF;
+        
+                        IF (buffer^[index] = '}' AND NOT inValueArea) THEN
+                            inKeyArea := TRUE;
+                            inNestedArea := FALSE;
+                            inValueArea := FALSE;
+                            inArrayArea := FALSE;
+                            
+                            areaEndIndex := index;
+                            valueFound := TRUE;
+                        END_IF;
+                    END_IF;
+                    
+                    //----- value area
+                    IF NOT inKeyArea AND NOT inNestedArea AND NOT inArrayArea THEN
+                        IF (buffer^[index] = ':' ) THEN
+                            inValueArea := TRUE;
+                            inNestedArea := FALSE;
+                            inKeyArea := FALSE;
+                            inArrayArea := FALSE;
+    
+                            areaStartIndex := index + 1;
+                            CONTINUE;
+                        END_IF;
+        
+                        IF (buffer^[index] = ',' OR buffer^[index] = '}') THEN
+                            inKeyArea := TRUE;
+                            inValueArea := FALSE;
+                            inNestedArea := FALSE;
+                            inArrayArea := FALSE;
+        
+                            areaEndIndex := index - 1;
+                            valueFound := TRUE;
+                        END_IF;
+                    END_IF;
+                    
+                    //----- get value
+                    IF (keyFound = TRUE AND valueFound = TRUE) THEN
+                        EXIT;
+
+                    END_IF;
+    
+                    valueFound := FALSE; // must be reset, otherwise the last found key is attached!
+    
+                END_FOR;
+
+                //doubleCheck, Remove later
+                IF (keyFound = TRUE AND valueFound = TRUE) THEN
+                    value:= THIS.GetValueFromIndex(areaStartIndex, areaEndIndex);
+                    GetValue_WithKeyArray:= keyFound;
+                    documentStartIndex:= areaStartIndex;
+                    documentEndIndex:= areaEndIndex;
+                    GetValue_WithKeyArray := keyFound;
+                    
+                    valueFound:= FALSE;
+                    keyFound:= FALSE;
+
+                
+                ELSE //doublecode remove later
+                    value := '';
+                    GetValue_WithKeyArray := keyFound;
+                    RETURN;
+                END_IF;
+
+
+
+            END_FOR;
+            
+            
+
+        END_METHOD
+
+
+
+
+
 
         METHOD PUBLIC GetValue : BOOL
             VAR_INPUT
