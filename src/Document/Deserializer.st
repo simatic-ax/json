@@ -3,14 +3,15 @@ USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
     CLASS Deserializer
+        //TODO: initializer (kontruktor)
         VAR PRIVATE //TODO Public entfernen wenn ref_to array star, derzeit nur noch zum testen drin!
-            buffer : ARRAY[0..999] OF CHAR;
+            buffer : REF_TO ARRAY[0..999] OF CHAR;
         END_VAR
 
         //Temporäre Hilfsmethode um Buffer zus etzten, bis Ref_to array*
         METHOD PUBLIC SetBuffer
             VAR_INPUT
-                _buffer : ARRAY[0..999] OF CHAR;
+                _buffer : REF_TO ARRAY[0..999] OF CHAR;
             end_var
 
             buffer := _buffer;
@@ -28,7 +29,7 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
 
             FOR loopIndex := startIndex TO endIndex DO
-                IF NOT (buffer[loopIndex] = key^[keyIndex])  THEN
+                IF NOT (buffer^[loopIndex] = key^[keyIndex])  THEN
                     KeyIsInIndexSpan := FALSE;
                     RETURN;
                 END_IF;
@@ -54,7 +55,7 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
 
             FOR index := startIndex TO endIndex DO
-                IF NOT ((buffer[index] = ' ') OR ((buffer[index] = '"'))) THEN
+                IF NOT ((buffer^[index] = ' ') OR ((buffer^[index] = '"'))) THEN
                     realStartIndex := index;
                     EXIT;
                 END_IF;
@@ -62,14 +63,14 @@ NAMESPACE Simatic.Ax.Json
 
 
             FOR index := endIndex TO realStartIndex BY incrementBackwards DO
-                IF NOT ((buffer[index] = ' ') OR ((buffer[index] = '"'))) THEN
+                IF NOT ((buffer^[index] = ' ') OR ((buffer^[index] = '"'))) THEN
                     realEndIndex := index;
                     EXIT;
                 END_IF;
             
             END_FOR;
 
-            GetValueFromIndex := Conversion.Arrays.ToString(buffer, realStartIndex, realEndIndex);
+            GetValueFromIndex := Conversion.Arrays.ToString(buffer^, realStartIndex, realEndIndex);
         END_METHOD
 
         METHOD PRIVATE GetBufferIndizes
@@ -83,14 +84,14 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
 
             FOR index := 0 TO 999 DO //TODO: Array* upper und lowerbound
-                IF (buffer[index] = '{') THEN
+                IF (buffer^[index] = '{') THEN
                     bufferStart := index;
                     EXIT;
                 END_IF;
             END_FOR;
 
             FOR index := 999 TO 0 BY incrementBackwards DO
-                IF (buffer[index] = '}') THEN
+                IF (buffer^[index] = '}') THEN
                     bufferEnd := index;
                     RETURN;
                 END_IF;
@@ -112,6 +113,7 @@ NAMESPACE Simatic.Ax.Json
                 inKeyArea : BOOL := TRUE;
                 inNestedArea: BOOL := FALSE;
                 inValueArea: BOOL := FALSE;
+                inArrayArea: BOOL := FALSE;
 
                 areaStartIndex: INT;
                 areaEndIndex: INT;
@@ -129,7 +131,7 @@ NAMESPACE Simatic.Ax.Json
                 
                 //----- key area
                 IF inKeyArea AND NOT inNestedArea AND NOT inValueArea THEN
-                    IF (keyFound = FALSE AND buffer[index] = '"') THEN
+                    IF (keyFound = FALSE AND buffer^[index] = '"') THEN
                         quotationMarkCount := quotationMarkCount + 1;
     
                         IF (quotationMarkCount = 1) THEN
@@ -151,21 +153,46 @@ NAMESPACE Simatic.Ax.Json
                     END_IF;
                 END_IF;
                 
-                //----- nested area
+                //----- array area
                 IF NOT inKeyArea THEN
-                    IF (buffer[index] = '{') THEN
-                        inNestedArea := TRUE;
+                    IF (buffer^[index] = '[') THEN
+                        inArrayArea := TRUE;
+                        inNestedArea := FALSE;
                         inKeyArea := FALSE;
                         inValueArea:= FALSE;
 
                         areaStartIndex := index;
                         CONTINUE;
                     END_IF;
-    
-                    IF (buffer[index] = '}' AND NOT inValueArea) THEN
+
+                    IF (buffer^[index] = ']' AND NOT inValueArea) THEN
                         inKeyArea := TRUE;
                         inNestedArea := FALSE;
                         inValueArea := FALSE;
+                        inArrayArea := FALSE;
+                        
+                        areaEndIndex := index;
+                        valueFound := TRUE;
+                    END_IF;
+                END_IF;
+
+                //----- nested area
+                IF NOT inKeyArea AND NOT inArrayArea THEN
+                    IF (buffer^[index] = '{') THEN
+                        inNestedArea := TRUE;
+                        inKeyArea := FALSE;
+                        inValueArea:= FALSE;
+                        inArrayArea := FALSE;
+
+                        areaStartIndex := index;
+                        CONTINUE;
+                    END_IF;
+    
+                    IF (buffer^[index] = '}' AND NOT inValueArea) THEN
+                        inKeyArea := TRUE;
+                        inNestedArea := FALSE;
+                        inValueArea := FALSE;
+                        inArrayArea := FALSE;
                         
                         areaEndIndex := index;
                         valueFound := TRUE;
@@ -173,20 +200,22 @@ NAMESPACE Simatic.Ax.Json
                 END_IF;
                 
                 //----- value area
-                IF NOT inKeyArea AND NOT inNestedArea THEN
-                    IF (buffer[index] = ':' ) THEN
+                IF NOT inKeyArea AND NOT inNestedArea AND NOT inArrayArea THEN
+                    IF (buffer^[index] = ':' ) THEN
                         inValueArea := TRUE;
                         inNestedArea := FALSE;
                         inKeyArea := FALSE;
+                        inArrayArea := FALSE;
 
                         areaStartIndex := index + 1;
                         CONTINUE;
                     END_IF;
     
-                    IF (buffer[index] = ',' OR buffer[index] = '}') THEN
+                    IF (buffer^[index] = ',' OR buffer^[index] = '}') THEN
                         inKeyArea := TRUE;
                         inValueArea := FALSE;
                         inNestedArea := FALSE;
+                        inArrayArea := FALSE;
     
                         areaEndIndex := index - 1;
                         valueFound := TRUE;

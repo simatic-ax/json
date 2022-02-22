@@ -9,7 +9,7 @@ NAMESPACE Deserializer
 {TestFixture}
 CLASS Test_FindValueInBuffer
     VAR protected
-        doc : Deserializer;
+        deserializer : Deserializer;
 
         buffer : ARRAY[0..999] OF CHAR;
         key: STRING;
@@ -25,10 +25,10 @@ CLASS Test_FindValueInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := '1234', arr := buffer);
-        doc.SetBuffer(buffer);
+        deserializer.SetBuffer(REF(buffer));
 
         testIndex1:= 0; testIndex2 := 3;
-        value:= doc.GetValueFromIndex(testIndex1, testIndex2);
+        value:= deserializer.GetValueFromIndex(testIndex1, testIndex2);
 
         Equal('1234', value);
         
@@ -41,10 +41,10 @@ CLASS Test_FindValueInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := '    1234    ', arr := buffer);
-        doc.SetBuffer(buffer);
+        deserializer.SetBuffer(REF(buffer));
 
         testIndex1:= 0; testIndex2 := 10;
-        value:= doc.GetValueFromIndex(testIndex1, testIndex2);
+        value:= deserializer.GetValueFromIndex(testIndex1, testIndex2);
 
         Equal('1234', value);
         
@@ -57,10 +57,10 @@ CLASS Test_FindValueInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := ' "1234"      ', arr := buffer);
-        doc.SetBuffer(buffer);
+        deserializer.SetBuffer(REF(buffer));
 
         testIndex1:= 0; testIndex2 := 10;
-        value:= doc.GetValueFromIndex(testIndex1, testIndex2);
+        value:= deserializer.GetValueFromIndex(testIndex1, testIndex2);
 
         Equal('1234', value);
         
@@ -76,21 +76,72 @@ CLASS Test_FindValueInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(buffer); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         key := 'key';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.GetValue( REF(key), value);
         Equal(8, LengthOf(value));
         Equal('Element1', value);
 
         key := 'Key 4';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.GetValue( REF(key), value);
         Equal(4, LengthOf(value));
         Equal('1234', value);
 
         key := 'not a key';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.GetValue( REF(key), value);
         Equal('', value);
+    END_Method
+
+    {Test}
+    Method Public Test_FindValue_in_JSON_SimpleArray
+        VAR
+            JSON_Entry: STRING := '{ "arraykey": [123, 456]}';
+
+            len:DINT;
+            keyFound: BOOL;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+
+        key := 'arraykey';
+        keyFound := deserializer.GetValue( REF(key), value);
+        Equal('[123, 456]', value);
+    END_Method
+
+    {Test}
+    Method Public Test_FindValue_in_JSON_ComplexArray
+        VAR
+            JSON_Entry: STRING := '{ "key1": 1234,"arraykey": [123, 456], "key2": 456}';
+
+            len:DINT;
+            keyFound: BOOL;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+
+        key := 'arraykey';
+        keyFound := deserializer.GetValue( REF(key), value);
+        Equal('[123, 456]', value);
+    END_Method
+
+    {Test}
+    Method Public Test_FindValue_in_JSON_NestedArray
+        VAR
+            JSON_Entry: STRING := '{ "key1": 1234,"arraykey": [{"nestedkey1": 1234, "nestedkey2": 456}, {"nestedkey3": 1234, "nestedkey4": 456}], "key2": 456}';
+
+            len:DINT;
+            keyFound: BOOL;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+
+        key := 'arraykey';
+        keyFound := deserializer.GetValue( REF(key), value);
+        Equal('[{"nestedkey1": 1234, "nestedkey2": 456}, {"nestedkey3": 1234, "nestedkey4": 456}]', value);
     END_Method
 
     {Test}
@@ -103,17 +154,17 @@ CLASS Test_FindValueInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(buffer);
+        deserializer.SetBuffer(REF(buffer));
 
         key := 'key';
-        keyFound := doc.GetValue( REF(key), nestedElement);
+        keyFound := deserializer.GetValue( REF(key), nestedElement);
         Equal(true, keyFound);
         Equal('{"nested1" : "hello", "nested2" : 1234  }', nestedElement);
 
         len := Strings.ToArray(str := nestedElement, arr := buffer);
-        doc.SetBuffer(buffer);
+        //deserializer.SetBuffer(REF(buffer));
         key := 'nested1';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.GetValue( REF(key), value);
         Equal('hello', value);
 
     END_Method
@@ -128,17 +179,17 @@ CLASS Test_FindValueInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(buffer);
+        deserializer.SetBuffer(REF(buffer));
 
         key := 'key';
-        keyFound := doc.GetValue( REF(key), nestedElement);
+        keyFound := deserializer.GetValue( REF(key), nestedElement);
         Equal(true, keyFound);
         Equal('{"nested1" : "hello", "nested2" : 1234  }', nestedElement);
 
         len := Strings.ToArray(str := nestedElement, arr := buffer);
-        doc.SetBuffer(buffer);
+        //deserializer.SetBuffer(REF(buffer));
         key := 'nested1';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.GetValue( REF(key), value);
         Equal('hello', value);
 
     END_Method

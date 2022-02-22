@@ -30,7 +30,7 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(buffer);
+        doc.SetBuffer(REF(buffer));
 
         key := 'key ';
         keyFound := doc.GetValue( REF(key), value);
@@ -57,7 +57,7 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(buffer);
+        doc.SetBuffer(REF(buffer));
 
         key := 'nested';
         keyFound := doc.GetValue( REF(key), value);
@@ -76,7 +76,7 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(buffer);
+        doc.SetBuffer(REF(buffer));
 
         key := 'key ';
         keyFound := doc.GetValue( REF(key), value);
@@ -92,6 +92,25 @@ CLASS Test_FindKeyInBuffer
     END_Method
 
     {Test}
+    Method Public Test_FindKeysPosition_with_JSON_SimpleArray
+        VAR
+            JSON_Entry: STRING := '{ "simpleArray": [123, 456]}';
+
+            len:DINT;
+            keyStart : int;
+            keyEnd : int;
+            keyFound: BOOL;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        doc.SetBuffer(REF(buffer));
+
+        key := 'simpleArray';
+        keyFound := doc.GetValue( REF(key), value);
+        Equal(TRUE, keyFound);
+    END_Method
+
+    {Test}
     Method Public Test_KeyIsInIndexSpan_FindsKey
         VAR
             len:DINT;
@@ -102,7 +121,7 @@ CLASS Test_FindKeyInBuffer
 
         key := 'key';
         len:= Strings.ToArray(str := key, arr := buffer);
-        doc.SetBuffer(buffer);
+        doc.SetBuffer(REF(buffer));
 
         keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
         Equal(TRUE, keyFound);
