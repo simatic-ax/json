@@ -154,7 +154,7 @@ NAMESPACE Simatic.Ax.Json
                 END_IF;
                 
                 //----- array area
-                IF NOT inKeyArea THEN
+                IF NOT inKeyArea AND NOT inNestedArea THEN
                     IF (buffer^[index] = '[') THEN
                         inArrayArea := TRUE;
                         inNestedArea := FALSE;

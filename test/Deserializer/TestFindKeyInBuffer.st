@@ -5,6 +5,7 @@ using Simatic.Ax.Json;
 
 
 NAMESPACE Deserializer
+NAMESPACE FindKeys
 
 {TestFixture}
 CLASS Test_FindKeyInBuffer
@@ -133,4 +134,5 @@ CLASS Test_FindKeyInBuffer
 
 END_CLASS
 
+END_NAMESPACE
 END_NAMESPACE
