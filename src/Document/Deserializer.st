@@ -187,7 +187,7 @@ NAMESPACE Simatic.Ax.Json
                         END_IF;
                     END_IF;
                     
-                    //----- array area -> selbes Problem wie {! (und ").... zählen!
+                    //----- array area
                     IF NOT inKeyArea AND NOT inNestedArea THEN
                         IF (buffer^[index] = '[') THEN
                             squareBrakedCount := squareBrakedCount + 1;
@@ -205,7 +205,7 @@ NAMESPACE Simatic.Ax.Json
                         END_IF;
     
                         IF (buffer^[index] = ']' AND NOT inValueArea) THEN
-                            squareBrakedCount := squareBrakedCount + 1;
+                            squareBrakedCount := squareBrakedCount - 1;
 
                             IF squareBrakedCount = 0 THEN
                                 inKeyArea := TRUE;
@@ -220,7 +220,7 @@ NAMESPACE Simatic.Ax.Json
                         END_IF;
                     END_IF;
     
-                    //----- nested area -> bug: bei nested in nested wird die klammer zu früh geschlossen! Klammern zählen!
+                    //----- nested area
                     IF NOT inKeyArea AND NOT inArrayArea THEN
                         IF (buffer^[index] = '{') THEN
                             bracesCount := bracesCount + 1;
@@ -327,6 +327,8 @@ NAMESPACE Simatic.Ax.Json
 
                 index: INT;
                 quotationMarkCount : INT := 0;
+                bracesCount: INT := 0;
+                squareBrakedCount: INT := 0;
 
                 inKeyArea : BOOL := TRUE;
                 inNestedArea: BOOL := FALSE;
@@ -348,7 +350,7 @@ NAMESPACE Simatic.Ax.Json
             FOR index := documentStartIndex TO documentEndIndex DO 
                 
                 //----- key area
-                IF inKeyArea AND NOT inNestedArea AND NOT inValueArea THEN
+                IF inKeyArea AND NOT inNestedArea AND NOT inValueArea AND NOT inArrayArea THEN
                     IF (keyFound = FALSE AND buffer^[index] = '"') THEN
                         quotationMarkCount := quotationMarkCount + 1;
     
@@ -374,46 +376,66 @@ NAMESPACE Simatic.Ax.Json
                 //----- array area
                 IF NOT inKeyArea AND NOT inNestedArea THEN
                     IF (buffer^[index] = '[') THEN
-                        inArrayArea := TRUE;
-                        inNestedArea := FALSE;
-                        inKeyArea := FALSE;
-                        inValueArea:= FALSE;
+                        squareBrakedCount := squareBrakedCount + 1;
 
-                        areaStartIndex := index;
+                        IF squareBrakedCount = 1 THEN
+                            inArrayArea := TRUE;
+                            inNestedArea := FALSE;
+                            inKeyArea := FALSE;
+                            inValueArea:= FALSE;
+
+                            areaStartIndex := index;
+                        END_IF;
+                        
                         CONTINUE;
                     END_IF;
 
                     IF (buffer^[index] = ']' AND NOT inValueArea) THEN
-                        inKeyArea := TRUE;
-                        inNestedArea := FALSE;
-                        inValueArea := FALSE;
-                        inArrayArea := FALSE;
+                        squareBrakedCount := squareBrakedCount - 1;
+
+                        IF squareBrakedCount = 0 THEN
+                            inKeyArea := TRUE;
+                            inNestedArea := FALSE;
+                            inValueArea := FALSE;
+                            inArrayArea := FALSE;
                         
-                        areaEndIndex := index;
-                        valueFound := TRUE;
+                            areaEndIndex := index;
+                            valueFound := TRUE;
+                        END_IF;
+                        
                     END_IF;
                 END_IF;
 
                 //----- nested area
                 IF NOT inKeyArea AND NOT inArrayArea THEN
                     IF (buffer^[index] = '{') THEN
-                        inNestedArea := TRUE;
-                        inKeyArea := FALSE;
-                        inValueArea:= FALSE;
-                        inArrayArea := FALSE;
+                        bracesCount := bracesCount + 1;
 
-                        areaStartIndex := index;
+                        IF bracesCount = 1 THEN
+                            inNestedArea := TRUE;
+                            inKeyArea := FALSE;
+                            inValueArea:= FALSE;
+                            inArrayArea := FALSE;
+
+                            areaStartIndex := index;
+                        END_IF;
+                        
                         CONTINUE;
                     END_IF;
     
                     IF (buffer^[index] = '}' AND NOT inValueArea) THEN
-                        inKeyArea := TRUE;
-                        inNestedArea := FALSE;
-                        inValueArea := FALSE;
-                        inArrayArea := FALSE;
+                        bracesCount := bracesCount - 1;
+
+                        IF bracesCount = 0 THEN
+                            inKeyArea := TRUE;
+                            inNestedArea := FALSE;
+                            inValueArea := FALSE;
+                            inArrayArea := FALSE;
                         
-                        areaEndIndex := index;
-                        valueFound := TRUE;
+                            areaEndIndex := index;
+                            valueFound := TRUE;
+                        END_IF;
+                        
                     END_IF;
                 END_IF;
                 
