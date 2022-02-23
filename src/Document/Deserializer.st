@@ -483,7 +483,7 @@ NAMESPACE Simatic.Ax.Json
 
         END_METHOD
 
-        METHOD PUBLIC TryParse_STRING : BOOL
+        METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key: STRING;
             END_VAR
@@ -498,15 +498,15 @@ NAMESPACE Simatic.Ax.Json
 
             keyArray[0] := key;
 
-            TryParse_STRING := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
 
-            IF TryParse_STRING THEN
+            IF TryParse THEN
                 value:= THIS.GetValueFromIndex(valueStartIndex, valueEndIndex);
             END_IF;
           
         END_METHOD
 
-        METHOD PUBLIC TryParse_STRING : BOOL
+        METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray: ARRAY[*] OF STRING;
             END_VAR
@@ -518,15 +518,58 @@ NAMESPACE Simatic.Ax.Json
                 value: STRING;
             END_VAR
 
-            TryParse_STRING := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
 
-            IF TryParse_STRING THEN
+            IF TryParse THEN
                 value:= THIS.GetValueFromIndex(valueStartIndex, valueEndIndex);
             END_IF;
           
         END_METHOD
 
-        METHOD PUBLIC TryParse_LINT : BOOL
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                key: STRING;
+            END_VAR
+            VAR 
+                keyArray: ARRAY[0..0] OF STRING;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: SINT;
+            END_VAR
+
+            keyArray[0] := key;
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                keyArray: ARRAY[*] OF STRING;
+            END_VAR
+            VAR 
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: SINT;
+            END_VAR
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key: STRING;
             END_VAR
@@ -541,15 +584,15 @@ NAMESPACE Simatic.Ax.Json
 
             keyArray[0] := key;
 
-            TryParse_LINT := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
 
-            IF TryParse_LINT THEN
-                TryParse_LINT:= Conversion.StringToAnyInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            IF TryParse THEN
+                TryParse:= Conversion.StringToAnyInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
             END_IF;
           
         END_METHOD
 
-        METHOD PUBLIC TryParse_LINT : BOOL
+        METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray: ARRAY[*] OF STRING;
             END_VAR
@@ -561,15 +604,56 @@ NAMESPACE Simatic.Ax.Json
                 value: LINT;
             END_VAR
 
-            TryParse_LINT := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
 
-            IF TryParse_LINT THEN
-                TryParse_LINT:= Conversion.StringToAnyInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            IF TryParse THEN
+                TryParse:= Conversion.StringToAnyInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
             END_IF;
           
         END_METHOD
 
-        //TO_<TYPE>(X)
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                key: STRING;
+            END_VAR
+            VAR 
+                keyArray: ARRAY[0..0] OF STRING;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: DINT;
+            END_VAR
+
+            keyArray[0] := key;
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                keyArray: ARRAY[*] OF STRING;
+            END_VAR
+            VAR 
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: DINT;
+            END_VAR
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
 
     END_CLASS
 END_NAMESPACE
