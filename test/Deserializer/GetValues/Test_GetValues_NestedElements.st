@@ -73,9 +73,30 @@ CLASS Test_Deserializer_GetValues_NestedElements
         Equal(true, keyFound);
         Equal('{"nested1" : "hello", "nested2" : 1234  }', value);
 
-        key := 'nested1';
         keyFound := deserializer.TryParse( keyArray, value);
         Equal('hello', value);
+
+    END_Method
+
+    {Test}
+    Method Public Test_FindValue_NestedElement_in_JSON_NestedInNested
+        VAR
+            JSON_Entry: STRING := '{"anotherkey": 123, "key": {"nested1" : "hello", "nestedkey": {"nInNested": "goodbye", "k": 1234}, "nested2" : 1234  }, "differentKey": 12 }';
+            len:DINT;
+            keyFound: BOOL;
+            keyArray: ARRAY [0..2] OF STRING:= ['key', 'nestedkey', 'nInNested'];
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        deserializer.SetBuffer(REF(buffer));
+
+        key := 'key';
+        keyFound := deserializer.TryParse( key, value);
+        Equal(true, keyFound);
+        Equal('{"nested1" : "hello", "nestedkey": {"nInNested": "goodbye", "k": 1234}, "nested2" : 1234  }', value);
+
+        keyFound := deserializer.TryParse( keyArray, value);
+        Equal('goodbye', value);
 
     END_Method
 
@@ -96,12 +117,10 @@ CLASS Test_Deserializer_GetValues_NestedElements
         Equal(true, keyFound);
         Equal('{"nested1" : ["hello", "123"], "nested2" : 1234  }', value);
 
-        key := 'nested1';
         keyFound := deserializer.TryParse( keyArray, value);
         Equal('["hello", "123"]', value);
 
     END_Method
-
 
 END_CLASS
 
