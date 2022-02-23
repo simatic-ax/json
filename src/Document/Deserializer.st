@@ -655,5 +655,219 @@ NAMESPACE Simatic.Ax.Json
           
         END_METHOD
 
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                key: STRING;
+            END_VAR
+            VAR 
+                keyArray: ARRAY[0..0] OF STRING;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: INT;
+            END_VAR
+
+            keyArray[0] := key;
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                keyArray: ARRAY[*] OF STRING;
+            END_VAR
+            VAR 
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: INT;
+            END_VAR
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                key: STRING;
+            END_VAR
+            VAR 
+                keyArray: ARRAY[0..0] OF STRING;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: USINT;
+            END_VAR
+
+            keyArray[0] := key;
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                keyArray: ARRAY[*] OF STRING;
+            END_VAR
+            VAR 
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: USINT;
+            END_VAR
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                key: STRING;
+            END_VAR
+            VAR 
+                keyArray: ARRAY[0..0] OF STRING;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: UINT;
+            END_VAR
+
+            keyArray[0] := key;
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                keyArray: ARRAY[*] OF STRING;
+            END_VAR
+            VAR 
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: UINT;
+            END_VAR
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+        
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                key: STRING;
+            END_VAR
+            VAR 
+                keyArray: ARRAY[0..0] OF STRING;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: UDINT;
+            END_VAR
+
+            keyArray[0] := key;
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                keyArray: ARRAY[*] OF STRING;
+            END_VAR
+            VAR 
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: UDINT;
+            END_VAR
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                key: STRING;
+            END_VAR
+            VAR 
+                keyArray: ARRAY[0..0] OF STRING;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: ULINT;
+            END_VAR
+
+            keyArray[0] := key;
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse : BOOL
+            VAR_INPUT
+                keyArray: ARRAY[*] OF STRING;
+            END_VAR
+            VAR 
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: ULINT;
+            END_VAR
+
+            TryParse := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse THEN
+                TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
     END_CLASS
 END_NAMESPACE
