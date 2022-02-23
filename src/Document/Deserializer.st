@@ -126,14 +126,14 @@ NAMESPACE Simatic.Ax.Json
         //Playground
         METHOD PUBLIC GetValue_WithKeyArray : BOOL
             VAR_INPUT
-                keyArray : REF_TO ARRAY[0..1] OF STRING;
+                keyArray : ARRAY[*] OF STRING;
             END_VAR
             VAR_TEMP
                 key: STRING;
                 keyFound: BOOL := FALSE;
                 valueFound: BOOL := FALSE;
 
-                keyIndex: INT;
+                keyIndex: DINT;
                 index: INT;
 
                 quotationMarkCount : INT := 0;
@@ -150,6 +150,9 @@ NAMESPACE Simatic.Ax.Json
 
                 documentStartIndex: INT;
                 documentEndIndex: INT;
+
+                keyArrayLower: DINT;
+                keyArrayUpper: DINT;
             END_VAR
             VAR_OUTPUT
                 value: STRING;
@@ -157,9 +160,12 @@ NAMESPACE Simatic.Ax.Json
 
             THIS.GetBufferIndizes(documentStartIndex, documentEndIndex );
 
+            keyArrayLower:= LOWER_BOUND(keyArray, 1);
+            keyArrayUpper:= UPPER_BOUND(keyArray, 1);
+
             //gehe durch key Array!
-            FOR keyIndex := 0 TO 1 DO
-                key := keyArray^[keyIndex];
+            FOR keyIndex := keyArrayLower TO keyArrayUpper DO
+                key := keyArray[keyIndex];
                 
                 FOR index := documentStartIndex TO documentEndIndex DO 
                 

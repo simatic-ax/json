@@ -27,7 +27,7 @@ CLASS Playground
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         
-        keyFound := deserializer.GetValue_WithKeyArray( REF(keyArray), value);
+        keyFound := deserializer.GetValue_WithKeyArray( keyArray, value);
         Equal('123', value);
 
         
@@ -45,9 +45,8 @@ CLASS Playground
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         
-        keyFound := deserializer.GetValue_WithKeyArray( REF(keyArray), value);
+        keyFound := deserializer.GetValue_WithKeyArray( keyArray, value);
         Equal('123', value);
-
         
     END_Method
 
