@@ -7,18 +7,18 @@ using Simatic.Ax.Json;
 NAMESPACE Deserializer
 
 {TestFixture}
-CLASS Playground
+CLASS TryParse
     VAR protected
         deserializer : Deserializer;
-        keyArray: ARRAY [0..1] OF STRING := ['key1', 'nestedkey1'];
         buffer : ARRAY[0..999] OF CHAR;
         value: STRING;
     END_VAR
 
     {Test}
-    Method Public Test_FindValue_in_nestedElementWithPlayground
+    Method Public Test_TryParse_String
         VAR
             JSON_Entry: STRING := '{ "key1": {"nestedkey1": 123}}';
+            key: STRING := 'key1';
             len:DINT;
             keyFound: BOOL;
         END_VAR
@@ -27,16 +27,17 @@ CLASS Playground
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         
-        keyFound := deserializer.GetValue_WithKeyArray( keyArray, value);
-        Equal('123', value);
+        keyFound := deserializer.TryParse_STRING( key, value);
+        Equal('{"nestedkey1": 123}', value);
 
         
     END_Method
 
     {Test}
-    Method Public Test_FindValue_in_nestedElementWithPlayground_Complex
+    Method Public Test_TryParse_String_Nested
         VAR
             JSON_Entry: STRING := '{ "aKey": "hallo", "anotherKey": 1234, "key1": {"nestedkey1": 123, "nestedkey2": "hallo", "nestedkey3": {"nestedInNestedkey1": 1234 }}}';
+            keyArray: ARRAY [0..1] OF STRING := ['key1', 'nestedkey1'];
             len:DINT;
             keyFound: BOOL;
         END_VAR
@@ -45,7 +46,7 @@ CLASS Playground
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         
-        keyFound := deserializer.GetValue_WithKeyArray( keyArray, value);
+        keyFound := deserializer.TryParse_STRING( keyArray, value);
         Equal('123', value);
         
     END_Method

@@ -1,3 +1,4 @@
+USING Simatic.Ax.Conversion;
 USING Deserializer;
 USING System.Strings;
 
@@ -145,9 +146,6 @@ NAMESPACE Simatic.Ax.Json
                 inArrayArea: BOOL := FALSE;
                 inNestedArea: BOOL := FALSE;
 
-                areaStartIndex: INT;
-                areaEndIndex: INT;
-
                 documentStartIndex: INT;
                 documentEndIndex: INT;
 
@@ -155,7 +153,8 @@ NAMESPACE Simatic.Ax.Json
                 keyArrayUpper: DINT;
             END_VAR
             VAR_OUTPUT
-                value: STRING;
+                areaStartIndex: INT;
+                areaEndIndex: INT;
             END_VAR
 
             THIS.GetBufferIndizes(documentStartIndex, documentEndIndex );
@@ -294,7 +293,7 @@ NAMESPACE Simatic.Ax.Json
 
                 //doubleCheck, Remove later
                 IF (keyFound = TRUE AND valueFound = TRUE) THEN
-                    value:= THIS.GetValueFromIndex(areaStartIndex, areaEndIndex);
+                    
                     GetValue_WithKeyArray:= keyFound;
                     documentStartIndex:= areaStartIndex;
                     documentEndIndex:= areaEndIndex;
@@ -305,7 +304,7 @@ NAMESPACE Simatic.Ax.Json
 
                 
                 ELSE //doublecode remove later
-                    value := '';
+
                     GetValue_WithKeyArray := keyFound;
                     RETURN;
                 END_IF;
@@ -484,31 +483,93 @@ NAMESPACE Simatic.Ax.Json
 
         END_METHOD
 
-        METHOD PUBLIC TryParse : BOOL
+        METHOD PUBLIC TryParse_STRING : BOOL
             VAR_INPUT
-                keys : ARRAY[*] OF STRING;  //  --> ARRAY[*] OF STRING key[0] := 'key', key[1] := 'nestedkey'
+                key: STRING;
             END_VAR
-
+            VAR 
+                keyArray: ARRAY[0..0] OF STRING;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
             VAR_OUTPUT
-                value : DINT;
-            END_VAR
-            
-            VAR_TEMP
-                ub : DINT;
-                lb : DINT;
-                i : DINT;
+                value: STRING;
             END_VAR
 
-            ub := UPPER_BOUND(keys, 1);
-            lb := LOWER_BOUND(keys, 1);
+            keyArray[0] := key;
 
-            FOR i := lb TO ub DO
-                ;
-            END_FOR;
+            TryParse_STRING := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
 
-            TryParse := FALSE;
-            TryParse := TRUE;
+            IF TryParse_STRING THEN
+                value:= THIS.GetValueFromIndex(valueStartIndex, valueEndIndex);
+            END_IF;
+          
         END_METHOD
+
+        METHOD PUBLIC TryParse_STRING : BOOL
+            VAR_INPUT
+                keyArray: ARRAY[*] OF STRING;
+            END_VAR
+            VAR 
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: STRING;
+            END_VAR
+
+            TryParse_STRING := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse_STRING THEN
+                value:= THIS.GetValueFromIndex(valueStartIndex, valueEndIndex);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse_LINT : BOOL
+            VAR_INPUT
+                key: STRING;
+            END_VAR
+            VAR 
+                keyArray: ARRAY[0..0] OF STRING;
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: LINT;
+            END_VAR
+
+            keyArray[0] := key;
+
+            TryParse_LINT := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse_LINT THEN
+                TryParse_LINT:= Conversion.StringToAnyInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        METHOD PUBLIC TryParse_LINT : BOOL
+            VAR_INPUT
+                keyArray: ARRAY[*] OF STRING;
+            END_VAR
+            VAR 
+                valueStartIndex: INT;
+                valueEndIndex: INT;
+            END_VAR
+            VAR_OUTPUT
+                value: LINT;
+            END_VAR
+
+            TryParse_LINT := THIS.GetValue_WithKeyArray(keyArray, valueStartIndex, valueEndIndex);
+
+            IF TryParse_LINT THEN
+                TryParse_LINT:= Conversion.StringToAnyInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
+            END_IF;
+          
+        END_METHOD
+
+        //TO_<TYPE>(X)
 
     END_CLASS
 END_NAMESPACE
