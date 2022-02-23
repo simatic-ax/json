@@ -11,7 +11,6 @@ CLASS TryParse
     VAR protected
         deserializer : Deserializer;
         buffer : ARRAY[0..999] OF CHAR;
-        value: STRING;
     END_VAR
 
     {Test}
@@ -21,6 +20,7 @@ CLASS TryParse
             key: STRING := 'key1';
             len:DINT;
             keyFound: BOOL;
+            value: STRING;
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
@@ -40,6 +40,7 @@ CLASS TryParse
             keyArray: ARRAY [0..1] OF STRING := ['key1', 'nestedkey1'];
             len:DINT;
             keyFound: BOOL;
+            value: STRING;
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
@@ -48,6 +49,45 @@ CLASS TryParse
         
         keyFound := deserializer.TryParse_STRING( keyArray, value);
         Equal('123', value);
+        
+    END_Method
+
+    {Test}
+    Method Public Test_TryParse_LINT
+        VAR
+            JSON_Entry: STRING := '{ "key1": 1234}';
+            key: STRING := 'key1';
+            len:DINT;
+            keyFound: BOOL;
+            value: LINT;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+
+        
+        keyFound := deserializer.TryParse_LINT( key, value);
+        Equal(1234, value);
+
+        
+    END_Method
+
+    {Test}
+    Method Public Test_TryParse_LINT_Nested
+        VAR
+            JSON_Entry: STRING := '{ "aKey": "hallo", "anotherKey": 1234, "key1": {"nestedkey1": 123, "nestedkey2": "hallo", "nestedkey3": {"nestedInNestedkey1": 1234 }}}';
+            keyArray: ARRAY [0..1] OF STRING := ['key1', 'nestedkey1'];
+            len:DINT;
+            keyFound: BOOL;
+            value: LINT;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+
+        
+        keyFound := deserializer.TryParse_LINT( keyArray, value);
+        Equal(123, value);
         
     END_Method
 
