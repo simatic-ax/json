@@ -33,6 +33,24 @@ CLASS Playground
         
     END_Method
 
+    {Test}
+    Method Public Test_FindValue_in_nestedElementWithPlayground_Complex
+        VAR
+            JSON_Entry: STRING := '{ "aKey": "hallo", "anotherKey": 1234, "key1": {"nestedkey1": 123, "nestedkey2": "hallo", "nestedkey3": {"nestedInNestedkey1": 1234 }}}';
+            len:DINT;
+            keyFound: BOOL;
+        END_VAR
+
+        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+
+        
+        keyFound := deserializer.GetValue_WithKeyArray( REF(keyArray), value);
+        Equal('123', value);
+
+        
+    END_Method
+
 END_CLASS
 
 END_NAMESPACE
