@@ -24,13 +24,10 @@ CLASS TryParse
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer));
 
-        
         keyFound := deserializer.TryParse( key, value);
         Equal('{"nestedkey1": 123}', value);
-
-        
     END_Method
 
     {Test}
@@ -44,12 +41,10 @@ CLASS TryParse
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer));
 
-        
         keyFound := deserializer.TryParse( keyArray, value);
         Equal('123', value);
-        
     END_Method
 
     {Test}
@@ -63,13 +58,10 @@ CLASS TryParse
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
-
+        deserializer.SetBuffer(REF(buffer));
         
         keyFound := deserializer.TryParse( key, value);
         Equal(1234, value);
-
-        
     END_Method
 
     {Test}
@@ -83,12 +75,10 @@ CLASS TryParse
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer));
 
-        
         keyFound := deserializer.TryParse( keyArray, value);
         Equal(123, value);
-        
     END_Method
 
     {Test}
@@ -102,13 +92,10 @@ CLASS TryParse
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer)); 
 
-        
         keyFound := deserializer.TryParse( key, value);
         Equal(-128, value);
-
-        
     END_Method
 
     {Test}
@@ -122,12 +109,10 @@ CLASS TryParse
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer));
 
-        
         keyFound := deserializer.TryParse( keyArray, value);
         Equal(123, value);
-        
     END_Method
 
     {Test}
@@ -137,17 +122,14 @@ CLASS TryParse
             key: STRING := 'key1';
             len:DINT;
             keyFound: BOOL;
-            value: SINT;
+            value: DINT;
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer));
 
-        
         keyFound := deserializer.TryParse( key, value);
         Equal(1234, value);
-
-        
     END_Method
 
     {Test}
@@ -161,12 +143,10 @@ CLASS TryParse
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer));
 
-        
         keyFound := deserializer.TryParse( keyArray, value);
         Equal(123, value);
-        
     END_Method
 
 END_CLASS

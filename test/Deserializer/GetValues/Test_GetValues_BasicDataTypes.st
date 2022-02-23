@@ -30,17 +30,17 @@ CLASS Test_Deserializer_GetValues_BasicDataTypes
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         key := 'key';
-        keyFound := deserializer.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(8, LengthOf(value));
         Equal('Element1', value);
 
         key := 'Key 4';
-        keyFound := deserializer.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(4, LengthOf(value));
         Equal('1234', value);
 
         key := 'not a key';
-        keyFound := deserializer.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal('', value);
     END_Method
 

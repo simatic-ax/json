@@ -10,7 +10,7 @@ NAMESPACE FindKeys
 {TestFixture}
 CLASS Test_FindKeyInBuffer
     VAR protected
-        doc : Deserializer;
+        deserializer : Deserializer;
 
         buffer : ARRAY[0..999] OF CHAR;
         key: STRING;
@@ -31,18 +31,18 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(REF(buffer));
+        deserializer.SetBuffer(REF(buffer));
 
         key := 'key ';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(TRUE, keyFound);
 
         key := 'Key 2';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(TRUE, keyFound);
 
         key := 'not a key';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(FALSE, keyFound);
     END_Method
 
@@ -58,10 +58,10 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(REF(buffer));
+        deserializer.SetBuffer(REF(buffer));
 
         key := 'nested';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(TRUE, keyFound);
     END_Method
 
@@ -77,18 +77,18 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(REF(buffer));
+        deserializer.SetBuffer(REF(buffer));
 
         key := 'key ';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(TRUE, keyFound);
 
         key := 'nested';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(TRUE, keyFound);
 
         key := 'key2';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(TRUE, keyFound);
     END_Method
 
@@ -104,10 +104,10 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        doc.SetBuffer(REF(buffer));
+        deserializer.SetBuffer(REF(buffer));
 
         key := 'simpleArray';
-        keyFound := doc.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal(TRUE, keyFound);
     END_Method
 
@@ -122,13 +122,13 @@ CLASS Test_FindKeyInBuffer
 
         key := 'key';
         len:= Strings.ToArray(str := key, arr := buffer);
-        doc.SetBuffer(REF(buffer));
+        deserializer.SetBuffer(REF(buffer));
 
-        keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
+        keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
         Equal(TRUE, keyFound);
 
         key := 'not';
-        keyFound := doc.KeyIsInIndexSpan(REF(key), keyStart, keyEnd);
+        keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
         Equal(FALSE, keyFound);
     END_Method
 

@@ -30,7 +30,7 @@ CLASS Test_Deserializer_GetValues_Arrays
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         key := 'arraykey';
-        keyFound := deserializer.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal('[123, 456]', value);
     END_Method
 
@@ -47,7 +47,7 @@ CLASS Test_Deserializer_GetValues_Arrays
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         key := 'arraykey';
-        keyFound := deserializer.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal('[123, 456]', value);
     END_Method
 
@@ -64,7 +64,7 @@ CLASS Test_Deserializer_GetValues_Arrays
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         key := 'arraykey';
-        keyFound := deserializer.GetValue( REF(key), value);
+        keyFound := deserializer.TryParse( key, value);
         Equal('[{"nestedkey1": 1234, "nestedkey2": 456}, {"nestedkey3": 1234, "nestedkey4": 456}]', value);
     END_Method
 
