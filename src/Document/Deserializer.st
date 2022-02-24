@@ -66,7 +66,7 @@ NAMESPACE Simatic.Ax.Json
             FOR index := endIndex TO realStartIndex BY incrementBackwards DO
                 IF NOT ((buffer^[index] = ' ') OR ((buffer^[index] = '"'))) THEN
                     realEndIndex := index;
-                    EXIT;
+                    RETURN;
                 END_IF;
             
             END_FOR;
