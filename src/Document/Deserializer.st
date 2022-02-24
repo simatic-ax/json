@@ -18,7 +18,7 @@ NAMESPACE Simatic.Ax.Json
             buffer := _buffer;
         END_METHOD
 
-         METHOD PUBLIC KeyIsInIndexSpan : BOOL 
+         METHOD PRIVATE KeyIsInIndexSpan : BOOL 
             VAR_INPUT
                 key :  STRING;
                 startIndex: INT;
@@ -42,7 +42,7 @@ NAMESPACE Simatic.Ax.Json
 
         END_METHOD
 
-        METHOD PUBLIC GetValueFromIndex : STRING
+        METHOD PRIVATE GetValueFromIndex : STRING
             VAR_INPUT
                startIndex: INT;
                endIndex: INT; 
@@ -99,7 +99,7 @@ NAMESPACE Simatic.Ax.Json
             END_FOR;
         END_METHOD
 
-        METHOD PUBLIC GetValue_WithKeyArray : BOOL
+        METHOD PRIVATE GetValue_WithKeyArray : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
             END_VAR

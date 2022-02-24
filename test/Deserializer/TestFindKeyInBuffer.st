@@ -111,26 +111,27 @@ CLASS Test_FindKeyInBuffer
         Equal(TRUE, keyFound);
     END_Method
 
-    {Test}
-    Method Public Test_KeyIsInIndexSpan_FindsKey
-        VAR
-            len:DINT;
-            keyStart : int := 0;
-            keyEnd : int := 2;
-            keyFound: BOOL;
-        END_VAR
+    //Comment in to test the private KeyIsInIndexSpan method
+    // {Test}
+    // Method Public Test_KeyIsInIndexSpan_FindsKey
+    //     VAR
+    //         len:DINT;
+    //         keyStart : int := 0;
+    //         keyEnd : int := 2;
+    //         keyFound: BOOL;
+    //     END_VAR
 
-        key := 'key';
-        len:= Strings.ToArray(str := key, arr := buffer);
-        deserializer.SetBuffer(REF(buffer));
+    //     key := 'key';
+    //     len:= Strings.ToArray(str := key, arr := buffer);
+    //     deserializer.SetBuffer(REF(buffer));
 
-        keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
-        Equal(TRUE, keyFound);
+    //     keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
+    //     Equal(TRUE, keyFound);
 
-        key := 'not';
-        keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
-        Equal(FALSE, keyFound);
-    END_Method
+    //     key := 'not';
+    //     keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
+    //     Equal(FALSE, keyFound);
+    // END_Method
 
 END_CLASS
 
