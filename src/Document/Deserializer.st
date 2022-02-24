@@ -265,7 +265,6 @@ NAMESPACE Simatic.Ax.Json
     
                 END_FOR;
 
-                //doubleCheck, Remove later
                 IF (keyFound = TRUE AND valueFound = TRUE) THEN
 
                     GetValue_WithKeyArray:= keyFound;
@@ -275,9 +274,8 @@ NAMESPACE Simatic.Ax.Json
                     
                     valueFound:= FALSE;
                     keyFound:= FALSE;
-                    
-                ELSE //doublecode remove later
 
+                ELSE 
                     GetValue_WithKeyArray := keyFound;
                     RETURN;
                 END_IF;

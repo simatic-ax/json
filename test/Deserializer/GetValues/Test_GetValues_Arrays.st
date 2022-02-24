@@ -1,7 +1,7 @@
 USING Simatic.Ax.Conversion;
 USING AxUnit.Assert;
 USING System.Strings;
-using Simatic.Ax.Json;
+USING Simatic.Ax.Json;
 
 
 NAMESPACE Deserializer
@@ -27,7 +27,7 @@ CLASS Test_Deserializer_GetValues_Arrays
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer));
 
         key := 'arraykey';
         keyFound := deserializer.TryParse( key, value);
@@ -44,7 +44,7 @@ CLASS Test_Deserializer_GetValues_Arrays
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer));
 
         key := 'arraykey';
         keyFound := deserializer.TryParse( key, value);
@@ -61,7 +61,7 @@ CLASS Test_Deserializer_GetValues_Arrays
         END_VAR
 
         len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
+        deserializer.SetBuffer(REF(buffer));
 
         key := 'arraykey';
         keyFound := deserializer.TryParse( key, value);
