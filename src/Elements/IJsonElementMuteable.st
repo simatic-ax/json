@@ -8,7 +8,7 @@ NAMESPACE Simatic.Ax.Json
 
         METHOD AddElement
             VAR_INPUT
-                elem : IJsonElementMuteable;
+                elem : IJsonElement;
             END_VAR
         END_METHOD
     END_INTERFACE

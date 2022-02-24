@@ -1,10 +1,9 @@
 USING Simatic.Ax.Conversion;
-USING Simatic.Ax.Json;
-
+    
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonInt EXTENDS BaseJsonNumber
+    CLASS JsonUSInt EXTENDS BaseJsonNumber
         VAR PUBLIC
-            Value : INT;
+            Value : USINT;
         END_VAR
     
         METHOD PUBLIC OVERRIDE ToString : STRING

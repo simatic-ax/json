@@ -7,8 +7,8 @@ NAMESPACE Simatic.Ax.Json
             buffer : ARRAY[0..999] OF CHAR;
         END_VAR
         VAR PROTECTED
-            _firstObject : IJsonElementMuteable;
-            _lastObject : IJsonElementMuteable;
+            _firstElement : IJsonElementMuteable;
+            _lastElement : IJsonElementMuteable;
             _rootElement : IJsonElement;
             _lentgh : DINT;
             _bufLowerBound : DINT;
@@ -23,7 +23,7 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
         
             _str := Concat(_str, '{');
-            _elem ?= _firstObject;
+            _elem ?= _firstElement;
             _to ?= _elem;
             WHILE _elem <> NULL DO
                 _str := Concat(_str, _elem.ToString());
@@ -49,7 +49,7 @@ NAMESPACE Simatic.Ax.Json
             _bufIndex := _bufLowerBound;
             THIS.AddChar(c := '{');            
             
-            _elem ?= _firstObject;
+            _elem ?= _firstElement;
             _to ?= _elem;
             WHILE _elem <> NULL DO
                 _elem.Serialize(doc := REF(THIS));
@@ -105,14 +105,14 @@ NAMESPACE Simatic.Ax.Json
                 _elemMuted : IJsonElementMuteable;
             END_VAR
             _elemMuted ?= elem;
-            IF (_firstObject = NULL) THEN
-                _firstObject := _elemMuted;
-                _lastObject := _elemMuted;
+            IF (_firstElement = NULL) THEN
+                _firstElement := _elemMuted;
+                _lastElement := _elemMuted;
                 _rootElement := elem;
             ELSE
                 _elemMuted ?= elem;
-                _lastObject.AddElement(_elemMuted);
-                _lastObject := _elemMuted;
+                _lastElement.AddElement(elem);
+                _lastElement := _elemMuted;
             END_IF;
             ;
         END_METHOD

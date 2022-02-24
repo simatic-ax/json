@@ -1,13 +1,18 @@
-USING Simatic.Ax.Conversion;
-    
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonDoubleInt EXTENDS JsonNumber
+    CLASS JsonBoolean EXTENDS BaseJsonNumber
         VAR PUBLIC
-            value : DINT;
+            Value : BOOL;
+        END_VAR
+        VAR PROTECTED
+            
         END_VAR
     
         METHOD PUBLIC OVERRIDE ToString : STRING
-            ToString := THIS.ToStringHelper(Integer.ToString(value := value));
+            IF (Value) THEN
+                ToString := THIS.ToStringHelper('true');
+            ELSE
+                ToString := THIS.ToStringHelper('false');
+            END_IF;
         END_METHOD
 
         METHOD PUBLIC OVERRIDE Serialize : BOOL
