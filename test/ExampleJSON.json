@@ -1,0 +1,32 @@
+{
+    "WeirdStuff \",##,,,::::" : ",,,###\"::::", 
+    "Element1": 1, 
+    "Element1": 1, 
+    "Element2": "Element1", 
+    "Element3,,,,,,": "Element3,,,,", 
+    
+    "NestedObject": 
+    {
+       "Element1": 1, 
+       "Element2": 2, 
+       "Element3": 3,
+       "Element4": {
+         "abc": 123
+       }
+    },
+    
+    "nestedArray": [ 
+        {
+          "Element1" : "test",
+          "Element2" : 345
+        },
+        {
+          "Element1" : "anArrayElement",
+          "Element2" : 5555
+        }
+      ],
+      "simpleArray": [
+        123,
+        456
+      ]
+}

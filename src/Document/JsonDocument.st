@@ -1,3 +1,4 @@
+USING Deserializer;
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
@@ -114,33 +115,6 @@ NAMESPACE Simatic.Ax.Json
                 _lastElement := _elemMuted;
             END_IF;
             ;
-        END_METHOD
-
-        
-        METHOD PUBLIC TryParse : BOOL
-            VAR_INPUT
-                keys : ARRAY[*] OF STRING;  //  --> ARRAY[*] OF STRING key[0] := 'key', key[1] := 'nestedkey'
-            END_VAR
-
-            VAR_OUTPUT
-                value : DINT;
-            END_VAR
-            
-            VAR_TEMP
-                ub : DINT;
-                lb : DINT;
-                i : DINT;
-            END_VAR
-
-            ub := UPPER_BOUND(keys, 1);
-            lb := LOWER_BOUND(keys, 1);
-
-            FOR i := lb TO ub DO
-                ;
-            END_FOR;
-
-            TryParse := FALSE;
-            TryParse := TRUE;
         END_METHOD
 
     END_CLASS
