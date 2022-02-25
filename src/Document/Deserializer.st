@@ -3,8 +3,8 @@ USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
     CLASS Deserializer
-        //TODO: initializer (kontruktor)
-        VAR PRIVATE //TODO Public entfernen wenn ref_to array star, derzeit nur noch zum testen drin!
+
+        VAR PRIVATE //will be array* in future
             buffer : REF_TO ARRAY[0..999] OF CHAR;
         END_VAR
 
@@ -135,7 +135,7 @@ NAMESPACE Simatic.Ax.Json
             keyArrayLower:= LOWER_BOUND(keyArray, 1);
             keyArrayUpper:= UPPER_BOUND(keyArray, 1);
 
-            //gehe durch key Array!
+            //iterate through keys
             FOR keyIndex := keyArrayLower TO keyArrayUpper DO
                 key := keyArray[keyIndex];
                 
@@ -254,13 +254,11 @@ NAMESPACE Simatic.Ax.Json
                         END_IF;
                     END_IF;
                     
-                    //----- get value
                     IF (keyFound = TRUE AND valueFound = TRUE) THEN
                         EXIT;
-
                     END_IF;
     
-                    valueFound := FALSE; // must be reset, otherwise the last found key is attached!
+                    valueFound := FALSE;
     
                 END_FOR;
 
