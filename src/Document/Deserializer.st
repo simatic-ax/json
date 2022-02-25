@@ -66,7 +66,7 @@ NAMESPACE Simatic.Ax.Json
             FOR index := endIndex TO realStartIndex BY incrementBackwards DO
                 IF NOT ((buffer^[index] = ' ') OR ((buffer^[index] = '"'))) THEN
                     realEndIndex := index;
-                    RETURN;
+                    EXIT;
                 END_IF;
             
             END_FOR;
@@ -94,7 +94,7 @@ NAMESPACE Simatic.Ax.Json
             FOR index := 999 TO 0 BY incrementBackwards DO
                 IF (buffer^[index] = '}') THEN
                     bufferEnd := index;
-                    RETURN;
+                    EXIT;
                 END_IF;
             END_FOR;
         END_METHOD
@@ -270,7 +270,6 @@ NAMESPACE Simatic.Ax.Json
                     GetValue_WithKeyArray:= keyFound;
                     documentStartIndex:= areaStartIndex;
                     documentEndIndex:= areaEndIndex;
-                    GetValue_WithKeyArray := keyFound;
                     
                     valueFound:= FALSE;
                     keyFound:= FALSE;
