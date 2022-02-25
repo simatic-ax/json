@@ -345,7 +345,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+
+            IF NOT TryParse THEN
                 value:= SINT#0;
             END_IF;
           
@@ -367,7 +369,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= SINT#0;
             END_IF;
           
@@ -392,7 +396,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.StringToAnyInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= 0;
             END_IF;
           
@@ -414,7 +420,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.StringToAnyInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= 0;
             END_IF;
           
@@ -439,7 +447,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= 0;
             END_IF;
           
@@ -461,7 +471,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= 0;
             END_IF;
           
@@ -486,7 +498,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= 0;
             END_IF;
           
@@ -508,7 +522,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= 0;
             END_IF;
           
@@ -533,7 +549,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= USINT#0;
             END_IF;
           
@@ -555,7 +573,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= USINT#0;
             END_IF;
           
@@ -580,7 +600,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= USINT#0;
             END_IF;
           
@@ -602,7 +624,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= USINT#0;
             END_IF;
           
@@ -627,7 +651,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= USINT#0;
             END_IF;
           
@@ -649,7 +675,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= USINT#0;
             END_IF;
           
@@ -674,7 +702,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= USINT#0;
             END_IF;
           
@@ -696,7 +726,9 @@ NAMESPACE Simatic.Ax.Json
 
             IF TryParse THEN
                 TryParse:= Conversion.Strings.ToInt(THIS.GetValueFromIndex(valueStartIndex, valueEndIndex), value);
-            ELSE
+            END_IF;
+            
+            IF NOT TryParse THEN
                 value:= USINT#0;
             END_IF;
           
