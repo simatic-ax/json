@@ -5,6 +5,7 @@ NAMESPACE Simatic.Ax.Json
         VAR PUBLIC
             buffer : ARRAY[0..999] OF CHAR;
         END_VAR
+        
         VAR PROTECTED
             _firstElement : IJsonElementMuteable;
             _lastElement : IJsonElementMuteable;
@@ -40,6 +41,10 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 _to : IJsonElementMuteable;
             END_VAR
+
+            // Clear buffer (not hard before serializing)
+            THIS.ClearBuffer();
+
             _bufLowerBound := LOWER_BOUND(buf, 1);
             _bufIndex := _bufLowerBound;
             THIS.AddChar(c := '{');            
@@ -85,7 +90,6 @@ NAMESPACE Simatic.Ax.Json
             GetLength := _lentgh;
         END_METHOD
 
-
         METHOD PUBLIC GetRootElement : IJsonElement
             GetRootElement := _rootElement;
         END_METHOD
@@ -110,6 +114,24 @@ NAMESPACE Simatic.Ax.Json
                 _lastElement := _elemMuted;
             END_IF;
             ;
+        END_METHOD
+
+        METHOD PUBLIC ClearBuffer
+            VAR_INPUT
+                hard : BOOL := FALSE;
+            END_VAR
+            VAR_TEMP
+                i : DINT;
+            END_VAR
+
+            IF (hard) THEN
+                FOR i := _bufLowerBound TO _bufIndex DO
+                    buffer[i] := TO_CHAR(BYTE#16#00);
+                END_FOR;
+            END_IF;
+            _bufLowerBound := 0;
+            _bufIndex := 0;
+            _lentgh := 0;
         END_METHOD
 
     END_CLASS

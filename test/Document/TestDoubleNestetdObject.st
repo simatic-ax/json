@@ -1,8 +1,9 @@
 USING AxUnit.Assert;
 USING System.Strings;
 USING Simatic.Ax.Conversion;
+USING Simatic.Ax.Json;
 
-NAMESPACE Simatic.Ax.Json
+NAMESPACE Document
     {TestFixture}
     CLASS TestDoubleNestetdObject
         
@@ -15,15 +16,7 @@ NAMESPACE Simatic.Ax.Json
             // {"O1": {"O2": "O3""e1" :}}
                                 // 01234567890123456789012345678901234567890
             expString : STRING := '{"O1": {"O2": {"O3": {"e1": 999}}}}';
-            
-            
-            
-            
-            
-            
-            
-            
-            
+                        
             actString : STRING;
             res : BOOL;
             doc : JsonDocument;
@@ -47,6 +40,7 @@ NAMESPACE Simatic.Ax.Json
             len := Strings.ToArray(str := expString, arr := cmpBuff);
             res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
+            Equal(expected := LengthOf(expString), actual := doc.GetLength());
         END_METHOD
         
 
