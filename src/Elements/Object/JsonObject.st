@@ -12,7 +12,6 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 _str : STRING;
                 _to : IJsonElementMuteable;
-                _elem : IJsonElement;
             END_VAR
 
             ;
@@ -22,11 +21,9 @@ NAMESPACE Simatic.Ax.Json
         
             _str := Concat(_str, '{');
             // insert properties
-            _elem ?= _firstElement;
-            _to ?= _elem;
+            _to := _firstElement;
             WHILE _to <> NULL DO
-                _elem ?= _to;
-                _str := Concat(_str, _elem.ToString());
+                _str := Concat(_str, _to.ToString());
                 _to := _to.GetNext();
                 IF (_to <> NULL) THEN
                     _str := Concat(_str, ', ');
@@ -43,7 +40,6 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 _str : STRING;
                 _to : IJsonElementMuteable;
-                _elem : IJsonElement;
             END_VAR
             
             Serialize := FALSE;
@@ -57,12 +53,10 @@ NAMESPACE Simatic.Ax.Json
             doc^.AddChar('{');
             
             // insert properties
-            _elem ?= _firstElement;
-            _to ?= _elem;
+            _to := _firstElement;
             WHILE _to <> NULL DO
-                _elem.Serialize(doc);
+                _to.Serialize(doc);
                 _to := _to.GetNext();
-                _elem ?= _to;
                 IF (_to <> NULL) THEN
                     doc^.AddString(', ');
                 END_IF;
@@ -76,16 +70,15 @@ NAMESPACE Simatic.Ax.Json
                 elem : IJsonElement;
             END_VAR
             VAR_TEMP
-                _elemMuted : IJsonElementMuteable;
+                _lastElem : IJsonElement;
             END_VAR
             IF (_firstElement = NULL) THEN
-                _elemMuted ?= elem;
-                _firstElement := _elemMuted;
-                _lastElement := _elemMuted;
+                _firstElement ?= elem;
+                _lastElement := _firstElement;
             ELSE
-                _elemMuted ?= elem;
-                _lastElement.AddElement(elem);
-                _lastElement := _elemMuted;
+                _lastElem ?= _lastElement;
+                _lastElem.AddElement(elem);
+                _lastElement ?= elem;
             END_IF;
             ;
         END_METHOD
