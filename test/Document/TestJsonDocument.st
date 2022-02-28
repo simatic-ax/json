@@ -1,8 +1,9 @@
 USING AxUnit.Assert;
 USING System.Strings;
 USING Simatic.Ax.Conversion;
+USING Simatic.Ax.Json;
 
-NAMESPACE Simatic.Ax.Json
+NAMESPACE Document
     {TestFixture}
     CLASS TestJsonDocument
         
