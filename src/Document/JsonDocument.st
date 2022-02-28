@@ -41,6 +41,10 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 _to : IJsonElementMuteable;
             END_VAR
+
+            // Clear buffer (not hard before serializing)
+            THIS.ClearBuffer();
+
             _bufLowerBound := LOWER_BOUND(buf, 1);
             _bufIndex := _bufLowerBound;
             THIS.AddChar(c := '{');            

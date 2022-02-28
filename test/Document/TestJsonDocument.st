@@ -44,6 +44,24 @@ NAMESPACE Document
         END_METHOD
 
         {Test}
+        METHOD PUBLIC Test_object_with_one_element_And_Call_Serialize_twice_Expectstill_correct_string
+            // expected string
+            expString := '{"test": 999}';
+
+            doc.AddElement(e);
+            actString := doc.ToString();
+            Equal(expected := expString, actual := actString);           
+            
+            // Test Serialize
+            expArrayCnt := Strings.ToArray(str := expString, arr := expArray);
+            doc.Serialize(doc.buffer);
+            doc.Serialize(doc.buffer);
+            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            Equal(expected := TRUE, actual := result);
+        END_METHOD
+
+
+        {Test}
         METHOD PUBLIC Test_object_with_one_element_ToString_Expect_correct_string
             // expected string
             expString := '{"test": 999}';

@@ -21,6 +21,7 @@ NAMESPACE Document
             res : BOOL;
             doc : JsonDocument;
             cmpBuff : ARRAY[0..399] OF CHAR;
+            cmpBuffEmpty : ARRAY[0..399] OF CHAR;
             len : DINT;
         END_VAR
         
@@ -55,6 +56,30 @@ NAMESPACE Document
 
             // compare result buffer with compare array
             res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            Equal(expected := TRUE, actual := res);
+    
+            // Serialize again
+            doc.Serialize(doc.buffer);
+            len := Strings.ToArray(str := expString, arr := cmpBuff);
+            res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            Equal(expected := TRUE, actual := res);
+            Equal(expected := LengthOf(expString), actual := doc.GetLength());
+
+
+        END_METHOD
+
+        {Test}
+        METHOD PUBLIC TestCleanBufferHard
+            // Fill Buffer
+            THIS.Test_Build_nested_object_And_expect_correct_JSON();
+            Equal(expected := LengthOf(expString), actual := doc.GetLength());
+            
+            // Clean buffer and expect 0 characters in buffer (buffer is not deleted)
+            doc.ClearBuffer(hard := TRUE);
+            Equal(expected := 0, actual := doc.GetLength());
+
+            // compare result buffer with compare array
+            res := CompareArray(first := doc.buffer, scnd := cmpBuffEmpty, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
     
         END_METHOD
