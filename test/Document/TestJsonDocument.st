@@ -14,6 +14,13 @@ NAMESPACE Document
             doc : JsonDocument;
             o2 : JsonObject := (Key := 'Name');
             
+            oa : JsonObject := (Key := 'O1');
+            ob : JsonObject := (Key := 'O3');
+            ea : JsonDInt := (Key := 'ea', Value := 1);
+            eb : JsonDInt := (Key := 'eb', Value := 2);
+            ec : JsonDInt := (Key := 'ec', Value := 3);
+            ed : JsonDInt := (Key := 'ed', Value := 4);
+
             iElem : IJsonElement;
             rElem : REF_TO JsonDInt;
             expArray : ARRAY[0..399] OF CHAR;
@@ -182,5 +189,34 @@ NAMESPACE Document
             // result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             // Equal(expected := TRUE, actual := result);
         END_METHOD
+
+        {TestFixture}
+        {Test}
+        METHOD PUBLIC Test_two_objects_with_two_nested_elements_in_each_object
+            // expected string
+            expString := '{"O1": {"ea": 1, "eb": 2}, "O2": {"ec": 3, "ed": 4}}';
+            
+            doc.AddElement(oa);
+            doc.AddElement(ob);
+
+            oa.AddElement(ea);
+            oa.AddElement(eb);
+            
+            ob.AddElement(ec);
+            ob.AddElement(ed);
+            
+            
+            // doc.AddElement(oa);
+            Equal(expected := doc.ToString(), actual := expString);
+
+            // Test Serialize
+            expArrayCnt := Strings.ToArray(str := expString, arr := expArray);
+            doc.Serialize(doc.buffer);
+            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            Equal(expected := TRUE, actual := result);
+    
+        END_METHOD
+
+
     END_CLASS
 END_NAMESPACE
