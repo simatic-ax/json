@@ -16,11 +16,16 @@ NAMESPACE Document
             
             oa : JsonObject := (Key := 'O1');
             ob : JsonObject := (Key := 'O3');
+            oc : JsonObject := (Key := 'O5');
             ea : JsonDInt := (Key := 'ea', Value := 1);
             eb : JsonDInt := (Key := 'eb', Value := 2);
             ec : JsonDInt := (Key := 'ec', Value := 3);
             ed : JsonDInt := (Key := 'ed', Value := 4);
-
+            
+            ee : JsonString := (Key := 'ee', Value := 'ee');
+            ef : JsonString := (Key := 'ef', Value := 'ef');
+            eg : JsonString := (Key := 'eg', Value := 'eg');
+            
             iElem : IJsonElement;
             rElem : REF_TO JsonDInt;
             expArray : ARRAY[0..399] OF CHAR;
@@ -194,16 +199,21 @@ NAMESPACE Document
         {Test}
         METHOD PUBLIC Test_two_objects_with_two_nested_elements_in_each_object
             // expected string
-            expString := '{"O1": {"ea": 1, "eb": 2}, "O3": {"ec": 3, "ed": 4}}';
+            expString := '{"O1": {"ea": 1, "eb": 2}, "O3": {"ec": 3, "ed": 4}, "O5": {"ee": "ee", "ef": "ef", "eg": "eg"}}';
             
             doc.AddElement(oa);
             doc.AddElement(ob);
+            doc.AddElement(oc);
 
             oa.AddElement(ea);
             oa.AddElement(eb);
             
             ob.AddElement(ec);
             ob.AddElement(ed);
+
+            oc.AddElement(ee);
+            oc.AddElement(ef);
+            oc.AddElement(eg);
             
             
             // doc.AddElement(oa);
