@@ -1,7 +1,7 @@
 USING Simatic.Ax.Conversion;
     
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonUInt EXTENDS BaseJsonNumber
+    CLASS FINAL JsonUInt EXTENDS BaseJsonNumber
         VAR PUBLIC
             Value : UINT;
         END_VAR

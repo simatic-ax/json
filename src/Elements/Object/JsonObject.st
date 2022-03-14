@@ -1,7 +1,7 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonObject EXTENDS AbstractJsonElement IMPLEMENTS IJsonContainerElement
+    CLASS FINAL JsonObject EXTENDS AbstractJsonElement IMPLEMENTS IJsonContainerElement
         
         VAR PROTECTED
             _lastElement : IJsonElementMuteable;
