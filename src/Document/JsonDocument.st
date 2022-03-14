@@ -1,7 +1,7 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonDocument IMPLEMENTS IJsonContainerElement
+    CLASS FINAL JsonDocument IMPLEMENTS IJsonContainerElement
         VAR PUBLIC
             buffer : ARRAY[0..999] OF CHAR;
         END_VAR
