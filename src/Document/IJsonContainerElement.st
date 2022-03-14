@@ -1,6 +1,6 @@
 NAMESPACE Simatic.Ax.Json
-    INTERFACE IJsonElement
-        METHOD Insert
+    INTERFACE IJsonContainerElement
+        METHOD AddElement : IJsonContainerElement
             VAR_INPUT
                 elem : IJsonElement;
             END_VAR

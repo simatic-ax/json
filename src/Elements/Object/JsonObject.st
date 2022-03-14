@@ -1,7 +1,7 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonObject EXTENDS AbstractJsonElement
+    CLASS JsonObject EXTENDS AbstractJsonElement IMPLEMENTS IJsonContainerElement
         
         VAR PROTECTED
             _lastElement : IJsonElementMuteable;
@@ -65,7 +65,7 @@ NAMESPACE Simatic.Ax.Json
             Serialize := TRUE;
         END_METHOD
         
-        METHOD PUBLIC OVERRIDE AddElement
+        METHOD PUBLIC AddElement : IJsonContainerElement
             VAR_INPUT
                 elem : IJsonElement;
             END_VAR
@@ -77,9 +77,10 @@ NAMESPACE Simatic.Ax.Json
                 _lastElement := _firstElement;
             ELSE
                 _lastElem ?= _lastElement;
-                _lastElem.AddElement(elem);
+                _lastElem.Insert(elem);
                 _lastElement ?= elem;
             END_IF;
+            AddElement := THIS;
             ;
         END_METHOD
     END_CLASS

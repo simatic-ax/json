@@ -1,7 +1,7 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonDocument
+    CLASS JsonDocument IMPLEMENTS IJsonContainerElement
         VAR PUBLIC
             buffer : ARRAY[0..999] OF CHAR;
         END_VAR
@@ -94,7 +94,7 @@ NAMESPACE Simatic.Ax.Json
             GetRootElement := _rootElement;
         END_METHOD
     
-        METHOD PUBLIC AddElement
+        METHOD PUBLIC AddElement : IJsonContainerElement
             VAR_INPUT
                 elem : IJsonElement;
             END_VAR
@@ -110,10 +110,10 @@ NAMESPACE Simatic.Ax.Json
             ELSE
                 _elemMuted ?= elem;
                 _lastElem ?= _lastElement;
-                _lastElem.AddElement(elem);
+                _lastElem.Insert(elem);
                 _lastElement := _elemMuted;
             END_IF;
-            ;
+            AddElement := THIS;
         END_METHOD
 
         METHOD PUBLIC ClearBuffer
