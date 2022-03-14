@@ -194,7 +194,7 @@ NAMESPACE Document
         {Test}
         METHOD PUBLIC Test_two_objects_with_two_nested_elements_in_each_object
             // expected string
-            expString := '{"O1": {"ea": 1, "eb": 2}, "O2": {"ec": 3, "ed": 4}}';
+            expString := '{"O1": {"ea": 1, "eb": 2}, "O3": {"ec": 3, "ed": 4}}';
             
             doc.AddElement(oa);
             doc.AddElement(ob);

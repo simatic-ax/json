@@ -110,7 +110,7 @@ NAMESPACE Simatic.Ax.Json
             ELSE
                 _elemMuted ?= elem;
                 _lastElem ?= _lastElement;
-                _lastElem.AddElement(elem);
+                _lastElem.Insert(elem);
                 _lastElement := _elemMuted;
             END_IF;
             ;

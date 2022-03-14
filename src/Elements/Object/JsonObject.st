@@ -65,7 +65,7 @@ NAMESPACE Simatic.Ax.Json
             Serialize := TRUE;
         END_METHOD
         
-        METHOD PUBLIC OVERRIDE AddElement
+        METHOD PUBLIC AddElement
             VAR_INPUT
                 elem : IJsonElement;
             END_VAR
@@ -77,7 +77,7 @@ NAMESPACE Simatic.Ax.Json
                 _lastElement := _firstElement;
             ELSE
                 _lastElem ?= _lastElement;
-                _lastElem.AddElement(elem);
+                _lastElem.Insert(elem);
                 _lastElement ?= elem;
             END_IF;
             ;
