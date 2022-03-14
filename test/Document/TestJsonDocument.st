@@ -201,19 +201,15 @@ NAMESPACE Document
             // expected string
             expString := '{"O1": {"ea": 1, "eb": 2}, "O3": {"ec": 3, "ed": 4}, "O5": {"ee": "ee", "ef": "ef", "eg": "eg"}}';
             
-            doc.AddElement(oa);
-            doc.AddElement(ob);
-            doc.AddElement(oc);
+            doc.AddElement(oa).AddElement(ob).AddElement(oc);
+            // doc.AddElement(ob);
+            // doc.AddElement(oc);
 
-            oa.AddElement(ea);
-            oa.AddElement(eb);
+            oa.AddElement(ea).AddElement(eb);
             
-            ob.AddElement(ec);
-            ob.AddElement(ed);
+            ob.AddElement(ec).AddElement(ed);
 
-            oc.AddElement(ee);
-            oc.AddElement(ef);
-            oc.AddElement(eg);
+            oc.AddElement(ee).AddElement(ef).AddElement(eg);
             
             
             // doc.AddElement(oa);
@@ -227,6 +223,16 @@ NAMESPACE Document
     
         END_METHOD
 
+        {Test}
+        METHOD PUBLIC When_adding_elemens_by_building_pattern_the_correct_Json_will_be_Returned
+
+            expString := '{"ea": 1, "eb": 2, "ec": 3}';
+            doc.AddElement(ea).AddElement(eb).AddElement(ec);
+            
+            Equal(expected := doc.ToString(), actual := expString);
+
+            ; // AxUnit.Assert.Equal(y, x)
+        END_METHOD
 
     END_CLASS
 END_NAMESPACE
