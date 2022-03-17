@@ -15,11 +15,11 @@ scripts:
     - apax version $1
     - apax pack
 devDependencies:
-  "@ax/sdk": 1.0.144
+  "@ax/sdk": 1.0.154
   "@simatic-ax/snippetscollection": 0.0.6
 dependencies:
   "@ax/system-strings": 2.0.13
-  "@simatic-ax/conversion": 0.0.7
+  "@simatic-ax/conversion": 0.0.8
 registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
 

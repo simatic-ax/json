@@ -1,13 +1,14 @@
 {
     "WeirdStuff \",##,,,::::" : ",,,###\"::::", 
-    "Element1": 1, 
-    "Element1": 1, 
+
+    "Eleme......nt1": 1, 
+    "Element1": "hello", 
     "Element2": "Element1", 
     "Element3,,,,,,": "Element3,,,,", 
     
     "NestedObject": 
     {
-       "Element1": 1, 
+       "Element1": 9, 
        "Element2": 2, 
        "Element3": 3,
        "Element4": {
