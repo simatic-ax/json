@@ -1,7 +1,7 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS JsonString EXTENDS AbstractJsonElement
+    CLASS FINAL JsonString EXTENDS AbstractJsonElement
         VAR PUBLIC
             Value : STRING;
         END_VAR

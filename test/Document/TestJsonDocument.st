@@ -1,8 +1,9 @@
 USING AxUnit.Assert;
 USING System.Strings;
 USING Simatic.Ax.Conversion;
+USING Simatic.Ax.Json;
 
-NAMESPACE Simatic.Ax.Json
+NAMESPACE Document
     {TestFixture}
     CLASS TestJsonDocument
         
@@ -12,6 +13,18 @@ NAMESPACE Simatic.Ax.Json
             e3 : JsonDInt := (Value := 1, Key := '3rd');
             doc : JsonDocument;
             o2 : JsonObject := (Key := 'Name');
+            
+            oa : JsonObject := (Key := 'O1');
+            ob : JsonObject := (Key := 'O3');
+            oc : JsonObject := (Key := 'O5');
+            ea : JsonDInt := (Key := 'ea', Value := 1);
+            eb : JsonDInt := (Key := 'eb', Value := 2);
+            ec : JsonDInt := (Key := 'ec', Value := 3);
+            ed : JsonDInt := (Key := 'ed', Value := 4);
+            
+            ee : JsonString := (Key := 'ee', Value := 'ee');
+            ef : JsonString := (Key := 'ef', Value := 'ef');
+            eg : JsonString := (Key := 'eg', Value := 'eg');
             
             iElem : IJsonElement;
             rElem : REF_TO JsonDInt;
@@ -41,6 +54,24 @@ NAMESPACE Simatic.Ax.Json
             Equal(expected := TRUE, actual := result);
             
         END_METHOD
+
+        {Test}
+        METHOD PUBLIC Test_object_with_one_element_And_Call_Serialize_twice_Expectstill_correct_string
+            // expected string
+            expString := '{"test": 999}';
+
+            doc.AddElement(e);
+            actString := doc.ToString();
+            Equal(expected := expString, actual := actString);           
+            
+            // Test Serialize
+            expArrayCnt := Strings.ToArray(str := expString, arr := expArray);
+            doc.Serialize(doc.buffer);
+            doc.Serialize(doc.buffer);
+            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            Equal(expected := TRUE, actual := result);
+        END_METHOD
+
 
         {Test}
         METHOD PUBLIC Test_object_with_one_element_ToString_Expect_correct_string
@@ -163,5 +194,45 @@ NAMESPACE Simatic.Ax.Json
             // result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             // Equal(expected := TRUE, actual := result);
         END_METHOD
+
+        {TestFixture}
+        {Test}
+        METHOD PUBLIC Test_two_objects_with_two_nested_elements_in_each_object
+            // expected string
+            expString := '{"O1": {"ea": 1, "eb": 2}, "O3": {"ec": 3, "ed": 4}, "O5": {"ee": "ee", "ef": "ef", "eg": "eg"}}';
+            
+            doc.AddElement(oa).AddElement(ob).AddElement(oc);
+            // doc.AddElement(ob);
+            // doc.AddElement(oc);
+
+            oa.AddElement(ea).AddElement(eb);
+            
+            ob.AddElement(ec).AddElement(ed);
+
+            oc.AddElement(ee).AddElement(ef).AddElement(eg);
+            
+            
+            // doc.AddElement(oa);
+            Equal(expected := doc.ToString(), actual := expString);
+
+            // Test Serialize
+            expArrayCnt := Strings.ToArray(str := expString, arr := expArray);
+            doc.Serialize(doc.buffer);
+            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            Equal(expected := TRUE, actual := result);
+    
+        END_METHOD
+
+        {Test}
+        METHOD PUBLIC When_adding_elemens_by_building_pattern_the_correct_Json_will_be_Returned
+
+            expString := '{"ea": 1, "eb": 2, "ec": 3}';
+            doc.AddElement(ea).AddElement(eb).AddElement(ec);
+            
+            Equal(expected := doc.ToString(), actual := expString);
+
+            ; // AxUnit.Assert.Equal(y, x)
+        END_METHOD
+
     END_CLASS
 END_NAMESPACE

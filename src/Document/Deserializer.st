@@ -2,7 +2,7 @@ USING Simatic.Ax.Conversion;
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
-    CLASS Deserializer
+    CLASS FINAL Deserializer
 
         VAR PRIVATE //will be array* in future
             buffer : REF_TO ARRAY[0..999] OF CHAR;
