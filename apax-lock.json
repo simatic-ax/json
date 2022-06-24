@@ -388,9 +388,9 @@
     }
   },
   "@ax/system-math": {
-    "version": "1.0.32",
-    "resolved": "https://apax-prod-734703289705.d.codeartifact.eu-central-1.amazonaws.com:443/npm/ax/@ax/system-math/-/system-math-1.0.32.tgz",
-    "integrity": "sha512-DO87l77JqcsbV6+87323QYnMxAFFmV1fNKTybSs6j/nC+SyCbonB04tXS1/0EnGMlP9eMCXgJmYRkQFTTcLgeQ=="
+    "version": "1.1.13",
+    "resolved": "https://apax-prod-734703289705.d.codeartifact.eu-central-1.amazonaws.com:443/npm/ax/@ax/system-math/-/system-math-1.1.13.tgz",
+    "integrity": "sha512-QFOhatw/S2rJXyg3bkqYuzDQa/M/Tdtqilp8kl8D3UuywQ6duyw4tcdzHlDDUTd2MS+Fq80m+cllhTPD+A1HEA=="
   },
   "@ax/system-strings": {
     "version": "2.1.6",
@@ -504,12 +504,12 @@
     "integrity": "sha512-k64xchoCHD3qAkiNy7PF72FVrj+KrS1MO2ly1CDZGICOhyXkx6x2ti79UF3ruqNOHM2IUcJRjJGKR7qMWtG33A=="
   },
   "@simatic-ax/conversion": {
-    "version": "0.0.8",
-    "resolved": "https://npm.pkg.github.com/download/@simatic-ax/conversion/0.0.8/8e4e53eab47aa39fdce87a3d62e18b1e79013227e23bc04cd85a6f7aa37e711d",
-    "integrity": "sha512-63RFIKwT+svZrS811GUNUpeuXfPnmbGqIlEn9sQb5h/Ur+ZAFvk0BMn0FgWmNFA9CDyEETmTcaA6ZBUPlog6kg==",
+    "version": "0.1.0",
+    "resolved": "https://npm.pkg.github.com/download/@simatic-ax/conversion/0.1.0/de88a36b0a9819369ef054897d5ea730959a0aedcf295d526ca403e96aff8855",
+    "integrity": "sha512-KwLwqA6oGLXb0c/ftwswUmnzu1/nC/WCXH6H4H/w/9x+gGE78ObPo+RGkLMaJR1XNr9CRapdpVGaW7A7uyIbAA==",
     "dependencies": {
-      "@ax/system-math": "1.0.32",
-      "@ax/system-strings": "2.0.13"
+      "@ax/system-math": "1.1.13",
+      "@ax/system-strings": "2.1.6"
     }
   },
   "@simatic-ax/snippetscollection": {
