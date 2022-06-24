@@ -195,7 +195,6 @@ NAMESPACE Document
             // Equal(expected := TRUE, actual := result);
         END_METHOD
 
-        {TestFixture}
         {Test}
         METHOD PUBLIC Test_two_objects_with_two_nested_elements_in_each_object
             // expected string
