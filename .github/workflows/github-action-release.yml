@@ -55,7 +55,9 @@ jobs:
         uses: ./ax_ci_workflows/.github/actions/setup-apax-runner
         with:
           apax-access-token: ${{ secrets.APAX_TOKEN }}
-
+      - name: "Login to github registry"
+        run: |
+          apax login --registry "https://npm.pkg.github.com" --password ${{ secrets.CI_KIT_TOKEN }}
       - name: "Build apax library"
         uses: ./ax_ci_workflows/.github/actions/build-apax-package
         with:
@@ -87,7 +89,9 @@ jobs:
         uses: ./ax_ci_workflows/.github/actions/setup-apax-runner
         with:
           apax-access-token: ${{ secrets.APAX_TOKEN }}
-
+      - name: "Login to github registry"
+        run: |
+          apax login --registry "https://npm.pkg.github.com" --password ${{ secrets.CI_KIT_TOKEN }}
       - name: "Build apax library"
         uses: ./ax_ci_workflows/.github/actions/build-apax-package
         with:
@@ -116,7 +120,9 @@ jobs:
         uses: ./ax_ci_workflows/.github/actions/setup-apax-runner
         with:
           apax-access-token: ${{ secrets.APAX_TOKEN }}
-
+      - name: "Login to github registry"
+        run: |
+          apax login --registry "https://npm.pkg.github.com" --password ${{ secrets.CI_KIT_TOKEN }}
       - name: "Download artifact"
         uses: actions/download-artifact@v3
         with:
