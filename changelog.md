@@ -28,3 +28,5 @@ JSonDocument.CleanBuffer() method added. [Issue](https://github.com/simatic-ax/J
 **Version:** 0.2.0 
 
 * Depends now on System.Math 1.1.13 Update dependencies 
+
+Version 1.0.0
