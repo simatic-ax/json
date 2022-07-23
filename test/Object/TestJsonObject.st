@@ -77,7 +77,7 @@ NAMESPACE Simatic.Ax.Json
             
             o.Serialize(REF(doc));
 
-            len := Strings.ToArray(str := _expStr, arr := cmpBuff);
+            len := Strings.ToArray.OfCharCount(str := _expStr, arr := cmpBuff);
             _res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := _res);
         END_METHOD

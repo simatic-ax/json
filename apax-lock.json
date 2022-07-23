@@ -533,9 +533,9 @@
     "integrity": "sha512-YlWfJaWdoysBJAW4BdXx6cZ2NeXBhrTH5NOSIsRUsfvJXxBzfP+qmdLeE3M4Gzu8Z63PAN5Jj+NCcG+aDwQ1nw=="
   },
   "@simatic-ax/conversion": {
-    "version": "0.1.2",
-    "resolved": "https://npm.pkg.github.com/download/@simatic-ax/conversion/0.1.2/43eb8c7576bab96abbb2d08f68342cbcb74e8a8e2bfc203c443c532fc8f793cc",
-    "integrity": "sha512-xtWRsgAA9K/6FhxCYF9fDtgVEW7Z8ChcBlGlXRwIg4Dv3fuvx21IQD7+U1l5jCPdDccplwk95tT8nm4p+ctPwQ==",
+    "version": "1.1.2",
+    "resolved": "https://npm.pkg.github.com/download/@simatic-ax/conversion/1.1.2/eedb10c801a6d2cc4c16f7d6cd43df3343b1f859b330d12657d7d618018f4704",
+    "integrity": "sha512-YfICPBB7oXfSl/CgWZQRkohQ+AMLDnjz3tvqQBawcSwhOr66LXc62j4E53OEru2Wkt1OxEAvh22AS3yjicU9sw==",
     "dependencies": {
       "@ax/system-math": "1.2.1",
       "@ax/system-strings": "2.1.6"

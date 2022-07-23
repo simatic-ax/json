@@ -37,7 +37,7 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
             e.Serialize(REF(doc));
 
-            len := Strings.ToArray(str := s_test_max, arr := cmpBuff);
+            len := Strings.ToArray.OfCharCount(str := s_test_max, arr := cmpBuff);
             res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
 
@@ -51,7 +51,7 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
             
             e2.Serialize(REF(doc));
-            len := Strings.ToArray(str := s_test_minus_min, arr := cmpBuff);
+            len := Strings.ToArray.OfCharCount(str := s_test_minus_min, arr := cmpBuff);
             res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
 

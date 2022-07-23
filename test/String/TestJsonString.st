@@ -23,7 +23,7 @@ NAMESPACE Simatic.Ax.Json
             e.Serialize(REF(doc));
 
             expString := '"test": "my#1234,,,,"';
-            len := Strings.ToArray(str := expString, arr := cmpBuff);
+            len := Strings.ToArray.OfCharCount(str := expString, arr := cmpBuff);
             res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
 

@@ -30,7 +30,7 @@ CLASS Test_FindKeyInBuffer
             keyFound: BOOL;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         key := 'key ';
@@ -57,7 +57,7 @@ CLASS Test_FindKeyInBuffer
             keyFound: BOOL;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         key := 'nested';
@@ -76,7 +76,7 @@ CLASS Test_FindKeyInBuffer
             keyFound: BOOL;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         key := 'key ';
@@ -103,7 +103,7 @@ CLASS Test_FindKeyInBuffer
             keyFound: BOOL;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         key := 'simpleArray';
@@ -122,7 +122,7 @@ CLASS Test_FindKeyInBuffer
     //     END_VAR
 
     //     key := 'key';
-    //     len:= Strings.ToArray(str := key, arr := buffer);
+    //     len:= Strings.ToArray.OfCharCount(str := key, arr := buffer);
     //     deserializer.SetBuffer(REF(buffer));
 
     //     keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);

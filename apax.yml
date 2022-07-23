@@ -19,7 +19,7 @@ devDependencies:
   "@simatic-ax/snippetscollection": 0.0.13
 dependencies:
   "@ax/system-strings": 3.0.4
-  "@simatic-ax/conversion": 0.1.2
+  "@simatic-ax/conversion": 1.1.2
 registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
 

@@ -23,7 +23,7 @@ NAMESPACE Simatic.Ax.Json
             e.Serialize(REF(doc));
 
             expString := '"test": true';
-            len := Strings.ToArray(str := expString, arr := cmpBuff);
+            len := Strings.ToArray.OfCharCount(str := expString, arr := cmpBuff);
             res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
 
@@ -38,7 +38,7 @@ NAMESPACE Simatic.Ax.Json
             
             e2.Serialize(REF(doc));
             expString := '"second_key": false';
-            len := Strings.ToArray(str := expString, arr := cmpBuff);
+            len := Strings.ToArray.OfCharCount(str := expString, arr := cmpBuff);
             res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
 
