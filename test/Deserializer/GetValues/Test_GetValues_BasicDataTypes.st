@@ -26,7 +26,7 @@ CLASS Test_Deserializer_GetValues_BasicDataTypes
             keyFound: BOOL;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         key := 'key';

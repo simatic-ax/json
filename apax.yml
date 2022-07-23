@@ -1,28 +1,21 @@
 name: '@simatic-ax/json'
-version: 0.1.0
-author: Siemens AG
+version: 0.0.0-placeholder
 type: lib
+variables:
+  APAX_BUILD_ARGS:
+    - '--log Trace'
+    - '--simulation'
+    - '--debug'
 targets:
-  - "1500"
-  - axunit-llvm
-scripts:
-  publishlib:
-    - apax publish --package *.apax.tgz --registry 'https://npm.pkg.github.com/'
-    - rm *.apax.tgz -f
-  createpackage:
-    # - apax build
-    # - apax test
-    - apax version $1
-    - apax pack
+  - 'axunit-llvm'
 devDependencies:
-  "@ax/sdk": 1.0.154
-  "@simatic-ax/snippetscollection": 0.0.6
+  "@ax/sdk": 2.0.3
+  "@simatic-ax/snippetscollection": 0.0.13
 dependencies:
-  "@ax/system-strings": 2.0.13
-  "@simatic-ax/conversion": 0.0.8
+  "@ax/system-strings": 3.0.4
+  "@simatic-ax/conversion": 2.1.2
 registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
-
 files:
   - 'README.md'
   - 'LICENSE.md'

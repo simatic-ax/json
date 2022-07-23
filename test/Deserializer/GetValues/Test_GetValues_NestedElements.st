@@ -26,7 +26,7 @@ CLASS Test_Deserializer_GetValues_NestedElements
             keyFound: BOOL;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer)); //TODO: ausbauen und ersetzen durch buffer in methode
 
         key := 'arraykey';
@@ -43,7 +43,7 @@ CLASS Test_Deserializer_GetValues_NestedElements
             keyArray: ARRAY [0..1] OF STRING:= ['key', 'nested1'];
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         key := 'key';
@@ -65,7 +65,7 @@ CLASS Test_Deserializer_GetValues_NestedElements
             keyArray: ARRAY [0..1] OF STRING:= ['key', 'nested1'];
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         key := 'key';
@@ -87,7 +87,7 @@ CLASS Test_Deserializer_GetValues_NestedElements
             keyArray: ARRAY [0..2] OF STRING:= ['key', 'nestedkey', 'nInNested'];
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         key := 'key';
@@ -109,7 +109,7 @@ CLASS Test_Deserializer_GetValues_NestedElements
             keyArray: ARRAY [0..1] OF STRING:= ['key', 'nested1'];
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         key := 'key';

@@ -23,7 +23,7 @@ CLASS TryParse
             value: STRING;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( key, value);
@@ -40,7 +40,7 @@ CLASS TryParse
             value: STRING;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( keyArray, value);
@@ -57,7 +57,7 @@ CLASS TryParse
             value: LINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
         
         key:= 'leftBoundary';
@@ -89,7 +89,7 @@ CLASS TryParse
             value: LINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( keyArray, value);
@@ -106,7 +106,7 @@ CLASS TryParse
             value: SINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer)); 
 
         keyFound := deserializer.TryParse( key, value);
@@ -123,7 +123,7 @@ CLASS TryParse
             value: SINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( keyArray, value);
@@ -140,7 +140,7 @@ CLASS TryParse
             value: DINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( key, value);
@@ -157,7 +157,7 @@ CLASS TryParse
             value: SINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( keyArray, value);
@@ -174,7 +174,7 @@ CLASS TryParse
             value: INT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( key, value);
@@ -191,7 +191,7 @@ CLASS TryParse
             value: INT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( keyArray, value);
@@ -208,7 +208,7 @@ CLASS TryParse
             value: USINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( key, value);
@@ -225,7 +225,7 @@ CLASS TryParse
             value: USINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( keyArray, value);
@@ -242,7 +242,7 @@ CLASS TryParse
             value: UINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( key, value);
@@ -259,7 +259,7 @@ CLASS TryParse
             value: UINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( keyArray, value);
@@ -276,7 +276,7 @@ CLASS TryParse
             value: UDINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( key, value);
@@ -293,7 +293,7 @@ CLASS TryParse
             value: UDINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( keyArray, value);
@@ -310,7 +310,7 @@ CLASS TryParse
             value: ULINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( key, value);
@@ -327,7 +327,7 @@ CLASS TryParse
             value: ULINT;
         END_VAR
 
-        len:= Strings.ToArray(str := JSON_Entry, arr := buffer);
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
         deserializer.SetBuffer(REF(buffer));
 
         keyFound := deserializer.TryParse( keyArray, value);

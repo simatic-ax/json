@@ -1,6 +1,7 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
+    {axcode:docs-v0:@simatic-ax/json:../README.md}
     CLASS BaseJsonNumber EXTENDS AbstractJsonElement
 
         METHOD PROTECTED OVERRIDE ToStringHelper : STRING

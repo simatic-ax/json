@@ -23,3 +23,8 @@ JSonDocument.CleanBuffer() method added. [Issue](https://github.com/simatic-ax/J
 * AddElement supports the create pattern now. `doc.AddElement(a).AddElement(b)`
   
 
+## June 2022-06-24
+
+**Version:** 0.2.0 
+
+* Depends now on System.Math 1.1.13 Update dependencies 

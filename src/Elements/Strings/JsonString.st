@@ -24,6 +24,7 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 _s : STRING;
             END_VAR
+            
             _s := THIS.ToString();
             THIS.SerializeHelper(doc, _s);
             // THIS.SerializeHelper(doc, THIS.ToString());

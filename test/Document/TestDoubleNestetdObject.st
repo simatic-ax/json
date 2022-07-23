@@ -37,7 +37,7 @@ NAMESPACE Document
             doc.AddElement(o1);
             doc.Serialize(doc.buffer);
 
-            len := Strings.ToArray(str := expString, arr := cmpBuff);
+            len := Strings.ToArray.OfCharCount(str := expString, arr := cmpBuff);
             res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
             Equal(expected := LengthOf(expString), actual := doc.GetLength());
