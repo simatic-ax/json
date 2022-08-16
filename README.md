@@ -136,21 +136,9 @@ The JSON Format allows a user to have duplicate keys in his json document, e.g.
 However, the norm does not define, how duplicate keys should be processed. In case of a duplicate key, this library will alwys try to parse the first key and ignore the second one.
 
 # Serializing
-## JsonDocument
-### Definition
-Contains the root element of the JSON string
 
-### Methods
+## [JsonDocument](docs/JsonDocument.md)
 
-|||
-|-|-|
-|ToString() : STRING;| Returns the JSON string of this element|
-|GetRootElement() : IJsonElement| Returns root element of the JSON object|
-|AddElement(elem : IJsonElement)| Add a new element to the JSON document|
-|ClearBuffer(hard : BOOL)| Clear the buffer logically (fast). If `hard = TRUE` then delete the buffer also physically (slow) |
-|||
-### 
----
 ### AbstractJsonElement
 
 ---
