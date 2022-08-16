@@ -65,6 +65,23 @@ NAMESPACE Simatic.Ax.Json
             Serialize := TRUE;
         END_METHOD
         
+        METHOD PUBLIC OVERRIDE Reset
+            VAR_TEMP
+                _currentElement : IJsonElementMuteable;
+                _nextElement : IJsonElementMuteable;
+            END_VAR
+            
+            SUPER.Reset();
+            
+            _currentElement := _firstElement;
+            WHILE _currentElement <> NULL DO
+                _nextElement := _currentElement.GetNext();           
+                _currentElement.Reset();      
+                _currentElement := _nextElement;    
+            END_WHILE;
+
+        END_METHOD
+
         METHOD PUBLIC AddElement : IJsonContainerElement
             VAR_INPUT
                 elem : IJsonElement;
