@@ -53,6 +53,11 @@ NAMESPACE Simatic.Ax.Json
             GetNext := _next;
         END_METHOD
 
+        METHOD PUBLIC Reset
+            _next := NULL;
+        END_METHOD
+
+
         METHOD PUBLIC Insert
             VAR_INPUT
                 elem : IJsonElement;

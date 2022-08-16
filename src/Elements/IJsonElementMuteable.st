@@ -15,5 +15,7 @@ NAMESPACE Simatic.Ax.Json
                 doc : REF_TO JsonDocument;
             END_VAR
         END_METHOD
+        METHOD Reset
+        END_METHOD
     END_INTERFACE
 END_NAMESPACE

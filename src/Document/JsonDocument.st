@@ -1,6 +1,9 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
+
+    /// The JsonDocument contains the object model of the Json object.
+    {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
     CLASS FINAL JsonDocument IMPLEMENTS IJsonContainerElement
         VAR PUBLIC
             buffer : ARRAY[0..999] OF CHAR;
@@ -15,6 +18,7 @@ NAMESPACE Simatic.Ax.Json
             _bufIndex : DINT;
         END_VAR
 
+        /// Returns the JSON string of the JSON document (max. 254 characters)
         METHOD PUBLIC ToString : STRING
             VAR_TEMP
                 _str : STRING;
@@ -34,6 +38,7 @@ NAMESPACE Simatic.Ax.Json
             ToString := _str;
         END_METHOD
 
+        /// Serializes the JSON document ino a ARRAY OF CHAR
         METHOD PUBLIC Serialize : BOOL
             VAR_IN_OUT
                 buf : ARRAY[*] OF CHAR;
@@ -86,14 +91,17 @@ NAMESPACE Simatic.Ax.Json
             AddString := TRUE;
         END_METHOD
     
+        /// Returns the count of the serialized cahracters
         METHOD PUBLIC GetLength : DINT
             GetLength := _lentgh;
         END_METHOD
 
+        /// Returns root element of the JSON document
         METHOD PUBLIC GetRootElement : IJsonElement
             GetRootElement := _rootElement;
         END_METHOD
     
+        /// Add a new element to the JSON document
         METHOD PUBLIC AddElement : IJsonContainerElement
             VAR_INPUT
                 elem : IJsonElement;
@@ -116,6 +124,9 @@ NAMESPACE Simatic.Ax.Json
             AddElement := THIS;
         END_METHOD
 
+        /// Clear the buffer logically (fast). 
+        /// If `hard = TRUE` then delete the buffer also 
+        /// physically (slow)
         METHOD PUBLIC ClearBuffer
             VAR_INPUT
                 hard : BOOL := FALSE;
@@ -132,6 +143,29 @@ NAMESPACE Simatic.Ax.Json
             _bufLowerBound := 0;
             _bufIndex := 0;
             _lentgh := 0;
+        END_METHOD
+
+        /// Reset the complete object tree and the destination buffer 
+        /// of the JSON document for the purpose, a new JSON object should
+        /// be created.
+        METHOD PUBLIC Reset
+            VAR_TEMP
+                _currentElement : IJsonElementMuteable;
+                _nextElement : IJsonElementMuteable;
+            END_VAR
+            
+            _currentElement := _firstElement;
+            WHILE _currentElement <> NULL DO
+                _nextElement := _currentElement.GetNext();           
+                _currentElement.Reset();      
+                _currentElement := _nextElement;    
+            END_WHILE;
+
+            // Clear the buffer
+            THIS.ClearBuffer(hard := TRUE);
+            _firstElement := NULL;
+            _lastElement := NULL;
+            _rootElement := NULL;
         END_METHOD
 
     END_CLASS
