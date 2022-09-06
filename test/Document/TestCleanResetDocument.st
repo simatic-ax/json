@@ -84,5 +84,8 @@ NAMESPACE Document
     
         END_METHOD
 
+
+    
+
     END_CLASS
 END_NAMESPACE
