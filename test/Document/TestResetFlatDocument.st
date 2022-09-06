@@ -5,7 +5,7 @@ USING Simatic.Ax.Json;
 
 NAMESPACE Document
     {TestFixture}
-    CLASS TestResetDocument
+    CLASS TestResetFlatDocument
         
         VAR PROTECTED
             e1 : JsonDInt := (Value := 999, Key := 'e1');

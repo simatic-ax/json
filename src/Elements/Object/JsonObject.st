@@ -79,7 +79,8 @@ NAMESPACE Simatic.Ax.Json
                 _currentElement.Reset();      
                 _currentElement := _nextElement;    
             END_WHILE;
-
+            _lastElement := NULL;
+            _firstElement := NULL;
         END_METHOD
 
         METHOD PUBLIC AddElement : IJsonContainerElement
