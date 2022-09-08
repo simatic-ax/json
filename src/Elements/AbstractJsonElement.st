@@ -40,9 +40,7 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 _i : DINT;
             END_VAR
-            FOR _i := 1 TO LengthOf(valueAsString) DO
-                doc^.AddChar(valueAsString[_i]);
-            END_FOR;
+            doc^.AddString(valueAsString);
         END_METHOD
 
         METHOD PUBLIC HasNext : BOOL
