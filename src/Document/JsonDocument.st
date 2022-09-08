@@ -91,7 +91,7 @@ NAMESPACE Simatic.Ax.Json
             AddString := TRUE;
         END_METHOD
     
-        /// Returns the count of the serialized cahracters
+        /// Returns the count of the serialized characters
         METHOD PUBLIC GetLength : DINT
             GetLength := _lentgh;
         END_METHOD
@@ -161,7 +161,7 @@ NAMESPACE Simatic.Ax.Json
                 _currentElement := _nextElement;    
             END_WHILE;
 
-            // Clear the buffer
+            /// Clear the buffer
             THIS.ClearBuffer(hard := TRUE);
             _firstElement := NULL;
             _lastElement := NULL;
