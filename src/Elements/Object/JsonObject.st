@@ -1,6 +1,8 @@
 USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
+    /// The Object contains nested JsonElements
+    {axcode:docs-v0:@simatic-ax/json:JsonObject.md}
     CLASS FINAL JsonObject EXTENDS AbstractJsonElement IMPLEMENTS IJsonContainerElement
         
         VAR PROTECTED
