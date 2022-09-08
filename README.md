@@ -139,78 +139,87 @@ However, the norm does not define, how duplicate keys should be processed. In ca
 
 ## [JsonDocument](docs/JsonDocument.md)
 
-### AbstractJsonElement
+## [JsonObject](docs/JsonObject.md)
 
----
-## JsonObject
+# Examples
 
-### Definition
 
-Inheritance: AbstractJsonElement-->JsonObject
+## Example ho to use the JSON library
+This example shows in how to create, serialize, parse and reset a JSON document.
 
-### Public members
-|||
-|-|-|
-|value : DINT;| Value of this element
-|key : STRING  := 'NoKeySet';| Key of this element
-### Methods
-|||
-|-|-|
-|ToString() : STRING;| Returns the JSON string of this element|
-|GetRootElement() : IJsonElement| Returns root element of the JSON object|
-|AddElement(elem : IJsonElement)| Add a new element to the JSON object|
-|||
----
-## DoubleInt
-
-### Definition
-
-Inheritance: AbstractJsonElement-->JsonNumber-->DoubleInt
-
-### Public members
-|||
-|-|-|
-|value : DINT;| Value of this element
-|key : STRING  := 'NoKeySet';| Key of this element
-
-### Methods
-
-|||
-|-|-|
-|ToString() : STRING;| Returns the JSON string of this element
-
-## Example
-```iec-st
-USING Simatic.Ax.Json;
-USING AxUnit.Assert;
-
-NAMESPACE Simatic.Ax
-    CLASS JsonExample
-        VAR PUBLIC
-            
-        END_VAR
-        VAR PROTECTED
-            doc : JsonDocument;
-            e1 : JsonDoubleInt := (key := 'Element1', value := 1);
-            e2 : JsonDoubleInt := (key := 'Element2', value := 2);
-            e3 : JsonDoubleInt := (key := 'Element3', value := 3);
-            o1 : JsonObject := (key := 'NestedObject');
-            
-        END_VAR
-        
-        METHOD PUBLIC Init;
-            // Example String:
-            // {"Element1": 1, {"Element2": 2, "Element3": 3}}            
-            doc.AddElement(e1).AddElement(o1);
-            o1.AddElement(e2).AddElement(e3);
-        END_METHOD
-
-        METHOD PUBLIC ToString : STRING
-            ToString := doc.ToString();
-        END_METHOD
-    END_CLASS    
-END_NAMESPACE
 ```
+USING Simatic.Ax.Conversion;
+USING Simatic.Ax.Json;
+
+CONFIGURATION MyConfiguration
+    TASK Main (INTERVAL := T#100ms, PRIORITY := 1);
+    PROGRAM P1 WITH Main: MyProgram;
+    VAR_GLOBAL
+        SerializedDocument : STRING;
+        ParsedValue : DINT;
+    END_VAR
+END_CONFIGURATION
+
+PROGRAM MyProgram
+    VAR_EXTERNAL
+        SerializedDocument : STRING;
+        ParsedValue : DINT;
+    END_VAR
+    VAR
+        doc : JsonDocument;
+        myBoolean : JsonBoolean := (Value := TRUE, Key := 'myBoolean');
+        myInt : JsonInt := (Value := 1234, Key := 'myInt');
+        myDint : JsonDInt := (Value := DINT#12345678, Key := 'myDint');
+        myObject : JsonObject := (Key := 'myObject');
+        deserializer : Deserializer;
+        keyFound : BOOL;
+        dintValue : DINT;
+        keyArray : ARRAY[0..1] OF STRING := ['myObject', 'myDint'];
+        step : Steps;
+    END_VAR
+    VAR_TEMP
+    END_VAR
+    CASE step OF
+        Steps#CreateDocument2:
+            // Create nested JSON document which looks like:
+            // {"myBoolean": true, "myObject": {"myInt": 1234, "myDint": 12345678}}
+            myObject.AddElement(myInt);
+            myObject.AddElement(myDint);
+            doc.AddElement(myBoolean);
+            doc.AddElement(myObject);
+            step := Steps#SerializeDocument2;
+        Steps#SerializeDocument2:
+            // Serialize the document {"myBoolean": true, "myObject": {"myInt": 1234, "myDint": 12345678}}
+            doc.Serialize(doc.buffer);
+            SerializedDocument := Arrays.ToString(arr := doc.buffer);
+            step := Steps#ParseDocument2;
+            ;
+        Steps#ParseDocument2:
+            // Parse Document for the value of the nested key `myObject.myDint` and expect `12345678`
+            // Get Values from a nested element
+            deserializer.SetBuffer(REF(doc.buffer));
+            keyFound := deserializer.TryParse(keyArray, dintValue);
+            ParsedValue := dintValue;
+            step := Steps#ResetJSonDocument2;
+            ;
+        Steps#ResetJSonDocument2:
+            // ResetJSonDocument 2nd configuration
+            doc.Reset();
+            step := Steps#CreateDocument2;
+            ;
+    END_CASE;
+END_PROGRAM
+
+TYPE
+    Steps : (CreateDocument2, SerializeDocument2, ParseDocument2, ResetJSonDocument2) := CreateDocument2;
+END_TYPE
+```
+
+## Application Example
+
+A complete application example, you can find here:
+
+[JSON Application Example](https://github.com/simatic-ax/ae-json-library)
 
 ## Contribution
 
