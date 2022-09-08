@@ -70,10 +70,3 @@ NAMESPACE Simatic.Ax
     END_CLASS    
 END_NAMESPACE
 ```
-
-A complete application example, you can install with the command:
-
-```sh
-apax create @simatic-ax/ae-json-library --registry https://npm.pkg.github.com ae-json-library
-axcode ae-json-library
-```

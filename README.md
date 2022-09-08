@@ -20,7 +20,7 @@ Simatic.Ax.Json;
 # Deserializing
 Use the _Deserializer_ class to deserialize JSON documents and parse values from the document. 
 
-## Restrictions
+### Restrictions
 In the current version we have several restrictions regarding the handling of JSON files.
 
 1. The JSON File must be in the form of a ARRAY [] OF CHAR. Read more in the _Workflow_ part.
@@ -141,8 +141,10 @@ However, the norm does not define, how duplicate keys should be processed. In ca
 
 ## [JsonObject](docs/JsonObject.md)
 
-## Example
+# Examples
 
+
+## Example ho to use the JSON library
 This example shows in how to create, serialize, parse and reset a JSON document.
 
 ```
@@ -212,6 +214,12 @@ TYPE
     Steps : (CreateDocument2, SerializeDocument2, ParseDocument2, ResetJSonDocument2) := CreateDocument2;
 END_TYPE
 ```
+
+## Application Example
+
+A complete application example, you can find here:
+
+[JSON Application Example](https://github.com/simatic-ax/ae-json-library)
 
 ## Contribution
 
