@@ -19,6 +19,7 @@ NAMESPACE Simatic.Ax.Json
         END_VAR
 
         /// Returns the JSON string of the JSON document (max. 254 characters)
+        {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC ToString : STRING
             VAR_TEMP
                 _str : STRING;
@@ -39,6 +40,7 @@ NAMESPACE Simatic.Ax.Json
         END_METHOD
 
         /// Serializes the JSON document ino a ARRAY OF CHAR
+        {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC Serialize : BOOL
             VAR_IN_OUT
                 buf : ARRAY[*] OF CHAR;
@@ -66,6 +68,7 @@ NAMESPACE Simatic.Ax.Json
             Serialize := TRUE;
         END_METHOD
 
+        {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC AddChar : BOOL
             VAR_INPUT
                 c : CHAR;
@@ -76,6 +79,7 @@ NAMESPACE Simatic.Ax.Json
             AddChar := TRUE;
         END_METHOD
 
+        {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC AddString : BOOL
             VAR_INPUT
                 s : STRING;
@@ -92,16 +96,19 @@ NAMESPACE Simatic.Ax.Json
         END_METHOD
     
         /// Returns the count of the serialized characters
+        {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC GetLength : DINT
             GetLength := _lentgh;
         END_METHOD
 
         /// Returns root element of the JSON document
+        {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC GetRootElement : IJsonElement
             GetRootElement := _rootElement;
         END_METHOD
     
         /// Add a new element to the JSON document
+        {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC AddElement : IJsonContainerElement
             VAR_INPUT
                 elem : IJsonElement;
@@ -127,6 +134,7 @@ NAMESPACE Simatic.Ax.Json
         /// Clear the buffer logically (fast). 
         /// If `hard = TRUE` then delete the buffer also 
         /// physically (slow)
+        {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC ClearBuffer
             VAR_INPUT
                 hard : BOOL := FALSE;
@@ -148,6 +156,7 @@ NAMESPACE Simatic.Ax.Json
         /// Reset the complete object tree and the destination buffer 
         /// of the JSON document for the purpose, a new JSON object should
         /// be created.
+        {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC Reset
             VAR_TEMP
                 _currentElement : IJsonElementMuteable;
