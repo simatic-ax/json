@@ -17,51 +17,58 @@ NAMESPACE Document
             myDint : JsonDInt := (Value := DINT#12345678, Key := 'myDint');
             myString : JsonString := (Value := 'this is my string', Key := 'myString');
             myObject : JsonObject := (Key := 'myObject');
+            buffer : ARRAY[0..200] OF CHAR;
         END_VAR
 
         {Test}
         METHOD PUBLIC Serialize_BOOLEAN
+            doc.buffer := REF(buffer);
+
             doc.AddElement(myBoolean);
-            doc.Serialize(doc.buffer);
+            doc.Serialize();
             
-            str := Arrays.ToString(doc.buffer, 0, 18);
+            str := Arrays.ToString(buffer, 0, 18);
             Equal(expected := '{"myBoolean": true}', actual := str);
         END_METHOD
 
         {Test}
         METHOD PUBLIC Serialize_INT
+            doc.buffer := REF(buffer);
             doc.AddElement(myInt);
-            doc.Serialize(doc.buffer);
+            doc.Serialize();
             
-            str := Arrays.ToString(doc.buffer, 0, 14);
+            str := Arrays.ToString(buffer, 0, 14);
             Equal(expected := '{"myInt": 1234}', actual := str);
         END_METHOD
 
         {Test}
         METHOD PUBLIC Serialize_DINT
+            doc.buffer := REF(buffer);
             doc.AddElement(myDint);
-            doc.Serialize(doc.buffer);
+            doc.Serialize();
             
-            str := Arrays.ToString(doc.buffer, 0, 19);
+            str := Arrays.ToString(buffer, 0, 19);
             Equal(expected := '{"myDint": 12345678}', actual := str);
         END_METHOD
         
         {Test}
         METHOD PUBLIC Serialize_STRING
+            doc.buffer := REF(buffer);
             doc.AddElement(myString);
-            doc.Serialize(doc.buffer);
+            doc.Serialize();
             
-            str := Arrays.ToString(doc.buffer, 0, 32);
+            str := Arrays.ToString(buffer, 0, 32);
             Equal(expected := '{"myString": "this is my string"}', actual := str);
         END_METHOD
 
         {Test}
         METHOD PUBLIC Serialize_INT_DINT
+            doc.buffer := REF(buffer);
             doc.AddElement(myInt);
             doc.AddElement(myDint);
-            doc.Serialize(doc.buffer);
+            doc.Serialize();
             
-            str := Arrays.ToString(doc.buffer, 0, 34);
+            str := Arrays.ToString(buffer, 0, 34);
             Equal(expected := '{"myInt": 1234, "myDint": 12345678}', actual := str);
         END_METHOD
 
@@ -73,9 +80,10 @@ NAMESPACE Document
             doc.AddElement(myBoolean);
             doc.AddElement(myObject);
             
-            doc.Serialize(doc.buffer);
+            doc.buffer := REF(buffer);
+            doc.Serialize();
             
-            str := Arrays.ToString(doc.buffer, 0, 67);
+            str := Arrays.ToString(buffer, 0, 67);
             Equal(expected := '{"myBoolean": true, "myObject": {"myInt": 1234, "myDint": 12345678}}', actual := str);
 
 
@@ -89,8 +97,8 @@ NAMESPACE Document
             doc.AddElement(myBoolean);
             doc.AddElement(myObject);
 
-            doc.Serialize(doc.buffer);
-            str := Arrays.ToString(doc.buffer, 0, 67);
+            doc.Serialize();
+            str := Arrays.ToString(buffer, 0, 67);
             Equal(expected := '{"myBoolean": true, "myObject": {"myInt": 1234, "myDint": 12345678}}', actual := str);
 
         END_METHOD

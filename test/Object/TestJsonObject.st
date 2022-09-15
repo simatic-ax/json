@@ -14,6 +14,7 @@ NAMESPACE Simatic.Ax.Json
             doc : JsonDocument;
             cmpBuff : ARRAY[0..399] OF CHAR;
             len : DINT;
+            buffer : ARRAY[0..200] OF CHAR;
         END_VAR
 
         {Test}
@@ -74,11 +75,11 @@ NAMESPACE Simatic.Ax.Json
             THIS.Test_Object_with_three_elements();
             _expStr := '"Name": {"test": 999, "second_key": -999, "3rd": 1}';
 
-            
+            doc.buffer := REF(buffer);
             o.Serialize(REF(doc));
 
             len := Strings.ToArray.OfCharCount(str := _expStr, arr := cmpBuff);
-            _res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            _res := CompareArray(first := buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := _res);
         END_METHOD
 
