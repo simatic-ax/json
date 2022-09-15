@@ -1,6 +1,9 @@
 name: '@simatic-ax/json'
 version: 0.0.0-placeholder
 type: lib
+repository: 
+  type: git
+  url: https://github.com/simatic-ax/json
 variables:
   APAX_BUILD_ARGS:
     - '--log Trace'
@@ -10,7 +13,7 @@ targets:
   - 'axunit-llvm'
 devDependencies:
   "@ax/sdk": 2.0.4
-  "@simatic-ax/snippetscollection": 0.0.13
+  "@simatic-ax/snippetscollection": 0.0.14
 dependencies:
   "@ax/system-strings": 3.0.4
   "@simatic-ax/conversion": 2.1.2
