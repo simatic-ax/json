@@ -6,7 +6,7 @@ NAMESPACE Simatic.Ax.Json
     {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
     CLASS FINAL JsonDocument IMPLEMENTS IJsonContainerElement
         VAR PUBLIC
-            buffer : ARRAY[0..999] OF CHAR;
+            buffer : REF_TO ARRAY[*] OF CHAR;
         END_VAR
         
         VAR PROTECTED
@@ -14,7 +14,6 @@ NAMESPACE Simatic.Ax.Json
             _lastElement : IJsonElementMuteable;
             _rootElement : IJsonElement;
             _lentgh : DINT;
-            _bufLowerBound : DINT;
             _bufIndex : DINT;
         END_VAR
 
@@ -42,17 +41,18 @@ NAMESPACE Simatic.Ax.Json
         /// Serializes the JSON document ino a ARRAY OF CHAR
         {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC Serialize : BOOL
-            VAR_IN_OUT
-                buf : ARRAY[*] OF CHAR;
-            END_VAR
             VAR_TEMP
                 _to : IJsonElementMuteable;
+                _bufLowerBound : DINT;
             END_VAR
-
+            IF (buffer = NULL)  THEN
+                Serialize := FALSE;
+                RETURN;
+            END_IF;
             // Clear buffer (not hard before serializing)
             THIS.ClearBuffer();
 
-            _bufLowerBound := LOWER_BOUND(buf, 1);
+            _bufLowerBound := LOWER_BOUND(buffer^, 1);
             _bufIndex := _bufLowerBound;
             THIS.AddChar(c := '{');            
             
@@ -73,7 +73,11 @@ NAMESPACE Simatic.Ax.Json
             VAR_INPUT
                 c : CHAR;
             END_VAR
-            buffer[_bufIndex] := c;
+            IF (buffer = NULL)  THEN
+                AddChar := FALSE;
+                RETURN;
+            END_IF;
+            buffer^[_bufIndex] := c;
             _bufIndex := _bufIndex + 1;
             _lentgh := _lentgh + 1;
             AddChar := TRUE;
@@ -87,8 +91,12 @@ NAMESPACE Simatic.Ax.Json
             VAR_TEMP
                 i : INT;
             END_VAR
+            IF (buffer = NULL)  THEN
+                AddString := FALSE;
+                RETURN;
+            END_IF;
             FOR i := 1 TO LengthOf(s) DO
-                buffer[_bufIndex] := s[i];
+                buffer^[_bufIndex] := s[i];
                 _bufIndex := _bufIndex + 1;
                 _lentgh := _lentgh + 1;
             END_FOR;
@@ -141,11 +149,15 @@ NAMESPACE Simatic.Ax.Json
             END_VAR
             VAR_TEMP
                 i : DINT;
+                _bufLowerBound : DINT;
             END_VAR
-
+            IF (buffer = NULL)  THEN
+                RETURN;
+            END_IF;
+            _bufLowerBound := LOWER_BOUND(buffer^, 1);
             IF (hard) THEN
                 FOR i := _bufLowerBound TO _bufIndex DO
-                    buffer[i] := TO_CHAR(BYTE#16#00);
+                    buffer^[i] := TO_CHAR(BYTE#16#00);
                 END_FOR;
             END_IF;
             _bufLowerBound := 0;

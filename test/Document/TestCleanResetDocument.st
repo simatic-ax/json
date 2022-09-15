@@ -22,6 +22,7 @@ NAMESPACE Document
             doc : JsonDocument;
             cmpBuff : ARRAY[0..399] OF CHAR;
             cmpBuffEmpty : ARRAY[0..399] OF CHAR;
+            buffer : ARRAY[0..200] OF CHAR;
             len : DINT;
         END_VAR
         
@@ -36,16 +37,18 @@ NAMESPACE Document
             o2.AddElement(o3);
             o1.AddElement(o2);
             doc.AddElement(o1);
-            doc.Serialize(doc.buffer);
+            doc.buffer := REF(buffer);
+            doc.Serialize();
 
             len := Strings.ToArray.OfCharCount(str := expString, arr := cmpBuff);
-            res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            res := CompareArray(first := buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
             Equal(expected := LengthOf(expString), actual := doc.GetLength());
         END_METHOD
         
         {Test}
         METHOD PUBLIC TestCleanBuffer
+            doc.buffer := REF(buffer);
             // Fill Buffer
             THIS.Test_Build_nested_object_And_expect_correct_JSON();
             Equal(expected := LengthOf(expString), actual := doc.GetLength());
@@ -55,13 +58,14 @@ NAMESPACE Document
             Equal(expected := 0, actual := doc.GetLength());
 
             // compare result buffer with compare array
-            res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            res := CompareArray(first := buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
     
             // Serialize again
-            doc.Serialize(doc.buffer);
+           
+            doc.Serialize();
             len := Strings.ToArray.OfCharCount(str := expString, arr := cmpBuff);
-            res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            res := CompareArray(first := buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
             Equal(expected := LengthOf(expString), actual := doc.GetLength());
 
@@ -79,7 +83,7 @@ NAMESPACE Document
             Equal(expected := 0, actual := doc.GetLength());
 
             // compare result buffer with compare array
-            res := CompareArray(first := doc.buffer, scnd := cmpBuffEmpty, count := TO_INT(len));
+            res := CompareArray(first := buffer, scnd := cmpBuffEmpty, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
     
         END_METHOD

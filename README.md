@@ -167,6 +167,7 @@ PROGRAM MyProgram
     END_VAR
     VAR
         doc : JsonDocument;
+        docBuffer : ARRAY[0..200] OF CHAR;
         myBoolean : JsonBoolean := (Value := TRUE, Key := 'myBoolean');
         myInt : JsonInt := (Value := 1234, Key := 'myInt');
         myDint : JsonDInt := (Value := DINT#12345678, Key := 'myDint');
@@ -190,6 +191,7 @@ PROGRAM MyProgram
             step := Steps#SerializeDocument2;
         Steps#SerializeDocument2:
             // Serialize the document {"myBoolean": true, "myObject": {"myInt": 1234, "myDint": 12345678}}
+            doc.buffer := REF(docBuffer);
             doc.Serialize(doc.buffer);
             SerializedDocument := Arrays.ToString(arr := doc.buffer);
             step := Steps#ParseDocument2;

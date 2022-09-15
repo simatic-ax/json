@@ -21,6 +21,7 @@ NAMESPACE Document
             res : BOOL;
             doc : JsonDocument;
             cmpBuff : ARRAY[0..399] OF CHAR;
+            buffer : ARRAY[0..200] OF CHAR;
             len : DINT;
         END_VAR
 
@@ -35,10 +36,11 @@ NAMESPACE Document
             o2.AddElement(o3);
             o1.AddElement(o2);
             doc.AddElement(o1);
-            doc.Serialize(doc.buffer);
+            doc.buffer := REF(buffer);
+            doc.Serialize();
 
             len := Strings.ToArray.OfCharCount(str := expString, arr := cmpBuff);
-            res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            res := CompareArray(first := buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
             Equal(expected := LengthOf(expString), actual := doc.GetLength());
         END_METHOD
