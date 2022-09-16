@@ -33,7 +33,7 @@ NAMESPACE Document
             expString : STRING;
             actString : STRING;
             result : BOOL;
-
+            buffer : ARRAY[0..200] OF CHAR;
 
 
         END_VAR
@@ -49,8 +49,9 @@ NAMESPACE Document
             
             // Test Serialize
             expArrayCnt := Strings.ToArray.OfCharCount(str := expString, arr := expArray);
-            doc.Serialize(doc.buffer);
-            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            doc.buffer := REF(buffer);
+            doc.Serialize();
+            result := CompareArray(first := buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             Equal(expected := TRUE, actual := result);
             
         END_METHOD
@@ -66,9 +67,10 @@ NAMESPACE Document
             
             // Test Serialize
             expArrayCnt := Strings.ToArray.OfCharCount(str := expString, arr := expArray);
-            doc.Serialize(doc.buffer);
-            doc.Serialize(doc.buffer);
-            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            doc.buffer := REF(buffer);
+            doc.Serialize();
+            doc.Serialize();
+            result := CompareArray(first := buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             Equal(expected := TRUE, actual := result);
         END_METHOD
 
@@ -84,8 +86,9 @@ NAMESPACE Document
             
             // Test Serialize
             expArrayCnt := Strings.ToArray.OfCharCount(str := expString, arr := expArray);
-            doc.Serialize(doc.buffer);
-            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            doc.buffer := REF(buffer);
+            doc.Serialize();
+            result := CompareArray(first := buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             Equal(expected := TRUE, actual := result);
         END_METHOD
 
@@ -99,8 +102,9 @@ NAMESPACE Document
             
             // Test Serialize
             expArrayCnt := Strings.ToArray.OfCharCount(str := expString, arr := expArray);
-            doc.Serialize(doc.buffer);
-            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            doc.buffer := REF(buffer);
+            doc.Serialize();
+            result := CompareArray(first := buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             Equal(expected := TRUE, actual := result);
         END_METHOD
     
@@ -118,8 +122,9 @@ NAMESPACE Document
             
             // Test Serialize
             expArrayCnt := Strings.ToArray.OfCharCount(str := expString, arr := expArray);
-            doc.Serialize(doc.buffer);
-            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            doc.buffer := REF(buffer);
+            doc.Serialize();
+            result := CompareArray(first := buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             Equal(expected := TRUE, actual := result);
         END_METHOD
 
@@ -137,8 +142,9 @@ NAMESPACE Document
             
             // Test Serialize
             expArrayCnt := Strings.ToArray.OfCharCount(str := expString, arr := expArray);
-            doc.Serialize(doc.buffer);
-            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            doc.buffer := REF(buffer);
+            doc.Serialize();
+            result := CompareArray(first := buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             Equal(expected := TRUE, actual := result);
         END_METHOD
 
@@ -154,8 +160,9 @@ NAMESPACE Document
 
             // Test Serialize
             expArrayCnt := Strings.ToArray.OfCharCount(str := expString, arr := expArray);
-            doc.Serialize(doc.buffer);
-            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            doc.buffer := REF(buffer);
+            doc.Serialize();
+            result := CompareArray(first := buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             Equal(expected := TRUE, actual := result);
         END_METHOD
 
@@ -190,8 +197,8 @@ NAMESPACE Document
 
             // // Test Serialize
             // expArrayCnt := Strings.ToArray.OfCharCount(str := expString, arr := expArray);
-            // doc.Serialize(doc.buffer);
-            // result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            // doc.Serialize();
+            // result := CompareArray(first := buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             // Equal(expected := TRUE, actual := result);
         END_METHOD
 
@@ -216,8 +223,9 @@ NAMESPACE Document
 
             // Test Serialize
             expArrayCnt := Strings.ToArray.OfCharCount(str := expString, arr := expArray);
-            doc.Serialize(doc.buffer);
-            result := CompareArray(first := doc.buffer, scnd := expArray, count := TO_INT(expArrayCnt));
+            doc.buffer := REF(buffer);
+            doc.Serialize();
+            result := CompareArray(first := buffer, scnd := expArray, count := TO_INT(expArrayCnt));
             Equal(expected := TRUE, actual := result);
     
         END_METHOD

@@ -13,6 +13,7 @@ NAMESPACE Simatic.Ax.Json
             s_test_max : STRING := '"second_key": 65535';
             cmpBuff : ARRAY[0..20] OF CHAR;
             doc : JsonDocument;
+            buffer : ARRAY[0..200] OF CHAR;
         END_VAR
 
         {Test}
@@ -35,10 +36,11 @@ NAMESPACE Simatic.Ax.Json
                 len : DINT;
                 res : BOOL;
             END_VAR
+            doc.buffer := REF(buffer);
             e.Serialize(REF(doc));
 
             len := Strings.ToArray.OfCharCount(str := s_test_min, arr := cmpBuff);
-            res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            res := CompareArray(first := buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
 
         END_METHOD
@@ -49,10 +51,10 @@ NAMESPACE Simatic.Ax.Json
                 len : DINT;
                 res : BOOL;
             END_VAR
-            
+            doc.buffer := REF(buffer);
             e2.Serialize(REF(doc));
             len := Strings.ToArray.OfCharCount(str := s_test_max, arr := cmpBuff);
-            res := CompareArray(first := doc.buffer, scnd := cmpBuff, count := TO_INT(len));
+            res := CompareArray(first := buffer, scnd := cmpBuff, count := TO_INT(len));
             Equal(expected := TRUE, actual := res);
 
         END_METHOD
