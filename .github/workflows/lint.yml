@@ -15,3 +15,5 @@ jobs:
     
       - name: Check markdown files
         uses: avto-dev/markdown-lint@v1
+        with:
+          args: '**/*.md'
