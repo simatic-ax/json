@@ -1,7 +1,6 @@
 name: linter checks
 on:
   push:
-  workflow_dispatch:
 
 jobs:
   linter:
