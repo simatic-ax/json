@@ -16,15 +16,15 @@ apax add @simatic-ax/json
 
 ## Namespace
 
-```
+```sh
 Simatic.Ax.Json;
 ```
 
-# Deserializing
+## Deserializing
 
 Use the _Deserializer_ class to deserialize JSON documents and parse values from the document.
 
-## Restrictions
+### Restrictions
 
 In the current version we have several restrictions regarding the handling of JSON files.
 
@@ -144,19 +144,19 @@ The JSON Format allows a user to have duplicate keys in his json document, e.g.
 
 However, the norm does not define, how duplicate keys should be processed. In case of a duplicate key, this library will alwys try to parse the first key and ignore the second one.
 
-# Serializing
+## Serializing
 
 ## [JsonDocument](docs/JsonDocument.md)
 
 ## [JsonObject](docs/JsonObject.md)
 
-# Examples
+## Examples
 
-## Example ho to use the JSON library
+### Example ho to use the JSON library
 
 This example shows in how to create, serialize, parse and reset a JSON document.
 
-```
+```iec-st
 USING Simatic.Ax.Conversion;
 USING Simatic.Ax.Json;
 
@@ -226,7 +226,7 @@ TYPE
 END_TYPE
 ```
 
-## Application Example
+### Application Example
 
 A complete application example, you can find here:
 
