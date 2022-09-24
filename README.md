@@ -1,26 +1,31 @@
 ﻿# JSON Library
 
 ## Description
+
 This Library will provides the possibility to serialize and deserialize JSON Files.
 
 ## Install this package
 
 Enter:
+
 ```cli
 apax add @simatic-ax/json
 ```
 
-> to install this package you need to login into the GitHub registry. You'll find more information [here](https://github.com/simatic-ax/.sharedstuff/blob/main/doc/personalaccesstoken.md) 
+> to install this package you need to login into the GitHub registry. You'll find more information [here](https://github.com/simatic-ax/.sharedstuff/blob/main/doc/personalaccesstoken.md)
 
 ## Namespace
+
 ```
 Simatic.Ax.Json;
 ```
 
 # Deserializing
-Use the _Deserializer_ class to deserialize JSON documents and parse values from the document. 
+
+Use the _Deserializer_ class to deserialize JSON documents and parse values from the document.
 
 ## Restrictions
+
 In the current version we have several restrictions regarding the handling of JSON files.
 
 1. The JSON File must be in the form of a ARRAY [] OF CHAR. Read more in the _Workflow_ part.
@@ -54,14 +59,15 @@ In the current version we have several restrictions regarding the handling of JS
 
 ## Workflow
 
-### Pre-requirements.
-1. You need to use the library _Simatic.Ax.Conversion_ and _Simatic.Ax.Json_; 
+### Pre-requirements
+
+1. You need to use the library _Simatic.Ax.Conversion_ and _Simatic.Ax.Json_;
 2. The deserializer currently expects an _ARRAY[0..999] OF CHAR_ as a buffer. If your JSON File is a STRING you can use the _Simatic.Ax.Conversion_ as shown in the example below.
 3. Finally you must set the buffer for the deserializer with the _SetBuffer_ method. The buffer is expected as a reference.
 
 ### Get values
 
-Use the _TryParse_ method to get values that match your provided STRING key . If you want to get values of nested elements you must instead provide a ARRAY [X] OF STRING, with a key for each nested layer. 
+Use the _TryParse_ method to get values that match your provided STRING key . If you want to get values of nested elements you must instead provide a ARRAY [X] OF STRING, with a key for each nested layer.
 
 The datatype _TryParse_ will return depends on the datatype of the value you provide.
 
@@ -124,15 +130,18 @@ parsingWasSuccessfull:= TryParse('not a key', value3);
 |TryParse(input: key (STRING), output: value) : BOOL| Returns false when parsing not succesfull and provides the value. The method is overloaded and accepts different data types. |
 |TryParse(input: key(ARRAY OF STRING), output: value) : BOOL| Returns false when parsing not succesfull and provides the value. The method is overloaded and accepts different data types. The key array is used to access values in nested elements. |
 |||
+
 ### Duplicate keys
 
 The JSON Format allows a user to have duplicate keys in his json document, e.g.
+
 ```JSON
 {
 "key" : "my value",
 "key" : 1234 
 }
 ```
+
 However, the norm does not define, how duplicate keys should be processed. In case of a duplicate key, this library will alwys try to parse the first key and ignore the second one.
 
 # Serializing
@@ -143,8 +152,8 @@ However, the norm does not define, how duplicate keys should be processed. In ca
 
 # Examples
 
-
 ## Example ho to use the JSON library
+
 This example shows in how to create, serialize, parse and reset a JSON document.
 
 ```
@@ -230,4 +239,3 @@ Thanks for your interest in contributing. Anybody is free to report bugs, unclea
 ## License and Legal information
 
 Please read the [Legal information](LICENSE.md)
-
