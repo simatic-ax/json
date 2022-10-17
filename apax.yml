@@ -1,5 +1,6 @@
 name: '@simatic-ax/json'
 version: 0.0.0-placeholder
+description: Library for serializing Json objects and parse Json strings.
 type: lib
 repository:
   type: git
