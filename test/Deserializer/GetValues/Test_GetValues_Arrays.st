@@ -27,7 +27,7 @@ CLASS Test_Deserializer_GetValues_Arrays
         END_VAR
 
         len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer));
+        deserializer.buffer := REF(buffer);
 
         key := 'arraykey';
         keyFound := deserializer.TryParse( key, value);
@@ -44,7 +44,7 @@ CLASS Test_Deserializer_GetValues_Arrays
         END_VAR
 
         len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer));
+        deserializer.buffer := REF(buffer);
 
         key := 'arraykey';
         keyFound := deserializer.TryParse( key, value);
@@ -61,7 +61,7 @@ CLASS Test_Deserializer_GetValues_Arrays
         END_VAR
 
         len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer));
+        deserializer.buffer := REF(buffer);
 
         key := 'arraykey';
         keyFound := deserializer.TryParse( key, value);

@@ -31,7 +31,7 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer));
+        deserializer.buffer := REF(buffer);
 
         key := 'key ';
         keyFound := deserializer.TryParse( key, value);
@@ -58,7 +58,7 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer));
+        deserializer.buffer := REF(buffer);
 
         key := 'nested';
         keyFound := deserializer.TryParse( key, value);
@@ -77,7 +77,7 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer));
+        deserializer.buffer := REF(buffer);
 
         key := 'key ';
         keyFound := deserializer.TryParse( key, value);
@@ -104,7 +104,7 @@ CLASS Test_FindKeyInBuffer
         END_VAR
 
         len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
-        deserializer.SetBuffer(REF(buffer));
+        deserializer.buffer := REF(buffer);
 
         key := 'simpleArray';
         keyFound := deserializer.TryParse( key, value);
