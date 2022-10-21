@@ -7,13 +7,6 @@ NAMESPACE Simatic.Ax.Json
         VAR PUBLIC
             buffer : REF_TO ARRAY[*] OF CHAR;
         END_VAR
-        //Temp method until ref_to array* possible
-        METHOD PUBLIC SetBuffer
-            VAR_INPUT
-                _buffer : REF_TO ARRAY[*] OF CHAR;
-            END_VAR
-            buffer := _buffer;
-        END_METHOD
         METHOD PRIVATE KeyIsInIndexSpan : BOOL
             VAR_INPUT
                 key : STRING;
