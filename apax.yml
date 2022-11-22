@@ -1,16 +1,20 @@
+# General information
 name: '@simatic-ax/json'
 version: 0.0.0-placeholder
 type: lib
+# Description will be displayed in the apax extension
+description: This is supporting the serializing of a JSON object model and parsing JSON formatted strings
+#URL to the repository
 repository:
   type: git
   url: https://github.com/simatic-ax/json
+# Environment variables
 variables:
   APAX_BUILD_ARGS:
-    - '--log Trace'
-    - '--simulation'
     - '--debug'
 targets:
   - 'axunit-llvm'
+# Dependencies
 devDependencies:
   "@ax/sdk": 3.0.1
   "@simatic-ax/snippetscollection": 0.0.14
@@ -19,6 +23,7 @@ dependencies:
   "@simatic-ax/conversion": 3.0.0
 registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
+# Dependencies
 files:
   - 'README.md'
   - 'LICENSE.md'
