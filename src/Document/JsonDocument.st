@@ -145,7 +145,7 @@ NAMESPACE Simatic.Ax.Json
         {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
         METHOD PUBLIC ClearBuffer
             VAR_INPUT
-                hard : BOOL := FALSE;
+                hard : BOOL;
             END_VAR
             VAR_TEMP
                 i : DINT;

@@ -9,7 +9,7 @@ Inheritance: AbstractJsonElement-->JsonObject
 |||
 |-|-|
 |value : DINT;| Value of this element
-|key : STRING  := 'NoKeySet';| Key of this element
+|key : STRING  := '';| Key of this element
 
 ## Methods
 

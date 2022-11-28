@@ -4,7 +4,7 @@ USING Simatic.Ax.Json;
 NAMESPACE Simatic.Ax.Json
     CLASS ABSTRACT AbstractJsonElement IMPLEMENTS IJsonElementMuteable, IJsonElement
         VAR PUBLIC
-            Key : STRING  := 'NoKeySet';                    
+            Key : STRING;                    
         END_VAR
 
         VAR PROTECTED
