@@ -17,7 +17,7 @@ targets:
   - 'axunit-llvm'
 # Dependencies
 devDependencies:
-  "@ax/sdk": 3.0.2
+  "@ax/sdk": 3.0.8
   "@simatic-ax/snippetscollection": 0.0.15
 dependencies:
   "@ax/system-strings": 4.1.43
