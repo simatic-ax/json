@@ -21,7 +21,7 @@ devDependencies:
   "@simatic-ax/snippetscollection": 0.0.15
 dependencies:
   "@ax/system-strings": 4.1.43
-  "@simatic-ax/conversion": 3.0.2
+  "@simatic-ax/conversion": 3.0.3
 registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
 # Files which 'apax pack' will include
