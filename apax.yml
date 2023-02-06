@@ -17,11 +17,11 @@ targets:
   - 'axunit-llvm'
 # Dependencies
 devDependencies:
-  "@ax/sdk": 3.0.8
+  "@ax/sdk": 3.0.10
   "@simatic-ax/snippetscollection": 0.0.15
 dependencies:
-  "@ax/system-strings": 4.1.43
-  "@simatic-ax/conversion": 3.0.3
+  "@ax/system-strings": 4.2.3
+  "@simatic-ax/conversion": 3.1.0
 registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
 # Files which 'apax pack' will include
