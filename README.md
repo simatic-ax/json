@@ -85,7 +85,7 @@ VAR PUBLIC
     //pre requirements
     deserializer : Deserializer;
     buffer : ARRAY[0..999] OF CHAR;
-    JSON_File: STRING := '{ "key 1" : 123, 'key 1' : {'nestedkey 1' : "456", 'nestedkey 2': {'nestedInNested': 789}}}'; //example of your JSON file
+    JSON_File: STRING := '{ "key 1" : 123, 'key 2' : {'nestedkey 1' : "456", 'nestedkey 2': {'nestedInNested': 789}}}'; //example of your JSON file
     
     //optional conversion information
     arrayLength:= DINT;
