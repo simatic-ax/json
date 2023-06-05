@@ -14,6 +14,41 @@ CLASS TryParse
     END_VAR
 
     {Test}
+    Method Public Test_TryParse_Value_as_String
+        VAR
+            JSON_Entry: STRING := '{ "key1": "nestedkey1"}';
+            key: STRING := 'key1';
+            len:DINT;
+            keyFound: BOOL;
+            value: STRING;
+        END_VAR
+
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
+        deserializer.buffer := REF(buffer);
+
+        keyFound := deserializer.TryParse( key, value);
+        Equal('nestedkey1', value);
+    END_Method
+
+    {Test}
+    Method Public Test_TryParse_Value_as_String2
+        VAR
+            JSON_Entry: STRING := '{"Name": "SIMATIC", data: {plc_type: 1518, OPC_SERVER_ENABLED: true}}';
+            key: STRING := 'Name';
+            len:DINT;
+            keyFound: BOOL;
+            value: STRING;
+        END_VAR
+        JSON_Entry:= '{"Name": "SIMATIC", data: {plc_type: 1518, OPC_SERVER_ENABLED: true}}';
+        key := 'Name';
+        len:= Strings.ToArray.OfCharCount(str := JSON_Entry, arr := buffer);
+        deserializer.buffer := REF(buffer);
+
+        keyFound := deserializer.TryParse( key, value);
+        Equal('SIMATIC', value);
+    END_Method
+
+    {Test}
     Method Public Test_TryParse_String
         VAR
             JSON_Entry: STRING := '{ "key1": {"nestedkey1": 123}}';
