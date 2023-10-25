@@ -45,7 +45,7 @@ CLASS TryParse
         deserializer.buffer := REF(buffer);
 
         keyFound := deserializer.TryParse( key, value);
-        Equal('SIMATIC', value);
+        Equal('SIMATIC-', value);
     END_Method
 
     {Test}

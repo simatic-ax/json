@@ -7,6 +7,10 @@ NAMESPACE Simatic.Ax.Json
         VAR PUBLIC
             buffer : REF_TO ARRAY[*] OF CHAR;
         END_VAR
+        VAR PRIVATE
+            _iBufferIndices : IGetBufferIndizes;
+            _BufferIndices : GetBufferIndizesSyncron;
+        END_VAR
         METHOD PRIVATE KeyIsInIndexSpan : BOOL
             VAR_INPUT
                 key : STRING;
@@ -51,31 +55,7 @@ NAMESPACE Simatic.Ax.Json
             END_FOR;
             GetValueFromIndex := Conversion.Arrays.ToString(buffer^, realStartIndex, realEndIndex);
         END_METHOD
-        METHOD PRIVATE GetBufferIndizes
-            VAR_OUTPUT
-                bufferStart : INT;
-                bufferEnd : INT;
-            END_VAR
-            VAR_TEMP
-                index : INT;
-                incrementBackwards : INT := -1;
-                _lb, _ub : INT;
-            END_VAR
-            _lb := TO_INT(LOWER_BOUND(buffer^, 1));
-            _ub := TO_INT(UPPER_BOUND(buffer^, 1));
-            FOR index := _lb TO _ub DO //TODO: When possible change to Array* upper und lowerbound
-                IF (buffer^[index] = '{') THEN
-                    bufferStart := index;
-                    EXIT;
-                END_IF;
-            END_FOR;
-            FOR index := _ub TO _lb BY incrementBackwards DO
-                IF (buffer^[index] = '}') THEN
-                    bufferEnd := index;
-                    EXIT;
-                END_IF;
-            END_FOR;
-        END_METHOD
+       
         METHOD PRIVATE GetValue_WithKeyArray : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -97,12 +77,27 @@ NAMESPACE Simatic.Ax.Json
                 documentEndIndex : INT;
                 keyArrayLower : DINT;
                 keyArrayUpper : DINT;
+                cmd : IPlcOpen;
             END_VAR
             VAR_OUTPUT
                 areaStartIndex : INT;
                 areaEndIndex : INT;
             END_VAR
-            THIS.GetBufferIndizes(documentStartIndex, documentEndIndex);
+            _iBufferIndices := _BufferIndices;
+            cmd := _iBufferIndices.Find(buffer);
+            IF NOT cmd.Busy() THEN
+                IF cmd.Done() THEN  // found '{' and '}'  
+                    documentStartIndex := _iBufferIndices.StartIndex();
+                    documentEndIndex := _iBufferIndices.EndIndex();
+                ELSIF cmd.Error() THEN // havn't found '{' and '}'
+                    GetValue_WithKeyArray := FALSE;
+                    areaStartIndex := 0;
+                    areaEndIndex := 0;
+                    RETURN;
+                END_IF;
+            ELSE
+                ; // wait until it is not busy any more
+            END_IF;
             keyArrayLower := LOWER_BOUND(keyArray, 1);
             keyArrayUpper := UPPER_BOUND(keyArray, 1);
             //iterate through keys
