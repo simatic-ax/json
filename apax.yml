@@ -14,7 +14,8 @@ variables:
   APAX_BUILD_ARGS:
     - '--debug'
 targets:
-  - 'axunit-llvm'
+  - '1500'
+  - 'llvm'
 # Dependencies
 devDependencies:
   "@ax/sdk": 2311.0.1
