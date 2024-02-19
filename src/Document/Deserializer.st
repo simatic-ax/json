@@ -213,6 +213,7 @@ NAMESPACE Simatic.Ax.Json
                 END_IF;
             END_FOR;
         END_METHOD
+        /// TryParse(STRING) : STRING
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -233,6 +234,7 @@ NAMESPACE Simatic.Ax.Json
                 value := '';
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : STRING
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -251,6 +253,7 @@ NAMESPACE Simatic.Ax.Json
                 value := '';
             END_IF;
         END_METHOD
+        /// TryParse(STRING) : SINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -272,6 +275,7 @@ NAMESPACE Simatic.Ax.Json
                 value := SINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : SINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -291,6 +295,7 @@ NAMESPACE Simatic.Ax.Json
                 value := SINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(STRING) : LINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -312,6 +317,7 @@ NAMESPACE Simatic.Ax.Json
                 value := 0;
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : LINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -331,6 +337,7 @@ NAMESPACE Simatic.Ax.Json
                 value := 0;
             END_IF;
         END_METHOD
+        /// TryParse(STRING) : DINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -352,6 +359,7 @@ NAMESPACE Simatic.Ax.Json
                 value := 0;
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : DINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -371,6 +379,7 @@ NAMESPACE Simatic.Ax.Json
                 value := 0;
             END_IF;
         END_METHOD
+        /// TryParse(STRING) : LINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -392,6 +401,7 @@ NAMESPACE Simatic.Ax.Json
                 value := 0;
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : LINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -411,6 +421,7 @@ NAMESPACE Simatic.Ax.Json
                 value := 0;
             END_IF;
         END_METHOD
+        /// TryParse(STRING) : USINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -432,6 +443,7 @@ NAMESPACE Simatic.Ax.Json
                 value := USINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : USINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -451,6 +463,7 @@ NAMESPACE Simatic.Ax.Json
                 value := USINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(STRING) : UINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -472,6 +485,7 @@ NAMESPACE Simatic.Ax.Json
                 value := USINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : UINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -491,6 +505,7 @@ NAMESPACE Simatic.Ax.Json
                 value := USINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(STRING) : UDINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -512,6 +527,7 @@ NAMESPACE Simatic.Ax.Json
                 value := USINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : UDINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -531,6 +547,7 @@ NAMESPACE Simatic.Ax.Json
                 value := USINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(STRING) : ULINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -552,6 +569,7 @@ NAMESPACE Simatic.Ax.Json
                 value := USINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : ULINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;

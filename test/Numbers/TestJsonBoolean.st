@@ -13,7 +13,14 @@ NAMESPACE Simatic.Ax.Json
             cmpBuff : ARRAY[0..20] OF CHAR;
             doc : JsonDocument;
             buffer : ARRAY[0..200] OF CHAR;
+            bufferStateLess : ARRAY[0..200] OF CHAR;
         END_VAR
+
+        {TestSetup}
+        METHOD PUBLIC TestSetup
+            doc.Reset();
+            buffer := bufferStateLess;
+        END_METHOD
 
         {Test}
         METHOD PUBLIC TestSerialize_s_test_true
