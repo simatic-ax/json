@@ -213,6 +213,7 @@ NAMESPACE Simatic.Ax.Json
                 END_IF;
             END_FOR;
         END_METHOD
+        /// TryParse(String) : String
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -233,6 +234,7 @@ NAMESPACE Simatic.Ax.Json
                 value := '';
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : String
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -251,6 +253,7 @@ NAMESPACE Simatic.Ax.Json
                 value := '';
             END_IF;
         END_METHOD
+        /// TryParse(String) : SINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
@@ -272,6 +275,7 @@ NAMESPACE Simatic.Ax.Json
                 value := SINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(ARRAY[*] OF STRING) : SINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
@@ -291,6 +295,7 @@ NAMESPACE Simatic.Ax.Json
                 value := SINT#0;
             END_IF;
         END_METHOD
+        /// TryParse(String) : LINT
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 key : STRING;
