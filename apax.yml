@@ -1,14 +1,17 @@
 # General information
 name: '@simatic-ax/json'
 version: 0.0.0-placeholder
+author: Siemens AG
 type: lib
 # Description will be displayed in the apax extension
-description: This is supporting the serializing of a JSON object model and
-  parsing JSON formatted strings
+description: This is supporting the serializing of a JSON object model and parsing JSON formatted strings
 #URL to the repository
 repository:
   type: git
   url: https://github.com/simatic-ax/json
+# Registry information, where the package will be published
+registries:
+  '@simatic-ax': 'https://npm.pkg.github.com/'
 # Environment variables
 variables:
   APAX_BUILD_ARGS:
@@ -16,16 +19,17 @@ variables:
 targets:
   - '1500'
   - 'llvm'
+# Install Setting
+installStrategy: strict
+apaxVersion: 3.2.1
 # Dependencies
 devDependencies:
-  "@ax/sdk": 2311.0.1
+  "@ax/sdk": 2405.0.0
   "@simatic-ax/snippetscollection": 1.0.0
 dependencies:
-  "@ax/system-strings": 6.0.94
-  "@simatic-ax/conversion": 2311.1.2
-registries:
-  '@simatic-ax': 'https://npm.pkg.github.com/'
-# Files which 'apax pack' will include
+  "@ax/system-strings": 7.0.17
+  "@simatic-ax/conversion": 2405.0.0
+# Files, which will be shipped with the library
 files:
   - 'README.md'
   - 'LICENSE.md'
@@ -33,5 +37,3 @@ files:
   - 'snippets'
   - 'docs'
   - 'src'
-installStrategy: strict
-apaxVersion: 3.1.0
