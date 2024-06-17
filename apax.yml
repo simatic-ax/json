@@ -4,8 +4,7 @@ version: 0.0.0-placeholder
 author: Siemens AG
 type: lib
 # Description will be displayed in the apax extension
-description: This is supporting the serializing of a JSON object model and
-  parsing JSON formatted strings
+description: This is supporting the serializing of a JSON object model and parsing JSON formatted strings
 #URL to the repository
 repository:
   type: git
