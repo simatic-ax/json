@@ -60,7 +60,9 @@ NAMESPACE Simatic.Ax.Json
             VAR_INPUT
                 elem : IJsonElement;
             END_VAR
-            _next ?= elem;
+            IF _next = NULL THEN
+                _next ?= elem;
+            END_IF;
         END_METHOD
 
     END_CLASS
