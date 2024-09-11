@@ -126,6 +126,10 @@ NAMESPACE Simatic.Ax.Json
                 _lastElem : IJsonElement;
             END_VAR
             _elemMuted ?= elem;
+            IF (elem = _lastElement) THEN
+                AddElement := NULL;
+                RETURN;
+            END_IF;
             IF (_firstElement = NULL) THEN
                 _firstElement := _elemMuted;
                 _lastElement := _elemMuted;

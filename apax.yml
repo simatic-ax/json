@@ -20,15 +20,15 @@ targets:
   - '1500'
   - 'llvm'
 # Install Setting
-installStrategy: strict
+installStrategy: overridable
 apaxVersion: 3.2.1
 # Dependencies
 devDependencies:
   "@ax/sdk": 2405.0.0
   "@simatic-ax/snippetscollection": 1.0.0
 dependencies:
-  "@ax/system-strings": 7.0.17
   "@simatic-ax/conversion": 2405.0.0
+  "@ax/axunitst": ^5.1.23
 # Files, which will be shipped with the library
 files:
   - 'README.md'

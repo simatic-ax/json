@@ -1,4 +1,4 @@
-USING Simatic.Ax.Conversion;
+USING Simatic.Ax.Conversion; // TODO Fix AxUnit Error
 USING AxUnit.Assert;
 USING System.Strings;
 USING Simatic.Ax.Json;
@@ -93,24 +93,25 @@ NAMESPACE Deserializer
                 keyFound := deserializer.TryParse(key, value);
                 Equal(TRUE, keyFound);
             END_METHOD
-//Comment in to test the private KeyIsInIndexSpan method
-// {Test}
-// Method Public Test_KeyIsInIndexSpan_FindsKey
-//     VAR
-//         len:DINT;
-//         keyStart : int := 0;
-//         keyEnd : int := 2;
-//         keyFound: BOOL;
-//     END_VAR
-//     key := 'key';
-//     len:= Strings.ToArray.OfCharCount(str := key, arr := buffer);
-//     deserializer.SetBuffer(REF(buffer));
-//     keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
-//     Equal(TRUE, keyFound);
-//     key := 'not';
-//     keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
-//     Equal(FALSE, keyFound);
-// END_Method
+            //Comment in to test the private KeyIsInIndexSpan method
+
+        //     {Test}
+        //     METHOD PUBLIC Test_KeyIsInIndexSpan_FindsKey
+        //         VAR
+        //             len : DINT;
+        //             keyStart : INT := 0;
+        //             keyEnd : INT := 2;
+        //             keyFound : BOOL;
+        //         END_VAR
+        //         key := 'key';
+        //         len := Strings.ToArray.OfCharCount(str := key, arr := buffer);
+        //         deserializer.buffer := (REF(buffer));
+        //         keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
+        //         Equal(TRUE, keyFound);
+        //         key := 'not';
+        //         keyFound := deserializer.KeyIsInIndexSpan(key, keyStart, keyEnd);
+        //         Equal(FALSE, keyFound);
+        //     END_METHOD
         END_CLASS
 
     END_NAMESPACE

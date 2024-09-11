@@ -15,7 +15,7 @@ NAMESPACE AxUnit.Assert
         IF actual = expected THEN
             axunit_Succeed();
         ELSE
-            axunit_Fail(Concat('Expected ', expected, ', but found ', actual), file, line);
+            axunit_Fail(Concat('Expected ', ', but found '), file, line);
         END_IF;
 
     END_FUNCTION
