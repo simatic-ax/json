@@ -24,11 +24,11 @@ installStrategy: overridable
 apaxVersion: 3.2.1
 # Dependencies
 devDependencies:
-  "@ax/sdk": 2405.1.0
+  "@ax/sdk": 2405.3.0
   "@simatic-ax/snippetscollection": 1.0.0
 dependencies:
   "@simatic-ax/conversion": ^2405.1.0
-  "@ax/axunitst": 5.2.6
+  "@ax/axunitst": 5.3.4
 # Files, which will be shipped with the library
 files:
   - 'README.md'
