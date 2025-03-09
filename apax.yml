@@ -27,7 +27,7 @@ devDependencies:
   "@ax/sdk": 2411.1.0
   "@simatic-ax/snippetscollection": 1.0.0
 dependencies:
-  "@simatic-ax/conversion": ^2405.1.0
+  "@simatic-ax/conversion": ^2411.0.0
 # Files, which will be shipped with the library
 files:
   - 'README.md'
