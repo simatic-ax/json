@@ -10,7 +10,7 @@
       "@simatic-ax/conversion": "^2505.0.0"
     },
     "devDependencies": {
-      "@ax/sdk": "2504.0.0",
+      "@ax/sdk": "^2504.0.0",
       "@simatic-ax/snippetscollection": "^1.0.0"
     },
     "catalogs": {
@@ -631,6 +631,20 @@
       "resolved": "https://registry.simatic-ax.siemens.io/@ax/st-docs/-/st-docs-10.0.85.tgz",
       "dependencies": {}
     },
+    "@ax/system-datetime": {
+      "name": "@ax/system-datetime",
+      "version": "10.0.24",
+      "integrity": "sha512-L4IoFzmAoeLXR3g0ThGJM30iIDDnXNhCNVKnEF4+eKjED6GlLozohpvm+UjdTW4H0+5zplqbe82T1DSpgN7LZg==",
+      "resolved": "https://registry.simatic-ax.siemens.io/@ax/system-datetime/-/system-datetime-10.0.24.tgz",
+      "dependencies": {}
+    },
+    "@ax/system-conversion": {
+      "name": "@ax/system-conversion",
+      "version": "10.0.24",
+      "integrity": "sha512-vHK3X8HnmZsGh/5KEeBmkJ9oZBPEFwxKx2Juu1HU9BN/er6cIQCRJpJOr3JehERxqaIT+s0+/V5rfTeWe1hkPQ==",
+      "resolved": "https://registry.simatic-ax.siemens.io/@ax/system-conversion/-/system-conversion-10.0.24.tgz",
+      "dependencies": {}
+    },
     "@ax/axunitst-test-director-linux-x64": {
       "name": "@ax/axunitst-test-director-linux-x64",
       "version": "8.0.33",
@@ -681,20 +695,6 @@
       "cpu": [
         "x64"
       ],
-      "dependencies": {}
-    },
-    "@ax/system-datetime": {
-      "name": "@ax/system-datetime",
-      "version": "10.0.24",
-      "integrity": "sha512-L4IoFzmAoeLXR3g0ThGJM30iIDDnXNhCNVKnEF4+eKjED6GlLozohpvm+UjdTW4H0+5zplqbe82T1DSpgN7LZg==",
-      "resolved": "https://registry.simatic-ax.siemens.io/@ax/system-datetime/-/system-datetime-10.0.24.tgz",
-      "dependencies": {}
-    },
-    "@ax/system-conversion": {
-      "name": "@ax/system-conversion",
-      "version": "10.0.24",
-      "integrity": "sha512-vHK3X8HnmZsGh/5KEeBmkJ9oZBPEFwxKx2Juu1HU9BN/er6cIQCRJpJOr3JehERxqaIT+s0+/V5rfTeWe1hkPQ==",
-      "resolved": "https://registry.simatic-ax.siemens.io/@ax/system-conversion/-/system-conversion-10.0.24.tgz",
       "dependencies": {}
     }
   },
