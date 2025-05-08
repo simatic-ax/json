@@ -12,22 +12,26 @@ repository:
 # Registry information, where the package will be published
 registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
+
+catalogs:
+  "@ax/simatic-ax": ^2504.0.0
+
+# Dependencies
+devDependencies:
+  "@ax/sdk": ^2504.0.0
+  "@simatic-ax/snippetscollection": ^1.0.0
+dependencies:
+  "@simatic-ax/conversion": ^2505.0.0
+
+targets:
+  - '1500'
+  - 'llvm'
+
 # Environment variables
 variables:
   APAX_BUILD_ARGS:
     - '--debug'
-targets:
-  - '1500'
-  - 'llvm'
-# Install Setting
-installStrategy: overridable
-apaxVersion: 3.2.1
-# Dependencies
-devDependencies:
-  "@ax/sdk": 2411.2.0
-  "@simatic-ax/snippetscollection": 1.0.0
-dependencies:
-  "@simatic-ax/conversion": ^2411.0.0
+
 # Files, which will be shipped with the library
 files:
   - 'README.md'
@@ -35,4 +39,4 @@ files:
   - 'changelog.md'
   - 'snippets'
   - 'docs'
-  - 'src'
+  - 'bin'
