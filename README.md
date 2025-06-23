@@ -152,7 +152,7 @@ However, the norm does not define, how duplicate keys should be processed. In ca
 
 ## Examples
 
-### Example ho to use the JSON library
+### Example how to use the JSON library
 
 This example shows in how to create, serialize, parse and reset a JSON document.
 
