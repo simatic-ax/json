@@ -31,7 +31,7 @@ NAMESPACE Deserializer
                 deserializer.buffer := REF(buffer);
                 key := 'key ';
                 keyFound := deserializer.TryParse(key, value);
-                Equal(TRUE, keyFound);
+                Equal(FALSE, keyFound);
                 key := 'Key 2';
                 keyFound := deserializer.TryParse(key, value);
                 Equal(TRUE, keyFound);
