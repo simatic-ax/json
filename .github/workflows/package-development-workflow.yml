@@ -62,8 +62,6 @@ jobs:
 
       - name: Test source code
         uses: simatic-ax/actions/apax-test@v3
-        with:
-          loglevel: debug
 
       - name: Check links
         uses: gaurav-nelson/github-action-markdown-link-check@v1
