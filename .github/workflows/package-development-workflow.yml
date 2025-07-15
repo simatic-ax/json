@@ -63,7 +63,6 @@ jobs:
       - name: Test source code
         uses: simatic-ax/actions/apax-test@v3
         with:
-          coverage: true
           loglevel: debug
 
       - name: Check links
