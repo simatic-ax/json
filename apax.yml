@@ -4,7 +4,7 @@ version: 0.0.0-placeholder
 author: Siemens AG
 type: lib
 # Description will be displayed in the apax extension
-description: This is supporting the serializing of a JSON object model and parsing JSON formatted strings
+description: "Library for serializing and deserializing JSON files in SIMATIC AX applications"
 #URL to the repository
 repository:
   type: git
@@ -14,14 +14,14 @@ registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
 
 catalogs:
-  "@ax/simatic-ax": ^2504.0.0
+  "@ax/simatic-ax": ^2510.0.0
 
 # Dependencies
 devDependencies:
-  "@ax/sdk": ^2504.0.0
+  "@ax/sdk": ^2510.0.0
   "@simatic-ax/snippetscollection": ^1.0.0
 dependencies:
-  "@simatic-ax/conversion": ^2505.0.0
+  "@simatic-ax/conversion": ^2510.0.0
 
 targets:
   - '1500'
