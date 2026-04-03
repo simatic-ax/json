@@ -146,6 +146,95 @@ However, the norm does not define, how duplicate keys should be processed. In ca
 
 ## Serializing
 
+## Async JSON Parsing
+
+For large JSON structures, synchronous parsing can consume significant PLC cycle time. The `AsyncDeserializer` class allows parsing to be distributed across multiple PLC cycles.
+
+### When to Use Async Parsing
+
+Use async parsing when:
+- Processing JSON documents larger than 500 characters
+- Parse time must be distributed across multiple cycles
+- UI or other time-critical tasks must run between parse chunks
+
+For small JSON documents (under 500 characters), use the synchronous `Deserializer` class directly.
+
+### Usage Example
+
+```iec-st
+USING Simatic.Ax.Json;
+
+VAR
+    asyncParser : AsyncDeserializer;
+    jsonBuffer : ARRAY[0..999] OF CHAR;
+    jsonString : STRING := '{"data": [{"id": 1}, {"id": 2}]}';
+    len : DINT;
+    charsPerCycle : INT := 50;
+END_VAR
+
+// Initialize with JSON buffer (converted from STRING)
+len := Simatic.Ax.Conversion.Strings.ToArray(str := jsonString, arr := jsonBuffer);
+asyncParser.Initialize(REF(jsonBuffer));
+
+// Parse in chunks across multiple cycles
+WHILE NOT asyncParser.IsComplete() DO
+    asyncParser.ParseChunk(charactersPerCycle := charsPerCycle);
+    // Other PLC logic runs here between chunks...
+END_WHILE;
+
+// Check result
+IF asyncParser.HasError() THEN
+    // Handle error
+    RETURN;
+END_IF;
+
+// Get state
+CASE asyncParser.GetState() OF
+    3: // Complete - ready to use parsed data
+    5: // Cancelled - call Reset() before reinitializing
+END_CASE;
+```
+
+### State Machine
+
+The parser uses a state machine with these states:
+
+| State | Value | Description |
+|-------|-------|-------------|
+| Idle | 0 | Initial state, no buffer set |
+| Ready | 1 | Buffer set, ready to parse |
+| Parsing | 2 | Currently parsing |
+| Complete | 3 | Parsing finished successfully |
+| Error | 4 | Parse error occurred |
+| Cancelled | 5 | Parsing cancelled |
+
+Check the state with `GetState()` or use convenience methods `IsComplete()` and `HasError()`.
+
+### Cancellation
+
+To cancel ongoing parsing:
+
+```iec-st
+asyncParser.Cancel();
+// After cancellation, call Reset() before reinitializing
+asyncParser.Reset();
+```
+
+### Interface
+
+The `IAsyncDeserializer` interface defines the contract for async parsing:
+
+| Method | Description |
+|--------|-------------|
+| `Initialize(buffer)` | Initialize with JSON buffer |
+| `ParseChunk(charactersPerCycle)` | Parse next chunk |
+| `Cancel()` | Cancel parsing |
+| `Reset()` | Reset to idle state |
+| `GetState()` | Get current state |
+| `IsComplete()` | Check if parsing complete |
+| `HasError()` | Check for errors |
+| `GetCurrentPosition()` | Get current parse position |
+
 ## [JsonDocument](docs/JsonDocument.md)
 
 ## [JsonObject](docs/JsonObject.md)
