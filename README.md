@@ -131,6 +131,43 @@ parsingWasSuccessfull:= TryParse('not a key', value3);
 |TryParse(input: key(ARRAY OF STRING), output: value) : BOOL| Returns false when parsing not succesfull and provides the value. The method is overloaded and accepts different data types. The key array is used to access values in nested elements. |
 |||
 
+### Async Parsing for Large JSON Files
+
+For large JSON documents that may block the PLC cycle, use the `AsyncJsonDeserializer` class to parse incrementally over multiple PLC cycles.
+
+```iec-st
+USING Simatic.Ax.Json;
+
+VAR
+    asyncParser : AsyncJsonDeserializer;
+    buffer : ARRAY[0..9999] OF CHAR;
+    jsonString : STRING := '{ "large" : "json" ... }';
+    result : REF_TO Deserializer;
+    progress : DINT;
+END_VAR
+
+// Convert string to buffer
+Strings.ToArray(str := jsonString, arr := buffer);
+
+// Start async parsing
+asyncParser.Start(REF(buffer));
+asyncParser.CharsPerCycle := 100; // Characters per cycle
+
+// In each PLC cycle:
+asyncParser.Process();
+
+// Check progress
+progress := asyncParser.GetProgress(); // 0-100
+
+// When complete:
+IF asyncParser.IsComplete() THEN
+    result := asyncParser.GetResult();
+    // Use result->TryParse(...) to get values
+END_IF;
+```
+
+See [AsyncJsonDeserializer](docs/AsyncJsonDeserializer.md) for full API documentation.
+
 ### Duplicate keys
 
 The JSON Format allows a user to have duplicate keys in his json document, e.g.
