@@ -275,7 +275,7 @@ NAMESPACE Simatic.Ax.Json
                 value := SINT#0;
             END_IF;
         END_METHOD
-        /// TryParse(ARRAY[*] OF STRING) : SINT
+
         METHOD PUBLIC TryParse : BOOL
             VAR_INPUT
                 keyArray : ARRAY[*] OF STRING;
