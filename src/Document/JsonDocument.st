@@ -2,7 +2,6 @@ USING System.Strings;
 
 NAMESPACE Simatic.Ax.Json
 
-    /// The JsonDocument contains the object model of the Json object.
     {axcode:docs-v0:@simatic-ax/json:JsonDocument.md}
     CLASS FINAL JsonDocument IMPLEMENTS IJsonContainerElement
         VAR PUBLIC
