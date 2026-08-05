@@ -18,7 +18,7 @@ catalogs:
 
 # Dependencies
 devDependencies:
-  "@ax/sdk": ^2504.0.0
+  "@ax/sdk": ^2510.0.0
   "@simatic-ax/snippetscollection": ^1.0.0
 dependencies:
   "@simatic-ax/conversion": ^2505.0.0
