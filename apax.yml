@@ -14,7 +14,7 @@ registries:
   '@simatic-ax': 'https://npm.pkg.github.com/'
 
 catalogs:
-  "@ax/simatic-ax": ^2504.0.0
+  "@ax/simatic-ax": ^2510.0.0
 
 # Dependencies
 devDependencies:
