@@ -24,7 +24,7 @@ devDependencies:
   "@ax/sdk": ^2510.0.0
   "@simatic-ax/snippetscollection": ^1.1.0
 dependencies:
-  "@simatic-ax/conversion": ^2510.0.1
+  "@simatic-ax/conversion": ^2610.0.0
 
 targets:
   - '1500'
